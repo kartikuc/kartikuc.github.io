@@ -1220,6 +1220,7 @@
     </div>
 
     <script>
+
         function showPage(pageId) {
             // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
@@ -1234,8 +1235,12 @@
             // Show selected page
             document.getElementById(pageId).classList.add('active');
 
-            // Add active to clicked nav link
-            event.target.classList.add('active');
+            // Add active to the corresponding nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.getAttribute('onclick').includes(pageId)) {
+                    link.classList.add('active');
+                }
+            });
 
             // Scroll to top
             window.scrollTo(0, 0);
