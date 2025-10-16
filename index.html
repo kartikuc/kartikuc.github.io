@@ -10,7 +10,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             background: #0a0a0a;
             color: #d4d4d4;
@@ -144,29 +144,52 @@
             margin-bottom: 16px; /* tightened from 25px */
         }
 
-        .contact-links {
-            display: flex;
-            gap: 16px; /* tightened from 20px */
-            flex-wrap: wrap;
-            margin-bottom: 16px; /* tightened from 30px */
-        }
+                        /* --- Icon tiles row --- */
+            :root {
+                --icon-size: 52px; /* ≈ 260px / 5; tweak if you change .profile-image width */
+            }
+            
+            .contact-icons {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            
+            .icon-tile {
+                width: var(--icon-size);
+                height: var(--icon-size);
+                border: 1px solid #2a2a2a;
+                background: #151515;
+                border-radius: 10px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
+            }
+            
+            .icon-tile:hover {
+                transform: translateY(-2px);
+                border-color: #4a9eff;
+                background: #1a1a1a;
+            }
+            
+            .icon-tile svg {
+                width: 24px;
+                height: 24px;
+                fill: #b0b0b0;
+                transition: fill 0.2s ease;
+            }
+            
+            .icon-tile:hover svg {
+                fill: #ffffff;
+            }
+            
+            @media (max-width: 700px) {
+                :root { --icon-size: 44px; }
+            }
 
-        /* keep email & phone on different lines, icons to the side */
-        .contact-list a {
-            display: block;
-            color: #4a9eff;
-            text-decoration: none;
-            font-size: 0.95em;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .contact-list a:hover { color: #7bb3ff; }
-
-        .social-links { display: flex; gap: 12px; align-items: center; }
-        .social-links a { display: inline-flex; text-decoration: none; }
-        .social-icon { width: 22px; height: 22px; fill: #999; transition: fill 0.3s ease, transform 0.2s ease; }
-        .social-links a:hover .social-icon { fill: #ffffff; transform: translateY(-1px); }
 
         h2 {
             font-size: 1.6em;
@@ -306,27 +329,34 @@
                     <h1>Kartik Chikkanagoudar</h1>
                     <p class="subtitle">Electrical Engineering with specialisation in Solid State Devices</p>
                     <p class="institution">Dual Degree (B.Tech + M.Tech) at IIT Bombay • 2026</p>
-                    <div class="contact-links">
-                        <!-- Email & Phone on separate lines -->
-                        <div class="contact-list">
-                            <a href="mailto:kartikuc@iitb.ac.in">Email</a>
-                            <a href="tel:+919969012868">Phone</a>
-                        </div>
-                        <!-- Clickable logo icons -->
-                        <div class="social-links">
-                            <a href="https://github.com" target="https://github.com/MonolayerGraphene" aria-label="GitHub">
-                                <!-- GitHub SVG -->
-                                <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.85 9.71.5.09.69-.22.69-.49 0-.24-.01-.87-.01-1.71-2.79.62-3.38-1.36-3.38-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05 .9 1.57 2.36 1.12 2.94.86 .09-.67 .35-1.12 .63-1.38-2.23-.26-4.58-1.13-4.58-5 0-1.1 .38-2 .99-2.7-.1-.26-.43-1.32 .09-2.75 0 0 .84-.27 2.75 1.03 .8-.23 1.66-.35 2.52-.35s1.72.12 2.52.35c1.91-1.3 2.75-1.03 2.75-1.03 .52 1.43 .19 2.49 .09 2.75 .61.7 .99 1.6 .99 2.7 0 3.88-2.36 4.73-4.6 4.99 .36.32 .68.94 .68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27 .18.58 .69.49A10.04 10.04 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
-                                </svg>
-                            </a>
-                            <a href="https://linkedin.com" target="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" aria-label="LinkedIn">
-                                <!-- LinkedIn SVG -->
-                                <svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V23h-4V8zM8 8h3.8v2.05h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-7.03c0-1.68-.03-3.84-2.34-3.84-2.35 0-2.71 1.83-2.71 3.72V23h-4V8z"/>
-                                </svg>
-                            </a>
-                        </div>
+                       <div class="contact-icons" aria-label="Contact links">
+                        <!-- Email -->
+                        <a class="icon-tile" href="mailto:kartikuc@iitb.ac.in" aria-label="Email">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 3.2-8 5.3-8-5.3V6l8 5.3L20 6v1.2z"/>
+                            </svg>
+                        </a>
+                    
+                        <!-- Phone -->
+                        <a class="icon-tile" href="tel:+919969012868" aria-label="Phone">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M6.6 10.8a15.7 15.7 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1.1-.23c1.2.48 2.5.75 3.8.8a1 1 0 0 1 1 1v3.3a1 1 0 0 1-1 1C10.3 22 2 13.7 2 3.7a1 1 0 0 1 1-1h3.3a1 1 0 0 1 1 1c.05 1.3.32 2.6.8 3.8a1 1 0 0 1-.23 1.1l-2.3 2.2z"/>
+                            </svg>
+                        </a>
+                    
+                        <!-- GitHub -->
+                        <a class="icon-tile" href="https://github.com/MonolayerGraphene" target="_blank" rel="noopener" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.85 9.71.5.09.69-.22.69-.49 0-.24-.01-.87-.01-1.71-2.79.62-3.38-1.36-3.38-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05 .9 1.57 2.36 1.12 2.94.86 .09-.67 .35-1.12 .63-1.38-2.23-.26-4.58-1.13-4.58-5 0-1.1 .38-2 .99-2.7-.1-.26-.43-1.32 .09-2.75 0 0 .84-.27 2.75 1.03 .8-.23 1.66-.35 2.52-.35s1.72.12 2.52.35c1.91-1.3 2.75-1.03 2.75-1.03 .52 1.43 .19 2.49 .09 2.75 .61.7 .99 1.6 .99 2.7 0 3.88-2.36 4.73-4.6 4.99 .36.32 .68.94 .68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27 .18.58 .69.49A10.04 10.04 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
+                            </svg>
+                        </a>
+                    
+                        <!-- LinkedIn -->
+                        <a class="icon-tile" href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V23h-4V8zM8 8h3.8v2.05h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-7.03c0-1.68-.03-3.84-2.34-3.84-2.35 0-2.71 1.83-2.71 3.72V23h-4V8z"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -352,7 +382,7 @@
             <div class="entry">
                 <div class="entry-grid">
                     <div class="entry-image">
-                        <img src="images/exp-pcmo-rram.jpg" alt="PCMO RRAMs">
+                        <img src="images/pcmo.png" alt="PCMO RRAMs">
                     </div>
                     <div>
                         <div class="entry-title">Modeling and Simulation of PCMO RRAMs</div>
@@ -384,7 +414,7 @@
             <div class="entry">
                 <div class="entry-grid">
                     <div class="entry-image">
-                        <img src="images/exp-moke.jpg" alt="Magneto-optic Synapse">
+                        <img src="images/moke.png" alt="Magneto-optic Synapse">
                     </div>
                     <div>
                         <div class="entry-title">Magneto-optic Synapse for Photonics-based Neuromorphic Computing</div>
@@ -416,7 +446,7 @@
             <div class="entry">
                 <div class="entry-grid">
                     <div class="entry-image">
-                        <img src="images/prof-bsim4.jpg" alt="BSIM4 Verilog-A">
+                        <img src="images/bsim4.jpeg" alt="BSIM4 Verilog-A">
                     </div>
                     <div>
                         <div class="entry-title">BSIM4 Verilog-A Model Development</div>
@@ -432,7 +462,7 @@
             <div class="entry">
                 <div class="entry-grid">
                     <div class="entry-image">
-                        <img src="images/prof-superconducting.jpg" alt="Superconducting Resonator">
+                        <img src="images/tifr.png" alt="Superconducting Resonator">
                     </div>
                     <div>
                         <div class="entry-title">Superconducting Resonator Design and Fabrication</div>
@@ -448,7 +478,7 @@
             <div class="entry">
                 <div class="entry-grid">
                     <div class="entry-image">
-                        <img src="images/prof-reactor.jpg" alt="Reactor Physics">
+                        <img src="images/aerb.png" alt="Reactor Physics">
                     </div>
                     <div>
                         <div class="entry-title">Reactor Physics and Control</div>
@@ -581,7 +611,7 @@
             <div class="entry">
                 <div class="entry-grid">
                     <div class="entry-image">
-                        <img src="images/proj-graphene.jpg" alt="Graphene Transport">
+                        <img src="images/755.png" alt="Graphene Transport">
                     </div>
                     <div>
                         <div class="entry-title">Transport in Few-Layer Graphene Nanoscale Devices</div>
