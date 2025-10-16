@@ -116,13 +116,9 @@
             text-align: center;
             padding: 15px;
             overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s ease;
             position: relative;
-        }
-
-        .profile-image:hover {
-            border-color: #444;
+            /* static image; no pointer cursor */
+            cursor: default;
         }
 
         .profile-image img {
@@ -130,14 +126,7 @@
             height: 100%;
             object-fit: cover;
             border-radius: 10px;
-        }
-
-        #imagePlaceholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
+            display: block;
         }
 
         .hero-text h1 {
@@ -378,6 +367,31 @@
             margin-bottom: 4px;
         }
 
+        /* Image layout for Experience & Projects entries */
+        .entry-grid {
+            display: grid;
+            grid-template-columns: 96px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .entry-image {
+            width: 96px;
+            height: 96px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 1px solid #222;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .entry-image img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         @media (max-width: 700px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -406,6 +420,15 @@
             .courses-grid {
                 grid-template-columns: 1fr;
             }
+
+            .entry-grid {
+                grid-template-columns: 80px 1fr;
+            }
+
+            .entry-image {
+                width: 80px;
+                height: 80px;
+            }
         }
     </style>
 </head>
@@ -429,8 +452,8 @@
         <div id="home" class="page active">
             <div class="hero">
                 <div class="profile-image">
-                    <img id="profileImg" src="" alt="Profile" onerror="this.style.display='none'">
-                    <div id="imagePlaceholder">Click to add photo</div>
+                    <!-- Static profile image set directly in HTML -->
+                    <img id="profileImg" src="images/profile.jpg" alt="Profile">
                 </div>
                 <div class="hero-text">
                     <h1>Kartik Chikkanagoudar</h1>
@@ -471,96 +494,152 @@
             <p class="section-intro">Current and completed research projects in nanoelectronics, device physics, and semiconductor design</p>
 
             <div class="entry">
-                <div class="entry-title">Modeling and Simulation of PCMO RRAMs</div>
-                <div class="entry-meta">MeLoDe Lab, IIT Bombay | Prof. Udayan Ganguly • Feb 2025 – Present</div>
-                <div class="entry-description">
-                    Characterizing stochasticity in resistive random access memories through random variations in compact model parameters. Building unified physics-based TCAD models with SET/RESET transient modeling using advanced physics models.
-                    <ul>
-                        <li>Modeling RESET transient and device characteristics using MSC model in Sentaurus TCAD</li>
-                        <li>Building unified physics-based TCAD model with SET modeling using NBTI model and stochasticity</li>
-                        <li>Characterizing parameter variations to understand device reliability and switching mechanisms</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/exp-pcmo-rram.jpg" alt="PCMO RRAMs">
+                    </div>
+                    <div>
+                        <div class="entry-title">Modeling and Simulation of PCMO RRAMs</div>
+                        <div class="entry-meta">MeLoDe Lab, IIT Bombay | Prof. Udayan Ganguly • Feb 2025 – Present</div>
+                        <div class="entry-description">
+                            Characterizing stochasticity in resistive random access memories through random variations in compact model parameters. Building unified physics-based TCAD models with SET/RESET transient modeling using advanced physics models.
+                            <ul>
+                                <li>Modeling RESET transient and device characteristics using MSC model in Sentaurus TCAD</li>
+                                <li>Building unified physics-based TCAD model with SET modeling using NBTI model and stochasticity</li>
+                                <li>Characterizing parameter variations to understand device reliability and switching mechanisms</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">AlN BAW SMR Resonator and Filter Design</div>
-                <div class="entry-meta">Research Project, IIT Bombay | Prof. Apurba Laha • Jul 2024 – Dec 2024</div>
-                <div class="entry-description">
-                    Designed and optimized aluminum nitride bulk acoustic wave surface acoustic wave resonators with distributed Bragg reflectors. Achieved 3.6 GHz center frequency with high quality factor through systematic optimization.
-                    <ul>
-                        <li>Designed AlN-based BAW resonator with W/SiO₂ DBR in COMSOL Multiphysics</li>
-                        <li>Optimized layer thicknesses to suppress spurious resonances and improve quality factor</li>
-                        <li>Developed Python scripts using BVD and Mason models for RF filter design</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/exp-aln-baw.jpg" alt="AlN BAW Resonator">
+                    </div>
+                    <div>
+                        <div class="entry-title">AlN BAW SMR Resonator and Filter Design</div>
+                        <div class="entry-meta">Research Project, IIT Bombay | Prof. Apurba Laha • Jul 2024 – Dec 2024</div>
+                        <div class="entry-description">
+                            Designed and optimized aluminum nitride bulk acoustic wave surface acoustic wave resonators with distributed Bragg reflectors. Achieved 3.6 GHz center frequency with high quality factor through systematic optimization.
+                            <ul>
+                                <li>Designed AlN-based BAW resonator with W/SiO₂ DBR in COMSOL Multiphysics</li>
+                                <li>Optimized layer thicknesses to suppress spurious resonances and improve quality factor</li>
+                                <li>Developed Python scripts using BVD and Mason models for RF filter design</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">Magneto-optic Synapse for Photonics-based Neuromorphic Computing</div>
-                <div class="entry-meta">Research Project, IIT Bombay | Prof. Debanjan Bhowmik • Dec 2023 – Apr 2024</div>
-                <div class="entry-description">
-                    Analytically examined perpendicular magnetic anisotropy materials for MOKE-based photonic memory applications. Developed Python simulations for magnetic domain-wall formation and propagation.
-                    <ul>
-                        <li>Analyzed MOKE effect on transverse electric mode EM waves in photonic arrays</li>
-                        <li>Simulated magnetic domain dynamics in PMA materials along easy and hard axes</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/exp-moke.jpg" alt="Magneto-optic Synapse">
+                    </div>
+                    <div>
+                        <div class="entry-title">Magneto-optic Synapse for Photonics-based Neuromorphic Computing</div>
+                        <div class="entry-meta">Research Project, IIT Bombay | Prof. Debanjan Bhowmik • Dec 2023 – Apr 2024</div>
+                        <div class="entry-description">
+                            Analytically examined perpendicular magnetic anisotropy materials for MOKE-based photonic memory applications. Developed Python simulations for magnetic domain-wall formation and propagation.
+                            <ul>
+                                <li>Analyzed MOKE effect on transverse electric mode EM waves in photonic arrays</li>
+                                <li>Simulated magnetic domain dynamics in PMA materials along easy and hard axes</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">Coulomb Blockade Spectroscopy in 2D Quantum Dots</div>
-                <div class="entry-meta">Research Project, IIT Bombay | Prof. Bhaskaran Muralidharan • Jul 2023 – Dec 2023</div>
-                <div class="entry-description">
-                    Developed Python-based simulation of Coulomb blockade phenomena using multi-electron Fock space representation. Examined current variations via SCF and Master equation procedures.
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/exp-coulomb.jpg" alt="Coulomb Blockade">
+                    </div>
+                    <div>
+                        <div class="entry-title">Coulomb Blockade Spectroscopy in 2D Quantum Dots</div>
+                        <div class="entry-meta">Research Project, IIT Bombay | Prof. Bhaskaran Muralidharan • Jul 2023 – Dec 2023</div>
+                        <div class="entry-description">
+                            Developed Python-based simulation of Coulomb blockade phenomena using multi-electron Fock space representation. Examined current variations via SCF and Master equation procedures.
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <h2>Professional Experience</h2>
 
             <div class="entry">
-                <div class="entry-title">BSIM4 Verilog-A Model Development</div>
-                <div class="entry-meta">Summer Intern, Micron Technology • Jun 2025 – Jul 2025</div>
-                <div class="entry-description">
-                    Developed robust and augmentable MOSFET compact models by translating BSIM4 C code to VerilogA. Validated model performance across all operating points and conducted geometric parameter tuning.
-                    <ul>
-                        <li>Translated BSIM4.8 C code to Verilog-A, eliminating convergence errors</li>
-                        <li>Validated model against original BSIM4 output with systematic debugging</li>
-                        <li>Performed four-corner geometrical tuning fitted to empirical device data</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/prof-bsim4.jpg" alt="BSIM4 Verilog-A">
+                    </div>
+                    <div>
+                        <div class="entry-title">BSIM4 Verilog-A Model Development</div>
+                        <div class="entry-meta">Summer Intern, Micron Technology • Jun 2025 – Jul 2025</div>
+                        <div class="entry-description">
+                            Developed robust and augmentable MOSFET compact models by translating BSIM4 C code to VerilogA. Validated model performance across all operating points and conducted geometric parameter tuning.
+                            <ul>
+                                <li>Translated BSIM4.8 C code to Verilog-A, eliminating convergence errors</li>
+                                <li>Validated model against original BSIM4 output with systematic debugging</li>
+                                <li>Performed four-corner geometrical tuning fitted to empirical device data</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">Superconducting Resonator Design and Fabrication</div>
-                <div class="entry-meta">Research Intern, TIFR • May 2024 – Jul 2024</div>
-                <div class="entry-description">
-                    Simulated superconducting resonator cavities optimizing bias filter configurations. Gained hands-on cleanroom experience fabricating van der Waals heterostructures.
-                    <ul>
-                        <li>Simulated superconducting resonator cavities in COMSOL optimizing for quality factor</li>
-                        <li>Analyzed resonator circuit models in Cadence Microwave AWR</li>
-                        <li>Fabricated graphene/hBN heterostructures with cleanroom proficiency</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/prof-superconducting.jpg" alt="Superconducting Resonator">
+                    </div>
+                    <div>
+                        <div class="entry-title">Superconducting Resonator Design and Fabrication</div>
+                        <div class="entry-meta">Research Intern, TIFR • May 2024 – Jul 2024</div>
+                        <div class="entry-description">
+                            Simulated superconducting resonator cavities optimizing bias filter configurations. Gained hands-on cleanroom experience fabricating van der Waals heterostructures.
+                            <ul>
+                                <li>Simulated superconducting resonator cavities in COMSOL optimizing for quality factor</li>
+                                <li>Analyzed resonator circuit models in Cadence Microwave AWR</li>
+                                <li>Fabricated graphene/hBN heterostructures with cleanroom proficiency</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">Reactor Physics and Control</div>
-                <div class="entry-meta">Project Intern, Atomic Energy Regulatory Board (AERB) • May 2023 – Jul 2023</div>
-                <div class="entry-description">
-                    Simulated pressurized water reactor cores with neutron kinetics and xenon feedback. Designed and tuned PID controllers for reactor power regulation.
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/prof-reactor.jpg" alt="Reactor Physics">
+                    </div>
+                    <div>
+                        <div class="entry-title">Reactor Physics and Control</div>
+                        <div class="entry-meta">Project Intern, Atomic Energy Regulatory Board (AERB) • May 2023 – Jul 2023</div>
+                        <div class="entry-description">
+                            Simulated pressurized water reactor cores with neutron kinetics and xenon feedback. Designed and tuned PID controllers for reactor power regulation.
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">HackerFab IITB Initiative</div>
-                <div class="entry-meta">Co-Founder • Aug 2025 – Present</div>
-                <div class="entry-description">
-                    Co-founding India's first bottom-up, student-led semiconductor fabrication facility. Leading development of low-cost maskless photolithography and automated processing systems.
-                    <ul>
-                        <li>Building 2 μm linewidth maskless photolithography system based on DLP-projector design</li>
-                        <li>Designing programmable spin coater with speed profiles (500–8000 RPM)</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/prof-hackerfab.jpg" alt="HackerFab IITB">
+                    </div>
+                    <div>
+                        <div class="entry-title">HackerFab IITB Initiative</div>
+                        <div class="entry-meta">Co-Founder • Aug 2025 – Present</div>
+                        <div class="entry-description">
+                            Co-founding India's first bottom-up, student-led semiconductor fabrication facility. Leading development of low-cost maskless photolithography and automated processing systems.
+                            <ul>
+                                <li>Building 2 μm linewidth maskless photolithography system based on DLP-projector design</li>
+                                <li>Designing programmable spin coater with speed profiles (500–8000 RPM)</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -571,88 +650,137 @@
             <p class="section-intro">Technical projects, course work, and competitions</p>
 
             <div class="entry">
-                <div class="entry-title">Nanowire FeFET Mirrorbit Characterization and Variability Analysis</div>
-                <div class="entry-meta">Nanoelectronics Course, IIT Bombay | Prof. Udayan Ganguly • Mar 2024 – May 2024</div>
-                <div class="entry-description">
-                    Simulated silicon-based nanowire ferroelectric FETs to analyze reliability and memory state differentiation in MirrorBit architecture. Identified metal grain granularity as dominant source of threshold voltage variability.
-                    <ul>
-                        <li>Examined MirrorBit memory cell architecture using NanoWire FeFETs in Sentaurus TCAD</li>
-                        <li>Investigated effects of channel dimensions and metal grain variation on reliability</li>
-                        <li>Quantified metal grain granularity as dominant variability factor over dimensional scaling</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/proj-fefet.jpg" alt="Nanowire FeFET">
+                    </div>
+                    <div>
+                        <div class="entry-title">Nanowire FeFET Mirrorbit Characterization and Variability Analysis</div>
+                        <div class="entry-meta">Nanoelectronics Course, IIT Bombay | Prof. Udayan Ganguly • Mar 2024 – May 2024</div>
+                        <div class="entry-description">
+                            Simulated silicon-based nanowire ferroelectric FETs to analyze reliability and memory state differentiation in MirrorBit architecture. Identified metal grain granularity as dominant source of threshold voltage variability.
+                            <ul>
+                                <li>Examined MirrorBit memory cell architecture using NanoWire FeFETs in Sentaurus TCAD</li>
+                                <li>Investigated effects of channel dimensions and metal grain variation on reliability</li>
+                                <li>Quantified metal grain granularity as dominant variability factor over dimensional scaling</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">Electroluminescence Imaging of Solar Cells</div>
-                <div class="entry-meta">Electronic Design Lab, IIT Bombay | Prof. Siddharth Tallur • Jan 2024 – Apr 2024</div>
-                <div class="entry-description">
-                    Developed cost-effective, portable device for contactless fault detection and quality assessment of solar cells. Integrated embedded systems with image processing for local series resistance extraction.
-                    <ul>
-                        <li>Designed single-sided PCB for current sensing, DAC control, and current boosting</li>
-                        <li>Interfaced Raspberry Pi 4B with Pico via USB serial communication using C SDK</li>
-                        <li>Hosted Flask web interface for real-time control and near-IR imaging with Sony IMX219</li>
-                        <li>Processed IR spectrum data for local series resistance image extraction</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/proj-el-solar.jpg" alt="Electroluminescence Imaging">
+                    </div>
+                    <div>
+                        <div class="entry-title">Electroluminescence Imaging of Solar Cells</div>
+                        <div class="entry-meta">Electronic Design Lab, IIT Bombay | Prof. Siddharth Tallur • Jan 2024 – Apr 2024</div>
+                        <div class="entry-description">
+                            Developed cost-effective, portable device for contactless fault detection and quality assessment of solar cells. Integrated embedded systems with image processing for local series resistance extraction.
+                            <ul>
+                                <li>Designed single-sided PCB for current sensing, DAC control, and current boosting</li>
+                                <li>Interfaced Raspberry Pi 4B with Pico via USB serial communication using C SDK</li>
+                                <li>Hosted Flask web interface for real-time control and near-IR imaging with Sony IMX219</li>
+                                <li>Processed IR spectrum data for local series resistance image extraction</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">Simulation of PMOS Two-Stage OTA</div>
-                <div class="entry-meta">CMOS Analog VLSI Design, IIT Bombay | Prof. Rajesh Zele • Sep 2024 – Nov 2024</div>
-                <div class="entry-description">
-                    Designed differential two-stage PMOS operational transconductance amplifier in Cadence Virtuoso with post-layout parasitic extraction and validation.
-                    <ul>
-                        <li>Designed differential 2-stage PMOS OTA in Cadence Virtuoso</li>
-                        <li>Executed post-layout simulations with parasitic extraction and DRC/LVS verification</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/proj-ota.jpg" alt="PMOS Two-Stage OTA">
+                    </div>
+                    <div>
+                        <div class="entry-title">Simulation of PMOS Two-Stage OTA</div>
+                        <div class="entry-meta">CMOS Analog VLSI Design, IIT Bombay | Prof. Rajesh Zele • Sep 2024 – Nov 2024</div>
+                        <div class="entry-description">
+                            Designed differential two-stage PMOS operational transconductance amplifier in Cadence Virtuoso with post-layout parasitic extraction and validation.
+                            <ul>
+                                <li>Designed differential 2-stage PMOS OTA in Cadence Virtuoso</li>
+                                <li>Executed post-layout simulations with parasitic extraction and DRC/LVS verification</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">Pipeline RISC Processor Design</div>
-                <div class="entry-meta">Microprocessors Course, IIT Bombay | Prof. Virendra Singh • Mar 2024 – May 2024</div>
-                <div class="entry-description">
-                    Designed and simulated 16-bit superscalar RISC processor with two-way fetch and advanced pipeline architecture. Implemented load queue and store buffer for enhanced parallelization.
-                    <ul>
-                        <li>Designed two-way-fetch superscalar architecture with 8 registers in VHDL</li>
-                        <li>Implemented load queue, store buffer, and alias detection for throughput enhancement</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/proj-risc.jpg" alt="Pipeline RISC">
+                    </div>
+                    <div>
+                        <div class="entry-title">Pipeline RISC Processor Design</div>
+                        <div class="entry-meta">Microprocessors Course, IIT Bombay | Prof. Virendra Singh • Mar 2024 – May 2024</div>
+                        <div class="entry-description">
+                            Designed and simulated 16-bit superscalar RISC processor with two-way fetch and advanced pipeline architecture. Implemented load queue and store buffer for enhanced parallelization.
+                            <ul>
+                                <li>Designed two-way-fetch superscalar architecture with 8 registers in VHDL</li>
+                                <li>Implemented load queue, store buffer, and alias detection for throughput enhancement</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">Chiplet Technology in Automotive Systems</div>
-                <div class="entry-meta">Inter IIT Tech Meet 12.0, JLR Problem Statement • Nov 2023 – Dec 2023</div>
-                <div class="entry-description">
-                    Engineered specialized chiplets for ADAS and autonomous vehicle applications. Developed micro-architecture for L4-L5 driving systems with extensive market research and analysis.
-                    <ul>
-                        <li>Engineered specialized chiplets for Advanced Driver Assistance Systems (ADAS)</li>
-                        <li>Developed chiplet micro-architecture for L4-L5 autonomous driving</li>
-                        <li>Conducted market research on commercial SoCs in automotive industry</li>
-                        <li>Achieved runner-up position in inter-college competition with 8-member team</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/proj-chiplet.jpg" alt="Chiplet Tech for Automotive">
+                    </div>
+                    <div>
+                        <div class="entry-title">Chiplet Technology in Automotive Systems</div>
+                        <div class="entry-meta">Inter IIT Tech Meet 12.0, JLR Problem Statement • Nov 2023 – Dec 2023</div>
+                        <div class="entry-description">
+                            Engineered specialized chiplets for ADAS and autonomous vehicle applications. Developed micro-architecture for L4-L5 driving systems with extensive market research and analysis.
+                            <ul>
+                                <li>Engineered specialized chiplets for Advanced Driver Assistance Systems (ADAS)</li>
+                                <li>Developed chiplet micro-architecture for L4-L5 autonomous driving</li>
+                                <li>Conducted market research on commercial SoCs in automotive industry</li>
+                                <li>Achieved runner-up position in inter-college competition with 8-member team</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">Matsya Autonomous Underwater Vehicle</div>
-                <div class="entry-meta">Team AUV-IITB • Dec 2021 – Dec 2022</div>
-                <div class="entry-description">
-                    Designed and optimized front frame of Matsya 6 AUV with actuator positioning. Collaborated on Mini RC 5-DOF submarine prototype with Drona Aviation.
-                    <ul>
-                        <li>Modeled front frame of Matsya 6 and optimized actuator positioning in ANSYS</li>
-                        <li>Designed, simulated and manufactured Mini RC 5 DOF submarine prototype</li>
-                        <li>Placed 7th in Autonomy Challenge and awarded Best Third chance at RoboSub 2022</li>
-                    </ul>
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/proj-auv.jpg" alt="Matsya AUV">
+                    </div>
+                    <div>
+                        <div class="entry-title">Matsya Autonomous Underwater Vehicle</div>
+                        <div class="entry-meta">Team AUV-IITB • Dec 2021 – Dec 2022</div>
+                        <div class="entry-description">
+                            Designed and optimized front frame of Matsya 6 AUV with actuator positioning. Collaborated on Mini RC 5-DOF submarine prototype with Drona Aviation.
+                            <ul>
+                                <li>Modeled front frame of Matsya 6 and optimized actuator positioning in ANSYS</li>
+                                <li>Designed, simulated and manufactured Mini RC 5 DOF submarine prototype</li>
+                                <li>Placed 7th in Autonomy Challenge and awarded Best Third chance at RoboSub 2022</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="entry">
-                <div class="entry-title">Transport in Few-Layer Graphene Nanoscale Devices</div>
-                <div class="entry-meta">Quantum Transport in Nanoscale Devices, IIT Bombay • Dec 2022 – Jun 2023</div>
-                <div class="entry-description">
-                    Simulated current flow in graphene ribbons using KWANT software in ballistic and quantum regimes. Analyzed quantization of conductance in 2D electron gas.
+                <div class="entry-grid">
+                    <div class="entry-image">
+                        <img src="images/proj-graphene.jpg" alt="Graphene Transport">
+                    </div>
+                    <div>
+                        <div class="entry-title">Transport in Few-Layer Graphene Nanoscale Devices</div>
+                        <div class="entry-meta">Quantum Transport in Nanoscale Devices, IIT Bombay • Dec 2022 – Jun 2023</div>
+                        <div class="entry-description">
+                            Simulated current flow in graphene ribbons using KWANT software in ballistic and quantum regimes. Analyzed quantization of conductance in 2D electron gas.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1103,29 +1231,7 @@
             window.scrollTo(0, 0);
         }
 
-        // Image upload functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const profileImage = document.getElementById('profileImg');
-            const imagePlaceholder = document.getElementById('imagePlaceholder');
-            const profileContainer = document.querySelector('.profile-image');
-
-            profileContainer.addEventListener('click', function() {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = 'image/*';
-                input.onchange = function(e) {
-                    const file = e.target.files[0];
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        profileImage.src = event.target.result;
-                        profileImage.style.display = 'block';
-                        imagePlaceholder.style.display = 'none';
-                    };
-                    reader.readAsDataURL(file);
-                };
-                input.click();
-            });
-        });
+        // Removed image upload logic to keep images static and defined in HTML.
     </script>
 </body>
 </html>
