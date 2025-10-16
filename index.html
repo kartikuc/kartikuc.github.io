@@ -70,7 +70,7 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 60px 30px;
+            padding: 40px 24px; /* tightened from 60px 30px */
         }
 
         .page {
@@ -83,28 +83,23 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Home Page */
         .hero {
             display: grid;
-            grid-template-columns: 180px 1fr;
-            gap: 50px;
-            align-items: start;
-            margin-bottom: 80px;
+            grid-template-columns: 260px 1fr; /* wider left column */
+            gap: 24px; /* tightened from 50px */
+            align-items: stretch; /* let image fill full text height */
+            margin-bottom: 48px; /* tightened from 80px */
         }
 
         .profile-image {
-            width: 180px;
-            height: 180px;
+            width: 260px; /* increased from 180px */
+            height: 100%; /* fill the hero column height */
+            min-height: 220px; /* sensible floor so it never looks tiny */
             border-radius: 12px;
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
             display: flex;
@@ -117,8 +112,7 @@
             padding: 15px;
             overflow: hidden;
             position: relative;
-            /* static image; no pointer cursor */
-            cursor: default;
+            cursor: default; /* static image; no pointer cursor */
         }
 
         .profile-image img {
@@ -131,7 +125,7 @@
 
         .hero-text h1 {
             font-size: 2.5em;
-            margin-bottom: 12px;
+            margin-bottom: 8px; /* tightened from 12px */
             color: #ffffff;
             font-weight: 700;
             letter-spacing: -1px;
@@ -140,24 +134,24 @@
         .hero-text .subtitle {
             color: #999;
             font-size: 1.15em;
-            margin-bottom: 8px;
+            margin-bottom: 6px; /* tightened from 8px */
             font-weight: 500;
         }
 
         .hero-text .institution {
             color: #666;
             font-size: 0.95em;
-            margin-bottom: 25px;
+            margin-bottom: 16px; /* tightened from 25px */
         }
 
         .contact-links {
             display: flex;
-            gap: 20px;
+            gap: 16px; /* tightened from 20px */
             flex-wrap: wrap;
-            margin-bottom: 30px;
+            margin-bottom: 16px; /* tightened from 30px */
         }
 
-        /* NEW: keep email & phone on different lines, icons to the side */
+        /* keep email & phone on different lines, icons to the side */
         .contact-list a {
             display: block;
             color: #4a9eff;
@@ -167,36 +161,16 @@
             transition: color 0.3s;
         }
 
-        .contact-list a:hover {
-            color: #7bb3ff;
-        }
+        .contact-list a:hover { color: #7bb3ff; }
 
-        .social-links {
-            display: flex;
-            gap: 14px;
-            align-items: center;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            text-decoration: none;
-        }
-
-        .social-icon {
-            width: 22px;
-            height: 22px;
-            fill: #999;
-            transition: fill 0.3s ease, transform 0.2s ease;
-        }
-
-        .social-links a:hover .social-icon {
-            fill: #ffffff;
-            transform: translateY(-1px);
-        }
+        .social-links { display: flex; gap: 12px; align-items: center; }
+        .social-links a { display: inline-flex; text-decoration: none; }
+        .social-icon { width: 22px; height: 22px; fill: #999; transition: fill 0.3s ease, transform 0.2s ease; }
+        .social-links a:hover .social-icon { fill: #ffffff; transform: translateY(-1px); }
 
         h2 {
             font-size: 1.6em;
-            margin: 50px 0 30px 0;
+            margin: 30px 0 18px 0; /* tightened from 50px/30px */
             color: #ffffff;
             font-weight: 700;
             letter-spacing: -0.5px;
@@ -204,205 +178,64 @@
 
         .section-intro {
             color: #888;
-            margin-bottom: 30px;
+            margin-bottom: 18px; /* tightened from 30px */
             font-size: 0.95em;
             line-height: 1.7;
         }
 
-        .about-text {
-            color: #b0b0b0;
-            line-height: 1.9;
-            font-size: 0.98em;
-        }
+        .about-text { color: #b0b0b0; line-height: 1.85; font-size: 0.98em; }
 
         .entry {
-            margin-bottom: 40px;
-            padding-bottom: 40px;
+            margin-bottom: 24px; /* tightened from 40px */
+            padding-bottom: 24px; /* tightened from 40px */
             border-bottom: 1px solid #1a1a1a;
         }
+        .entry:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
 
-        .entry:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-            margin-bottom: 0;
-        }
+        .entry-title { font-size: 1.15em; color: #ffffff; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.3px; }
+        .entry-meta { color: #666; font-size: 0.9em; margin-bottom: 8px; font-weight: 500; }
+        .entry-description { color: #b0b0b0; font-size: 0.95em; line-height: 1.75; }
+        .entry-description ul { margin-left: 18px; margin-top: 10px; }
+        .entry-description li { margin-bottom: 6px; color: #b0b0b0; }
 
-        .entry-title {
-            font-size: 1.15em;
-            color: #ffffff;
-            font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: -0.3px;
-        }
+        .highlights { display: grid; gap: 12px; margin: 20px 0; }
+        .highlight { padding: 14px; background: #151515; border-left: 3px solid #4a9eff; border-radius: 6px; color: #b0b0b0; font-size: 0.95em; line-height: 1.6; }
+        .highlight strong { color: #ffffff; font-weight: 700; }
 
-        .entry-meta {
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
+        .skills-grid { display: grid; gap: 18px; }
+        .skill-block { border-left: 2px solid #333; padding-left: 16px; transition: all 0.3s ease; }
+        .skill-block:hover { border-left-color: #4a9eff; }
+        .skill-block h3 { font-size: 0.95em; color: #ffffff; margin-bottom: 8px; font-weight: 700; letter-spacing: -0.3px; }
+        .skill-block p { color: #999; font-size: 0.9em; line-height: 1.7; }
 
-        .entry-description {
-            color: #b0b0b0;
-            font-size: 0.95em;
-            line-height: 1.8;
-        }
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; margin: 20px 0; }
+        .course-item { padding: 12px; background: #151515; border: 1px solid #222; border-radius: 6px; transition: all 0.3s ease; }
+        .course-item:hover { background: #1a1a1a; border-color: #333; }
+        .course-code { font-size: 0.85em; color: #4a9eff; font-weight: 700; margin-bottom: 6px; }
+        .course-name { font-size: 0.95em; color: #ffffff; font-weight: 600; margin-bottom: 6px; }
+        .course-grade { font-size: 0.85em; color: #888; }
 
-        .entry-description ul {
-            margin-left: 20px;
-            margin-top: 12px;
-        }
-
-        .entry-description li {
-            margin-bottom: 8px;
-            color: #b0b0b0;
-        }
-
-        .highlights {
-            display: grid;
-            gap: 16px;
-            margin: 30px 0;
-        }
-
-        .highlight {
-            padding: 18px;
-            background: #151515;
-            border-left: 3px solid #4a9eff;
-            border-radius: 6px;
-            color: #b0b0b0;
-            font-size: 0.95em;
-            line-height: 1.6;
-        }
-
-        .highlight strong {
-            color: #ffffff;
-            font-weight: 700;
-        }
-
-        .skills-grid {
-            display: grid;
-            gap: 25px;
-        }
-
-        .skill-block {
-            border-left: 2px solid #333;
-            padding-left: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .skill-block:hover {
-            border-left-color: #4a9eff;
-        }
-
-        .skill-block h3 {
-            font-size: 0.95em;
-            color: #ffffff;
-            margin-bottom: 10px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-
-        .skill-block p {
-            color: #999;
-            font-size: 0.9em;
-            line-height: 1.7;
-        }
-
-        .courses-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-            margin: 30px 0;
-        }
-
-        .course-item {
-            padding: 16px;
-            background: #151515;
-            border: 1px solid #222;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .course-item:hover {
-            background: #1a1a1a;
-            border-color: #333;
-        }
-
-        .course-code {
-            font-size: 0.85em;
-            color: #4a9eff;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .course-name {
-            font-size: 0.95em;
-            color: #ffffff;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .course-grade {
-            font-size: 0.85em;
-            color: #888;
-        }
-
-        .cv-section {
-            margin-bottom: 45px;
-        }
-
-        .cv-section h3 {
-            font-size: 1.1em;
-            color: #ffffff;
-            font-weight: 700;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #222;
-        }
-
-        .cv-entry {
-            margin-bottom: 20px;
-        }
-
-        .cv-entry-title {
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-
-        .cv-entry-subtitle {
-            font-size: 0.9em;
-            color: #888;
-            margin-bottom: 8px;
-        }
-
-        .cv-entry-description {
-            font-size: 0.9em;
-            color: #b0b0b0;
-            margin-left: 15px;
-            margin-bottom: 8px;
-        }
-
-        .cv-entry-description ul {
-            margin: 8px 0 0 20px;
-        }
-
-        .cv-entry-description li {
-            font-size: 0.9em;
-            margin-bottom: 4px;
-        }
+        .cv-section { margin-bottom: 30px; }
+        .cv-section h3 { font-size: 1.1em; color: #ffffff; font-weight: 700; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #222; }
+        .cv-entry { margin-bottom: 16px; }
+        .cv-entry-title { font-weight: 700; color: #ffffff; margin-bottom: 4px; }
+        .cv-entry-subtitle { font-size: 0.9em; color: #888; margin-bottom: 6px; }
+        .cv-entry-description { font-size: 0.9em; color: #b0b0b0; margin-left: 12px; margin-bottom: 6px; }
+        .cv-entry-description ul { margin: 6px 0 0 18px; }
+        .cv-entry-description li { font-size: 0.9em; margin-bottom: 4px; }
 
         /* Image layout for Experience & Projects entries */
         .entry-grid {
             display: grid;
-            grid-template-columns: 96px 1fr;
-            gap: 20px;
-            align-items: start;
+            grid-template-columns: 160px 1fr; /* increased from 96px */
+            gap: 16px; /* tightened from 20px */
+            align-items: stretch; /* make image column match full row height */
         }
 
         .entry-image {
-            width: 96px;
-            height: 96px;
+            width: 160px; /* increased from 96px */
+            height: 100%; /* fill the full vertical length of the entry */
+            min-height: 96px; /* floor so tiny entries don't collapse image */
             border-radius: 8px;
             background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
             border: 1px solid #222;
@@ -414,45 +247,34 @@
             display: block;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* crop to fill full height cleanly */
         }
 
         @media (max-width: 700px) {
             .hero {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 16px; /* tighter */
             }
 
             .profile-image {
-                width: 140px;
-                height: 140px;
+                width: 100%;
+                height: auto; /* avoid overly tall image when stacked */
+                min-height: 200px;
                 margin: 0 auto;
             }
 
-            .nav-links {
-                gap: 20px;
-                font-size: 0.9em;
-            }
-
-            .hero-text h1 {
-                font-size: 1.8em;
-            }
-
-            h2 {
-                font-size: 1.3em;
-            }
-
-            .courses-grid {
-                grid-template-columns: 1fr;
-            }
+            .nav-links { gap: 20px; font-size: 0.9em; }
+            .hero-text h1 { font-size: 1.8em; }
+            h2 { font-size: 1.3em; }
+            .courses-grid { grid-template-columns: 1fr; }
 
             .entry-grid {
-                grid-template-columns: 80px 1fr;
+                grid-template-columns: 120px 1fr; /* still larger image on mobile */
             }
 
             .entry-image {
-                width: 80px;
-                height: 80px;
+                width: 120px;
+                height: 100%;
             }
         }
     </style>
@@ -537,11 +359,6 @@
                         <div class="entry-meta">MeLoDe Lab, IIT Bombay | Prof. Udayan Ganguly • Feb 2025 – Present</div>
                         <div class="entry-description">
                             Characterizing stochasticity in resistive random access memories through random variations in compact model parameters. Building unified physics-based TCAD models with SET/RESET transient modeling using advanced physics models.
-                            <ul>
-                                <li>Modeling RESET transient and device characteristics using MSC model in Sentaurus TCAD</li>
-                                <li>Building unified physics-based TCAD model with SET modeling using NBTI model and stochasticity</li>
-                                <li>Characterizing parameter variations to understand device reliability and switching mechanisms</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -558,11 +375,7 @@
                         <div class="entry-meta">Research Project, IIT Bombay | Prof. Apurba Laha • Jul 2024 – Dec 2024</div>
                         <div class="entry-description">
                             Designed and optimized aluminum nitride bulk acoustic wave surface acoustic wave resonators with distributed Bragg reflectors. Achieved 3.6 GHz center frequency with high quality factor through systematic optimization.
-                            <ul>
-                                <li>Designed AlN-based BAW resonator with W/SiO₂ DBR in COMSOL Multiphysics</li>
-                                <li>Optimized layer thicknesses to suppress spurious resonances and improve quality factor</li>
-                                <li>Developed Python scripts using BVD and Mason models for RF filter design</li>
-                            </ul>
+              
                         </div>
                     </div>
                 </div>
@@ -578,10 +391,6 @@
                         <div class="entry-meta">Research Project, IIT Bombay | Prof. Debanjan Bhowmik • Dec 2023 – Apr 2024</div>
                         <div class="entry-description">
                             Analytically examined perpendicular magnetic anisotropy materials for MOKE-based photonic memory applications. Developed Python simulations for magnetic domain-wall formation and propagation.
-                            <ul>
-                                <li>Analyzed MOKE effect on transverse electric mode EM waves in photonic arrays</li>
-                                <li>Simulated magnetic domain dynamics in PMA materials along easy and hard axes</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -614,11 +423,7 @@
                         <div class="entry-meta">Summer Intern, Micron Technology • Jun 2025 – Jul 2025</div>
                         <div class="entry-description">
                             Developed robust and augmentable MOSFET compact models by translating BSIM4 C code to VerilogA. Validated model performance across all operating points and conducted geometric parameter tuning.
-                            <ul>
-                                <li>Translated BSIM4.8 C code to Verilog-A, eliminating convergence errors</li>
-                                <li>Validated model against original BSIM4 output with systematic debugging</li>
-                                <li>Performed four-corner geometrical tuning fitted to empirical device data</li>
-                            </ul>
+                  
                         </div>
                     </div>
                 </div>
@@ -634,11 +439,7 @@
                         <div class="entry-meta">Research Intern, TIFR • May 2024 – Jul 2024</div>
                         <div class="entry-description">
                             Simulated superconducting resonator cavities optimizing bias filter configurations. Gained hands-on cleanroom experience fabricating van der Waals heterostructures.
-                            <ul>
-                                <li>Simulated superconducting resonator cavities in COMSOL optimizing for quality factor</li>
-                                <li>Analyzed resonator circuit models in Cadence Microwave AWR</li>
-                                <li>Fabricated graphene/hBN heterostructures with cleanroom proficiency</li>
-                            </ul>
+                      
                         </div>
                     </div>
                 </div>
@@ -669,10 +470,7 @@
                         <div class="entry-meta">Co-Founder • Aug 2025 – Present</div>
                         <div class="entry-description">
                             Co-founding India's first bottom-up, student-led semiconductor fabrication facility. Leading development of low-cost maskless photolithography and automated processing systems.
-                            <ul>
-                                <li>Building 2 μm linewidth maskless photolithography system based on DLP-projector design</li>
-                                <li>Designing programmable spin coater with speed profiles (500–8000 RPM)</li>
-                            </ul>
+                    
                         </div>
                     </div>
                 </div>
@@ -694,11 +492,7 @@
                         <div class="entry-meta">Nanoelectronics Course, IIT Bombay | Prof. Udayan Ganguly • Mar 2024 – May 2024</div>
                         <div class="entry-description">
                             Simulated silicon-based nanowire ferroelectric FETs to analyze reliability and memory state differentiation in MirrorBit architecture. Identified metal grain granularity as dominant source of threshold voltage variability.
-                            <ul>
-                                <li>Examined MirrorBit memory cell architecture using NanoWire FeFETs in Sentaurus TCAD</li>
-                                <li>Investigated effects of channel dimensions and metal grain variation on reliability</li>
-                                <li>Quantified metal grain granularity as dominant variability factor over dimensional scaling</li>
-                            </ul>
+                  
                         </div>
                     </div>
                 </div>
@@ -714,12 +508,7 @@
                         <div class="entry-meta">Electronic Design Lab, IIT Bombay | Prof. Siddharth Tallur • Jan 2024 – Apr 2024</div>
                         <div class="entry-description">
                             Developed cost-effective, portable device for contactless fault detection and quality assessment of solar cells. Integrated embedded systems with image processing for local series resistance extraction.
-                            <ul>
-                                <li>Designed single-sided PCB for current sensing, DAC control, and current boosting</li>
-                                <li>Interfaced Raspberry Pi 4B with Pico via USB serial communication using C SDK</li>
-                                <li>Hosted Flask web interface for real-time control and near-IR imaging with Sony IMX219</li>
-                                <li>Processed IR spectrum data for local series resistance image extraction</li>
-                            </ul>
+            
                         </div>
                     </div>
                 </div>
@@ -735,10 +524,7 @@
                         <div class="entry-meta">CMOS Analog VLSI Design, IIT Bombay | Prof. Rajesh Zele • Sep 2024 – Nov 2024</div>
                         <div class="entry-description">
                             Designed differential two-stage PMOS operational transconductance amplifier in Cadence Virtuoso with post-layout parasitic extraction and validation.
-                            <ul>
-                                <li>Designed differential 2-stage PMOS OTA in Cadence Virtuoso</li>
-                                <li>Executed post-layout simulations with parasitic extraction and DRC/LVS verification</li>
-                            </ul>
+        
                         </div>
                     </div>
                 </div>
@@ -754,10 +540,7 @@
                         <div class="entry-meta">Microprocessors Course, IIT Bombay | Prof. Virendra Singh • Mar 2024 – May 2024</div>
                         <div class="entry-description">
                             Designed and simulated 16-bit superscalar RISC processor with two-way fetch and advanced pipeline architecture. Implemented load queue and store buffer for enhanced parallelization.
-                            <ul>
-                                <li>Designed two-way-fetch superscalar architecture with 8 registers in VHDL</li>
-                                <li>Implemented load queue, store buffer, and alias detection for throughput enhancement</li>
-                            </ul>
+                     
                         </div>
                     </div>
                 </div>
@@ -773,12 +556,7 @@
                         <div class="entry-meta">Inter IIT Tech Meet 12.0, JLR Problem Statement • Nov 2023 – Dec 2023</div>
                         <div class="entry-description">
                             Engineered specialized chiplets for ADAS and autonomous vehicle applications. Developed micro-architecture for L4-L5 driving systems with extensive market research and analysis.
-                            <ul>
-                                <li>Engineered specialized chiplets for Advanced Driver Assistance Systems (ADAS)</li>
-                                <li>Developed chiplet micro-architecture for L4-L5 autonomous driving</li>
-                                <li>Conducted market research on commercial SoCs in automotive industry</li>
-                                <li>Achieved runner-up position in inter-college competition with 8-member team</li>
-                            </ul>
+                   
                         </div>
                     </div>
                 </div>
@@ -794,11 +572,7 @@
                         <div class="entry-meta">Team AUV-IITB • Dec 2021 – Dec 2022</div>
                         <div class="entry-description">
                             Designed and optimized front frame of Matsya 6 AUV with actuator positioning. Collaborated on Mini RC 5-DOF submarine prototype with Drona Aviation.
-                            <ul>
-                                <li>Modeled front frame of Matsya 6 and optimized actuator positioning in ANSYS</li>
-                                <li>Designed, simulated and manufactured Mini RC 5 DOF submarine prototype</li>
-                                <li>Placed 7th in Autonomy Challenge and awarded Best Third chance at RoboSub 2022</li>
-                            </ul>
+             
                         </div>
                     </div>
                 </div>
