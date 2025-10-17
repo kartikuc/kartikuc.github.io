@@ -11,11 +11,106 @@
             box-sizing: border-box;
         }
         
-        body {
+       body {
             background: #0a0a0a;
             color: #d4d4d4;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.8;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body.light-mode {
+            background: #ffffff;
+            color: #333333;
+        }
+
+        body.light-mode nav {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        body.light-mode .nav-brand {
+            color: #000000;
+        }
+
+        body.light-mode .nav-links a {
+            color: #666666;
+        }
+
+        body.light-mode .nav-links a:hover,
+        body.light-mode .nav-links a.active {
+            color: #000000;
+        }
+
+        body.light-mode .profile-image,
+        body.light-mode .entry-image {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e5e5e5 100%);
+            border-color: #d5d5d5;
+        }
+
+        body.light-mode .icon-tile {
+            background: #f8f8f8;
+            border-color: #d5d5d5;
+        }
+
+        body.light-mode .icon-tile:hover {
+            background: #f0f0f0;
+            border-color: #4a9eff;
+        }
+
+        body.light-mode h1,
+        body.light-mode h2,
+        body.light-mode .entry-title,
+        body.light-mode .cv-entry-title,
+        body.light-mode .skill-block h3,
+        body.light-mode .course-name {
+            color: #000000;
+        }
+
+        body.light-mode .subtitle,
+        body.light-mode .about-text,
+        body.light-mode .entry-description,
+        body.light-mode .cv-entry-description,
+        body.light-mode .skill-block p {
+            color: #555555;
+        }
+
+        body.light-mode .institution,
+        body.light-mode .entry-meta,
+        body.light-mode .cv-entry-subtitle,
+        body.light-mode .course-professor {
+            color: #888888;
+        }
+
+        body.light-mode .entry {
+            border-bottom-color: #e5e5e5;
+        }
+
+        body.light-mode .highlight {
+            background: #f8f8f8;
+            border-left-color: #4a9eff;
+        }
+
+        body.light-mode .course-item {
+            background: #f8f8f8;
+            border-color: #d5d5d5;
+        }
+
+        body.light-mode .course-item:hover {
+            background: #f0f0f0;
+            border-color: #c5c5c5;
+        }
+
+        body.light-mode .skill-block {
+            border-left-color: #cccccc;
+        }
+
+        body.light-mode .skill-block:hover {
+            border-left-color: #4a9eff;
+        }
+
+        body.light-mode .cv-section h3 {
+            border-bottom-color: #d5d5d5;
         }
 
         nav {
@@ -67,6 +162,43 @@
             color: #ffffff;
         }
 
+        .theme-toggle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: #2a2a2a;
+            border-color: #4a9eff;
+        }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+            fill: #d4d4d4;
+        }
+
+        body.light-mode .theme-toggle {
+            background: #f0f0f0;
+            border-color: #d5d5d5;
+        }
+
+        body.light-mode .theme-toggle:hover {
+            background: #e5e5e5;
+            border-color: #4a9eff;
+        }
+
+        body.light-mode .theme-toggle svg {
+            fill: #333333;
+        }
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -236,8 +368,8 @@
         .course-item:hover { background: #1a1a1a; border-color: #333; }
         .course-code { font-size: 0.85em; color: #4a9eff; font-weight: 700; margin-bottom: 6px; }
         .course-name { font-size: 0.95em; color: #ffffff; font-weight: 600; margin-bottom: 6px; }
-        .course-grade { font-size: 0.85em; color: #888; }
-
+        .course-professor { font-size: 0.85em; color: #888; }        
+        
         .cv-section { margin-bottom: 30px; }
         .cv-section h3 { font-size: 1.1em; color: #ffffff; font-weight: 700; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2px solid #222; }
         .cv-entry { margin-bottom: 16px; }
@@ -314,6 +446,11 @@
                 <li><a onclick="showPage('academics')" class="nav-link">Academics</a></li>
                 <li><a onclick="showPage('cv')" class="nav-link">CV</a></li>
             </ul>
+            <div class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                <svg id="themeIcon" viewBox="0 0 24 24">
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+                </svg>
+            </div>
         </div>
     </nav>
 
@@ -696,32 +833,32 @@
                 <div class="course-item">
                     <div class="course-code">EE 784</div>
                     <div class="course-name">2D Materials and Devices</div>
-                    <div class="course-grade">Grade: AA</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 728</div>
                     <div class="course-name">Growth and Characterization of Nano-electronic Materials</div>
-                    <div class="course-grade">Grade: AA</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 724</div>
                     <div class="course-name">Nanoelectronics</div>
-                    <div class="course-grade">Grade: AA</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 755</div>
                     <div class="course-name">Quantum Transport in Nanoscale Devices</div>
-                    <div class="course-grade">Grade: BB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 620</div>
                     <div class="course-name">Physics of Transistors</div>
-                    <div class="course-grade">Grade: CC</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 457</div>
                     <div class="course-name">Compound Semiconductor Material and Devices</div>
-                    <div class="course-grade">Grade: AA</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
             </div>
 
@@ -730,32 +867,32 @@
                 <div class="course-item">
                     <div class="course-code">EE 669</div>
                     <div class="course-name">VLSI Technology</div>
-                    <div class="course-grade">Grade: BB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 672</div>
                     <div class="course-name">Microelectronics Lab</div>
-                    <div class="course-grade">Grade: AB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 735</div>
                     <div class="course-name">Microelectronics Simulations Lab</div>
-                    <div class="course-grade">Grade: AA</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 618</div>
                     <div class="course-name">CMOS Analog VLSI Design</div>
-                    <div class="course-grade">Grade: BB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 671</div>
                     <div class="course-name">VLSI Design</div>
-                    <div class="course-grade">Grade: BC</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 739</div>
                     <div class="course-name">Processor Design</div>
-                    <div class="course-grade">Grade: BB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
             </div>
 
@@ -764,32 +901,32 @@
                 <div class="course-item">
                     <div class="course-code">EE 767</div>
                     <div class="course-name">Photonics System Engineering</div>
-                    <div class="course-grade">Grade: AB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 301</div>
                     <div class="course-name">Electromagnetic Waves</div>
-                    <div class="course-grade">Grade: AA</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 341</div>
                     <div class="course-name">Communication Systems - I</div>
-                    <div class="course-grade">Grade: AB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 302</div>
                     <div class="course-name">Control Systems</div>
-                    <div class="course-grade">Grade: AB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 309</div>
                     <div class="course-name">Microprocessors</div>
-                    <div class="course-grade">Grade: AB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 344</div>
                     <div class="course-name">Electronic Design Lab</div>
-                    <div class="course-grade">Grade: AA</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
             </div>
 
@@ -798,27 +935,27 @@
                 <div class="course-item">
                     <div class="course-code">CS 228</div>
                     <div class="course-name">Logic for Computer Science</div>
-                    <div class="course-grade">Grade: BB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">CS 347</div>
                     <div class="course-name">Operating Systems</div>
-                    <div class="course-grade">Grade: BB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">CS 213</div>
                     <div class="course-name">Data Structures and Algorithms</div>
-                    <div class="course-grade">Grade: CD</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">CS 101</div>
                     <div class="course-name">Computer Programming and Utilization</div>
-                    <div class="course-grade">Grade: AB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 769</div>
                     <div class="course-name">Introduction to Machine Learning</div>
-                    <div class="course-grade">Grade: AB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
             </div>
 
@@ -827,22 +964,22 @@
                 <div class="course-item">
                     <div class="course-code">PH 252</div>
                     <div class="course-name">Introduction to Quantum Mechanics</div>
-                    <div class="course-grade">Grade: BC</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">MA 205</div>
                     <div class="course-name">Complex Analysis</div>
-                    <div class="course-grade">Grade: BB</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">MA 207</div>
                     <div class="course-name">Differential Equations II</div>
-                    <div class="course-grade">Grade: BC</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
                 <div class="course-item">
                     <div class="course-code">EE 325</div>
                     <div class="course-name">Probability and Random Processes</div>
-                    <div class="course-grade">Grade: BC</div>
+                    <div class="course-professor">Prof. Saurabh Lodha</div>
                 </div>
             </div>
         </div>
