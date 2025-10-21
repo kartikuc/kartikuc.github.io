@@ -276,7 +276,7 @@
             margin-bottom: 16px; /* tightened from 25px */
         }
 
-                        /* --- Icon tiles row --- */
+            /* --- Icon tiles row --- */
             :root {
                 --icon-size: 52px; /* ≈ 260px / 5; tweak if you change .profile-image width */
             }
@@ -339,6 +339,12 @@
         }
 
         .about-text { color: #b0b0b0; line-height: 1.85; font-size: 0.98em; }
+
+        /* Lists for Research Interests and Courses */
+        .about-list, .course-list { margin: 12px 0 0 18px; }
+        .about-list li, .course-list li { margin-bottom: 6px; color: #b0b0b0; line-height: 1.7; }
+        body.light-mode .about-list li, 
+        body.light-mode .course-list li { color: #555555; }
 
         .entry {
             margin-bottom: 24px; /* tightened from 40px */
@@ -466,7 +472,7 @@
                     <h1>Kartik Chikkanagoudar</h1>
                     <p class="subtitle">Electrical Engineering with specialisation in Solid State Devices</p>
                     <p class="institution">Dual Degree (B.Tech + M.Tech) at IIT Bombay • 2026</p>
-                       <div class="contact-icons" aria-label="Contact links">
+                    <div class="contact-icons" aria-label="Contact links">
                         <!-- Email -->
                         <a class="icon-tile" href="mailto:kartikuc@iitb.ac.in" aria-label="Email">
                             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -500,13 +506,21 @@
 
             <h2>About Me</h2>
             <p class="about-text">
-                I'm a final-year dual degree student at IIT Bombay, specializing in Solid State Devices with a minor in Computer Science. My research focuses on nanoelectronics, semiconductor device physics, and physics-based compact modeling. I'm passionate about designing and simulating cutting-edge electronic devices, from RRAMs and resonators to System-on-Chip. I co-founded the HackerFab IITB chapter, and I'm deeply interested in the intersection of physics, simulation, and practical engineering.
-            </p>
+                I am a final-year Dual Degree student in Electrical Engineering at IIT Bombay, specializing in Solid State Devices with a minor in Computer Science. My research interests include nanoelectronics, semiconductor physics, and device technology. Through various academic projects, I have explored different aspects of these areas and developed a strong foundation in both theory and experimentation. I believe in learning through practical application and have promoted this mindset as a co-founder of the HackerFab IIT Bombay chapter. I am driven by the immense scope for discovery and innovation in this field, which continues to inspire my academic and research pursuits.            </p>
 
-            <h2>Research Interests</h2>
-            <p class="about-text">
-                Device Physics & Nanoelectronics • Semiconductor Modeling & Simulation • Resistive RAM (RRAM) Characterization • Resonator Design • Photonics & Neuromorphic Computing • Physics-Based TCAD Simulations • Van der Waals Heterostructures
+            <p>
+                Outside academics, I enjoy playing hockey, drumming, and tinkering around in Linux. I am also passionate about photography, you can find some of my favorite shots <a href="https://your-link.com" target="https://kartikuc.github.io/photobook/"></a>.    
             </p>
+            <h2>Research Interests</h2>
+            <ul class="about-list">
+                <li>Device Physics & Nanoelectronics</li>
+                <li>Semiconductor Modeling & Simulation</li>
+                <li>III Nitride material and applications</li>
+                <li>2D materials and devices</li>
+                <li>Photonics & Neuromorphic Computing</li>
+                <li>Physics-Based TCAD Simulations, Compact Modeling</li>
+              
+            </ul>
 
             <!-- Honors & Awards section REMOVED as requested -->
         </div>
@@ -823,165 +837,57 @@
             </div>
         </div>
 
-        <!-- ACADEMICS PAGE -->
+        <!-- ACADEMICS PAGE (UPDATED TO LISTS) -->
         <div id="academics" class="page">
             <h2>Academic Coursework</h2>
             <p class="section-intro">Relevant and important courses from B.Tech and M.Tech curriculum (CGPA: 8.74/10.0)</p>
 
             <h2 style="margin-top: 40px; font-size: 1.3em;">Nanoelectronics & Device Physics</h2>
-            <div class="courses-grid">
-                <div class="course-item">
-                    <div class="course-code">EE 784</div>
-                    <div class="course-name">2D Materials and Devices</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 728</div>
-                    <div class="course-name">Growth and Characterization of Nano-electronic Materials</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 724</div>
-                    <div class="course-name">Nanoelectronics</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 755</div>
-                    <div class="course-name">Quantum Transport in Nanoscale Devices</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 620</div>
-                    <div class="course-name">Physics of Transistors</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 457</div>
-                    <div class="course-name">Compound Semiconductor Material and Devices</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-            </div>
+            <ul class="course-list">
+                <li>2D Materials and Devices (Prof. Saurabh Lodha)</li>
+                <li>Growth and Characterization of Nano-electronic Materials (Prof. Saurabh Lodha)</li>
+                <li>Nanoelectronics (Prof. Saurabh Lodha)</li>
+                <li>Quantum Transport in Nanoscale Devices (Prof. Saurabh Lodha)</li>
+                <li>Physics of Transistors (Prof. Saurabh Lodha)</li>
+                <li>Compound Semiconductor Material and Devices (Prof. Saurabh Lodha)</li>
+            </ul>
 
             <h2 style="margin-top: 40px; font-size: 1.3em;">VLSI & Circuit Design</h2>
-            <div class="courses-grid">
-                <div class="course-item">
-                    <div class="course-code">EE 669</div>
-                    <div class="course-name">VLSI Technology</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 672</div>
-                    <div class="course-name">Microelectronics Lab</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 735</div>
-                    <div class="course-name">Microelectronics Simulations Lab</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 618</div>
-                    <div class="course-name">CMOS Analog VLSI Design</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 671</div>
-                    <div class="course-name">VLSI Design</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 739</div>
-                    <div class="course-name">Processor Design</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-            </div>
+            <ul class="course-list">
+                <li>VLSI Technology (Prof. Saurabh Lodha)</li>
+                <li>Microelectronics Lab (Prof. Saurabh Lodha)</li>
+                <li>Microelectronics Simulations Lab (Prof. Saurabh Lodha)</li>
+                <li>CMOS Analog VLSI Design (Prof. Saurabh Lodha)</li>
+                <li>VLSI Design (Prof. Saurabh Lodha)</li>
+                <li>Processor Design (Prof. Saurabh Lodha)</li>
+            </ul>
 
             <h2 style="margin-top: 40px; font-size: 1.3em;">Electrical Engineering Core</h2>
-            <div class="courses-grid">
-                <div class="course-item">
-                    <div class="course-code">EE 767</div>
-                    <div class="course-name">Photonics System Engineering</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 301</div>
-                    <div class="course-name">Electromagnetic Waves</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 341</div>
-                    <div class="course-name">Communication Systems - I</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 302</div>
-                    <div class="course-name">Control Systems</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 309</div>
-                    <div class="course-name">Microprocessors</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 344</div>
-                    <div class="course-name">Electronic Design Lab</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-            </div>
+            <ul class="course-list">
+                <li>Photonics System Engineering (Prof. Saurabh Lodha)</li>
+                <li>Electromagnetic Waves (Prof. Saurabh Lodha)</li>
+                <li>Communication Systems – I (Prof. Saurabh Lodha)</li>
+                <li>Control Systems (Prof. Saurabh Lodha)</li>
+                <li>Microprocessors (Prof. Saurabh Lodha)</li>
+                <li>Electronic Design Lab (Prof. Saurabh Lodha)</li>
+            </ul>
 
             <h2 style="margin-top: 40px; font-size: 1.3em;">Computer Science (Minor)</h2>
-            <div class="courses-grid">
-                <div class="course-item">
-                    <div class="course-code">CS 228</div>
-                    <div class="course-name">Logic for Computer Science</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">CS 347</div>
-                    <div class="course-name">Operating Systems</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">CS 213</div>
-                    <div class="course-name">Data Structures and Algorithms</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">CS 101</div>
-                    <div class="course-name">Computer Programming and Utilization</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 769</div>
-                    <div class="course-name">Introduction to Machine Learning</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-            </div>
+            <ul class="course-list">
+                <li>Logic for Computer Science (Prof. Saurabh Lodha)</li>
+                <li>Operating Systems (Prof. Saurabh Lodha)</li>
+                <li>Data Structures and Algorithms (Prof. Saurabh Lodha)</li>
+                <li>Computer Programming and Utilization (Prof. Saurabh Lodha)</li>
+                <li>Introduction to Machine Learning (Prof. Saurabh Lodha)</li>
+            </ul>
 
             <h2 style="margin-top: 40px; font-size: 1.3em;">Mathematics & Physics</h2>
-            <div class="courses-grid">
-                <div class="course-item">
-                    <div class="course-code">PH 252</div>
-                    <div class="course-name">Introduction to Quantum Mechanics</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">MA 205</div>
-                    <div class="course-name">Complex Analysis</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">MA 207</div>
-                    <div class="course-name">Differential Equations II</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-                <div class="course-item">
-                    <div class="course-code">EE 325</div>
-                    <div class="course-name">Probability and Random Processes</div>
-                    <div class="course-professor">Prof. Saurabh Lodha</div>
-                </div>
-            </div>
+            <ul class="course-list">
+                <li>Introduction to Quantum Mechanics (Prof. Saurabh Lodha)</li>
+                <li>Complex Analysis (Prof. Saurabh Lodha)</li>
+                <li>Differential Equations II (Prof. Saurabh Lodha)</li>
+                <li>Probability and Random Processes (Prof. Saurabh Lodha)</li>
+            </ul>
         </div>
 
         <!-- CV PAGE -->
@@ -1177,9 +1083,6 @@
             // Scroll to top
             window.scrollTo(0, 0);
         }
-
-        // Removed image upload logic to keep images static and defined in HTML.
-    // Removed image upload logic to keep images static and defined in HTML.
 
         function toggleTheme() {
             const body = document.body;
