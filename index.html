@@ -304,13 +304,7 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
     <div class="g-item">TCAD Simulations &amp; Compact Modeling</div>
   </div>
 
-  <div class="r" style="margin-top:36px">
-    <div class="visitor-counter">
-      <span class="vc-dot"></span>
-      <span>visitors</span>
-      <span class="vc-num" id="vc-count">—</span>
-    </div>
-  </div>
+  
 </div>
 
 <!-- ══ EXPERIENCE ══ -->
@@ -789,8 +783,14 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
 </div>
 
 </div><!-- /shell -->
-<footer>kartik chikkanagoudar · iit bombay · 2026</footer>
-
+<footer style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+  <span>kartik chikkanagoudar · iit bombay · 2026</span>
+  <div class="visitor-counter">
+    <span class="vc-dot"></span>
+    <span>visitors</span>
+    <span class="vc-num" id="vc-count">—</span>
+  </div>
+</footer>
 <script>
 /* ── PCB background ── */
 function drawPCB(dark) {
@@ -907,10 +907,10 @@ function toggleTheme() {
 /* ── Visitor counter ── */
 (async () => {
   try {
-    const res = await fetch('https://api.countapi.xyz/hit/kartikuc.github.io/visits');
+    const res = await fetch('https://api.counterapi.dev/v1/kartikuc-site/visits/up');
     const data = await res.json();
     const el = document.getElementById('vc-count');
-    if (el && data.value) el.textContent = data.value.toLocaleString();
+    if (el && data.count) el.textContent = Number(data.count).toLocaleString();
   } catch (e) {
     const el = document.getElementById('vc-count');
     if (el) el.textContent = '—';
