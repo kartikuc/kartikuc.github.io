@@ -12,6 +12,7 @@
   --line:#c4c4c2;--line2:#acacaa;
   --ghost:#7e7e7c;--muted:#4c4c4a;--dim:#2c2c2a;
   --text:#161614;--ink:#040402;
+  --nav-h:68px;
 }
 body.dark{
   --bg:#0c0c0a;--bg2:#121210;--bg3:#181816;
@@ -20,91 +21,135 @@ body.dark{
   --text:#d2d2d0;--ink:#eeeeed;
 }
 
-body{background:var(--bg);color:var(--dim);font-family:'DM Sans',sans-serif;font-weight:300;font-size:16px;line-height:1.72;overflow-x:hidden}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--dim);
+  font-family:'DM Sans',sans-serif;font-weight:300;
+  font-size:16px;line-height:1.72;overflow-x:hidden;
+}
 
-/* PCB background */
 #pcb{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 
-/* Cursor */
-#cur{width:10px;height:10px;background:#fff;border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .26s cubic-bezier(.16,1,.3,1),height .26s cubic-bezier(.16,1,.3,1)}
-#cur.big{width:36px;height:36px}
-#bar{position:fixed;top:0;left:0;height:1px;width:0%;background:var(--ink);z-index:600}
+#cur{width:11px;height:11px;background:#fff;border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .26s cubic-bezier(.16,1,.3,1),height .26s cubic-bezier(.16,1,.3,1)}
+#cur.big{width:40px;height:40px}
+#bar{position:fixed;top:0;left:0;height:2px;width:0%;background:var(--ink);z-index:700}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:52px;display:flex;align-items:center;padding:0 44px;border-bottom:1px solid transparent;transition:background .3s,border-color .3s}
-nav.up{background:rgba(236,236,234,.95);backdrop-filter:blur(16px);border-color:var(--line)}
-body.dark nav.up{background:rgba(12,12,10,.95)}
-.nav-name{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink);cursor:pointer;text-decoration:none;letter-spacing:.03em;margin-right:auto;display:flex;align-items:center;gap:10px}
-.nav-name .ndot{width:5px;height:5px;border-radius:50%;background:#5a8a5a;flex-shrink:0;animation:ndpulse 2.4s ease-in-out infinite}
-@keyframes ndpulse{0%,100%{opacity:1}50%{opacity:.25}}
+/* ── NAV: taller, wider padding, bigger text ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:var(--nav-h);display:flex;align-items:center;
+  padding:0 72px;
+  border-bottom:1px solid transparent;
+  transition:background .3s,border-color .3s;
+}
+nav.up{background:rgba(236,236,234,.96);backdrop-filter:blur(20px);border-color:var(--line)}
+body.dark nav.up{background:rgba(12,12,10,.96)}
+
+.nav-name{
+  font-family:'JetBrains Mono',monospace;font-size:17px;
+  color:var(--ink);cursor:pointer;text-decoration:none;
+  letter-spacing:.04em;margin-right:auto;
+  display:flex;align-items:center;gap:12px;
+}
+.nav-name .ndot{width:7px;height:7px;border-radius:50%;background:#5a8a5a;flex-shrink:0;animation:ndpulse 2.4s ease-in-out infinite}
+@keyframes ndpulse{0%,100%{opacity:1}50%{opacity:.2}}
 body.dark .nav-name .ndot{background:#6aaa6a}
-.nav-links{display:flex;gap:24px;list-style:none}
-.nav-links a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost);text-decoration:none;cursor:pointer;letter-spacing:.07em;transition:color .2s;position:relative}
-.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:100%;height:1px;background:var(--ink);transition:right .3s cubic-bezier(.16,1,.3,1)}
+
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;font-size:13.5px;
+  color:var(--ghost);text-decoration:none;cursor:pointer;
+  letter-spacing:.09em;transition:color .2s;
+  position:relative;padding-bottom:3px;
+}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:100%;height:1px;background:var(--ink);transition:right .3s cubic-bezier(.16,1,.3,1)}
 .nav-links a:hover,.nav-links a.on{color:var(--ink)}
 .nav-links a:hover::after,.nav-links a.on::after{right:0}
-.tbtn{margin-left:24px;background:none;border:none;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--line2);letter-spacing:.08em;padding:0;transition:color .2s}
+
+.tbtn{
+  margin-left:32px;background:none;border:none;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;font-size:13.5px;
+  color:var(--line2);letter-spacing:.09em;padding:0;transition:color .2s;
+}
 .tbtn:hover{color:var(--ink)}
 
-/* Wider shell, less side padding */
-.shell{max-width:1100px;margin:0 auto;padding:0 40px;position:relative;z-index:1}
+/* ── Shell: wider ── */
+.shell{max-width:1180px;margin:0 auto;padding:0 72px;position:relative;z-index:1}
 
-.page{display:none;padding-top:68px;padding-bottom:60px}
+.page{display:none;padding-top:calc(var(--nav-h) + 14px);padding-bottom:72px}
 .page.on{display:block}
-@keyframes pin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-@keyframes pout{from{opacity:1}to{opacity:0;transform:translateY(-8px)}}
-.page.entering{animation:pin .34s cubic-bezier(.16,1,.3,1) both}
-.page.leaving{animation:pout .18s ease forwards;pointer-events:none}
+@keyframes pin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pout{from{opacity:1}to{opacity:0;transform:translateY(-10px)}}
+.page.entering{animation:pin .36s cubic-bezier(.16,1,.3,1) both}
+.page.leaving{animation:pout .2s ease forwards;pointer-events:none}
 
 /* ── HERO ── */
-.hero{display:grid;grid-template-columns:1fr 180px;gap:44px;align-items:end;padding-bottom:36px;border-bottom:1px solid var(--line2)}
-.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
-.hero-name{font-size:62px;font-weight:600;color:var(--ink);letter-spacing:-3px;line-height:.93;margin-bottom:16px}
-.hero-name em{font-style:normal;font-weight:300;color:var(--muted);letter-spacing:-2px}
-.hero-sub{font-size:15px;color:var(--muted);line-height:1.76;max-width:480px;margin-bottom:28px;min-height:2.4em}
+.hero{
+  display:grid;grid-template-columns:1fr 230px;
+  gap:56px;align-items:end;
+  padding-bottom:44px;border-bottom:1px solid var(--line2);
+}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ghost);letter-spacing:.13em;text-transform:uppercase;margin-bottom:16px}
+.hero-name{font-size:68px;font-weight:600;color:var(--ink);letter-spacing:-3.5px;line-height:.92;margin-bottom:20px}
+.hero-name em{font-style:normal;font-weight:300;color:var(--muted);letter-spacing:-2.5px}
+.hero-sub{font-size:15.5px;color:var(--muted);line-height:1.78;max-width:520px;margin-bottom:30px;min-height:2.6em}
 .typewriter-cursor{display:inline-block;width:2px;height:.9em;background:var(--ghost);vertical-align:text-bottom;animation:blink .9s step-end infinite;margin-left:1px}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
 .links{display:flex;flex-wrap:wrap;gap:0}
-.links a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;border:1px solid var(--line2);padding:7px 15px;margin-right:-1px;letter-spacing:.07em;transition:color .2s,border-color .2s,background .2s;position:relative;z-index:0}
+.links a{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  color:var(--muted);text-decoration:none;
+  border:1px solid var(--line2);padding:8px 17px;margin-right:-1px;
+  letter-spacing:.07em;transition:color .2s,border-color .2s,background .2s;position:relative;z-index:0;
+}
 .links a:first-child{border-radius:2px 0 0 2px}
 .links a:last-child{border-radius:0 2px 2px 0;margin-right:0}
 .links a:hover{color:var(--ink);border-color:var(--ghost);background:var(--bg3);z-index:1}
-.hero-img{width:180px;aspect-ratio:3/4;overflow:hidden;background:var(--bg3);border:1px solid var(--line2)}
-/* Always color — no grayscale */
-.hero-img img{width:100%;height:100%;object-fit:cover;display:block;filter:none;transition:transform .5s}
-.hero-img:hover img{transform:scale(1.04)}
+
+/* ── Hero image: larger, always color ── */
+.hero-img{width:230px;aspect-ratio:3/4;overflow:hidden;background:var(--bg3);border:1px solid var(--line2)}
+.hero-img img{width:100%;height:100%;object-fit:cover;display:block;filter:none;transition:transform .5s ease}
+.hero-img:hover img{transform:scale(1.05)}
 
 /* ── Section label ── */
-.label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost);letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px;padding-top:32px;display:flex;align-items:center;gap:14px}
+.label{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  color:var(--ghost);letter-spacing:.15em;text-transform:uppercase;
+  margin-bottom:18px;padding-top:36px;
+  display:flex;align-items:center;gap:16px;
+}
 .label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
-.page>.label:first-child{padding-top:4px}
+.page>.label:first-child{padding-top:6px}
 
 /* ── Rows ── */
-.row{display:grid;grid-template-columns:92px 1fr;border-top:1px solid var(--line);position:relative;cursor:default;transition:background .16s}
+.row{display:grid;grid-template-columns:96px 1fr;border-top:1px solid var(--line);position:relative;cursor:default;transition:background .16s}
 .row:last-child{border-bottom:1px solid var(--line)}
 .row:hover{background:var(--bg2)}
-.row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .26s cubic-bezier(.16,1,.3,1)}
+.row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .28s cubic-bezier(.16,1,.3,1)}
 .row:hover::before{transform:scaleY(1)}
-.row-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--line2);padding:18px 16px 18px 12px;line-height:1.6;transition:color .2s}
+
+.row-date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--line2);padding:20px 16px 20px 14px;line-height:1.6;transition:color .2s}
 .row:hover .row-date{color:var(--ghost)}
-.row-body{padding:18px 18px 18px 0}
-.row-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:3px;line-height:1.4;transition:color .2s}
+.row-body{padding:20px 20px 20px 0}
+.row-title{font-size:15.5px;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1.4;transition:color .2s}
 .row:hover .row-title{color:var(--ink)}
 .row-org{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost)}
-.row-desc{font-size:14px;color:var(--muted);line-height:1.74;max-height:0;opacity:0;overflow:hidden;transition:max-height .38s cubic-bezier(.16,1,.3,1),opacity .28s ease,margin-top .28s ease}
-.row:hover .row-desc{max-height:220px;opacity:1;margin-top:9px}
-.row-tags{display:flex;gap:4px;flex-wrap:wrap;max-height:0;opacity:0;overflow:hidden;transition:max-height .36s,opacity .26s ease .04s,margin-top .26s}
-.row:hover .row-tags{max-height:60px;opacity:1;margin-top:8px}
-.tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);border:1px solid var(--line2);padding:2px 6px;letter-spacing:.05em}
-.row-inner{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:start}
-.thumb{width:96px;aspect-ratio:4/3;overflow:hidden;background:var(--bg3);border:1px solid var(--line);flex-shrink:0}
-/* Always color — no grayscale */
-.thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:none;transition:transform .44s}
-.row:hover .thumb img{transform:scale(1.07)}
+.row-desc{font-size:14px;color:var(--muted);line-height:1.76;max-height:0;opacity:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1),opacity .3s ease,margin-top .3s ease}
+.row:hover .row-desc{max-height:240px;opacity:1;margin-top:10px}
+.row-tags{display:flex;gap:5px;flex-wrap:wrap;max-height:0;opacity:0;overflow:hidden;transition:max-height .36s,opacity .28s ease .05s,margin-top .28s}
+.row:hover .row-tags{max-height:64px;opacity:1;margin-top:9px}
+.tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);border:1px solid var(--line2);padding:2px 7px;letter-spacing:.05em}
+
+.row-inner{display:grid;grid-template-columns:106px 1fr;gap:18px;align-items:start}
+.thumb{width:106px;aspect-ratio:4/3;overflow:hidden;background:var(--bg3);border:1px solid var(--line);flex-shrink:0}
+/* Always color */
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:none;transition:transform .46s ease}
+.row:hover .thumb img{transform:scale(1.08)}
 
 /* ── Interest grid ── */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line)}
-.g-item{font-size:14px;color:var(--muted);padding:12px 16px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;transition:color .18s,background .18s;cursor:default}
+.g-item{font-size:14.5px;color:var(--muted);padding:13px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;transition:color .18s,background .18s;cursor:default}
 .g-item::before{content:'—';font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--line2);flex-shrink:0;transition:color .18s}
 .g-item:hover::before{color:var(--ghost)}
 .g-item:nth-child(even){border-right:none}
@@ -112,91 +157,94 @@ body.dark .nav-name .ndot{background:#6aaa6a}
 .g-item:hover{color:var(--ink);background:var(--bg2)}
 
 /* ── Courses ── */
-.course-group{margin-bottom:22px}
-.cg-title{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost);letter-spacing:.1em;margin-bottom:7px;text-transform:uppercase}
+.course-group{margin-bottom:24px}
+.cg-title{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost);letter-spacing:.11em;margin-bottom:8px;text-transform:uppercase}
 .chip-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
-.chip{background:var(--bg);padding:10px 14px;font-size:14px;color:var(--dim);transition:color .18s,background .18s;cursor:default;line-height:1.4}
+.chip{background:var(--bg);padding:11px 15px;font-size:14px;color:var(--dim);transition:color .18s,background .18s;cursor:default;line-height:1.4}
 .chip small{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);margin-top:2px}
 .chip:hover{color:var(--ink);background:var(--bg3)}
-.badge{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);border:1px solid var(--line2);padding:2px 8px;margin-left:10px;vertical-align:middle;letter-spacing:.07em}
 
-/* ── HackerFab page ── */
-.hf-hero{padding:28px 0 36px;border-bottom:1px solid var(--line2)}
-.hf-kicker{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
-.hf-title{font-size:48px;font-weight:600;color:var(--ink);letter-spacing:-2px;line-height:1;margin-bottom:8px}
+/* ── HackerFab ── */
+.hf-hero{padding:30px 0 40px;border-bottom:1px solid var(--line2)}
+.hf-kicker{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ghost);letter-spacing:.13em;text-transform:uppercase;margin-bottom:14px}
+.hf-title{font-size:52px;font-weight:600;color:var(--ink);letter-spacing:-2.5px;line-height:1;margin-bottom:10px}
 .hf-title em{font-style:normal;font-weight:300;color:var(--muted)}
-.hf-tagline{font-size:16px;color:var(--muted);margin-bottom:22px}
+.hf-tagline{font-size:16px;color:var(--muted);margin-bottom:24px}
 .hf-links{display:flex;gap:0}
-.hf-links a{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-decoration:none;border:1px solid var(--line2);padding:7px 15px;margin-right:-1px;letter-spacing:.07em;transition:color .2s,border-color .2s,background .2s;position:relative;z-index:0}
+.hf-links a{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);text-decoration:none;border:1px solid var(--line2);padding:8px 16px;margin-right:-1px;letter-spacing:.07em;transition:color .2s,border-color .2s,background .2s;position:relative;z-index:0}
 .hf-links a:first-child{border-radius:2px 0 0 2px}
 .hf-links a:last-child{border-radius:0 2px 2px 0;margin-right:0}
 .hf-links a:hover{color:var(--ink);border-color:var(--ghost);background:var(--bg3);z-index:1}
 
 .hf-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.hf-pillar{background:var(--bg);padding:20px 22px}
-.hf-pillar-icon{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost);letter-spacing:.1em;margin-bottom:8px;text-transform:uppercase}
-.hf-pillar-text{font-size:14px;color:var(--dim);line-height:1.7}
+.hf-pillar{background:var(--bg);padding:22px 24px}
+.hf-pillar-icon{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost);letter-spacing:.11em;margin-bottom:10px;text-transform:uppercase}
+.hf-pillar-text{font-size:14px;color:var(--dim);line-height:1.72}
 
-/* Timeline */
-.hf-timeline{position:relative;padding-left:30px}
+.hf-timeline{position:relative;padding-left:32px}
 .hf-timeline::before{content:'';position:absolute;left:5px;top:4px;bottom:4px;width:1px;background:var(--line2)}
-.hf-event{position:relative;margin-bottom:22px}
-.hf-event::before{content:'';position:absolute;left:-27px;top:5px;width:6px;height:6px;border-radius:50%;background:var(--bg);border:1px solid var(--ghost)}
-.hf-event-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);letter-spacing:.08em;margin-bottom:3px}
-.hf-event-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px}
-.hf-event-body{font-size:13.5px;color:var(--muted);line-height:1.7}
+.hf-event{position:relative;margin-bottom:24px}
+.hf-event::before{content:'';position:absolute;left:-29px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--bg);border:1px solid var(--ghost)}
+.hf-event-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);letter-spacing:.09em;margin-bottom:4px}
+.hf-event-title{font-size:14.5px;font-weight:500;color:var(--text);margin-bottom:3px}
+.hf-event-body{font-size:13.5px;color:var(--muted);line-height:1.72}
 
-/* Tech roadmap */
-.hf-goal{display:grid;grid-template-columns:96px 1fr;border-top:1px solid var(--line);padding:16px 0}
+.hf-goal{display:grid;grid-template-columns:104px 1fr;border-top:1px solid var(--line);padding:16px 0}
 .hf-goal:last-child{border-bottom:1px solid var(--line)}
 .hf-goal-status{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.07em;padding-top:2px}
 .hf-goal-status.active{color:#5a8a5a}
 .hf-goal-status.planned{color:var(--ghost)}
-.hf-goal-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px}
+.hf-goal-title{font-size:14.5px;font-weight:500;color:var(--text);margin-bottom:4px}
 .hf-goal-body{font-size:13.5px;color:var(--muted)}
 
-/* ── Hobbies page ── */
+/* ── Hobbies ── */
 .hobby-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
-.hobby-card{background:var(--bg);padding:24px 22px;text-decoration:none;color:inherit;transition:background .18s;display:block;position:relative;overflow:hidden}
+.hobby-card{background:var(--bg);padding:26px 24px;text-decoration:none;color:inherit;transition:background .18s;display:block;position:relative;overflow:hidden}
 .hobby-card:hover{background:var(--bg2)}
-.hobby-card::after{content:'↗';position:absolute;top:18px;right:18px;font-size:12px;color:var(--line2);transition:color .2s,transform .2s}
+.hobby-card::after{content:'↗';position:absolute;top:20px;right:20px;font-size:13px;color:var(--line2);transition:color .2s,transform .2s}
 .hobby-card:hover::after{color:var(--ghost);transform:translate(2px,-2px)}
-.hobby-kicker{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
-.hobby-title{font-size:16px;font-weight:500;color:var(--text);margin-bottom:8px;line-height:1.3}
-.hobby-desc{font-size:13.5px;color:var(--muted);line-height:1.72}
-/* full-width hobby card */
+.hobby-kicker{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);letter-spacing:.11em;text-transform:uppercase;margin-bottom:9px}
+.hobby-title{font-size:17px;font-weight:500;color:var(--text);margin-bottom:9px;line-height:1.3}
+.hobby-desc{font-size:14px;color:var(--muted);line-height:1.72}
 .hobby-card.wide{grid-column:1/-1}
 
-/* ── CV timeline ── */
-.cv-timeline{position:relative;padding-left:32px}
+/* ── CV ── */
+.cv-timeline{position:relative;padding-left:36px}
 .cv-timeline::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--line2)}
-.cv-sec{margin-bottom:28px;position:relative}
-.cv-sec::before{content:'';position:absolute;left:-29px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--bg);border:1px solid var(--ghost)}
-.cv-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.cv-sec{margin-bottom:32px;position:relative}
+.cv-sec::before{content:'';position:absolute;left:-33px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--bg);border:1px solid var(--ghost)}
+.cv-label{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ghost);letter-spacing:.13em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:14px}
 .cv-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
-.cv-item{margin-bottom:14px}
-.cv-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:2px}
-.cv-sub{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ghost);margin-bottom:5px}
-.cv-body{font-size:13.5px;color:var(--dim);line-height:1.72;margin-left:10px}
-.cv-body ul{margin-left:14px}
-.cv-body li{margin-bottom:3px}
+.cv-item{margin-bottom:15px}
+.cv-title{font-size:15.5px;font-weight:500;color:var(--text);margin-bottom:3px}
+.cv-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ghost);margin-bottom:6px}
+.cv-body{font-size:14px;color:var(--dim);line-height:1.74;margin-left:12px}
+.cv-body ul{margin-left:16px}
+.cv-body li{margin-bottom:4px}
 .cv-body li::marker{color:var(--ghost)}
 .cv-body strong{color:var(--text);font-weight:400}
 
-footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--line2);letter-spacing:.08em;border-top:1px solid var(--line);max-width:1100px;margin:0 auto}
+.prose{font-size:15.5px;color:var(--dim);line-height:1.84}
 
-.r{opacity:0;transform:translateY(7px);transition:opacity .42s ease,transform .42s ease}
+footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--line2);letter-spacing:.09em;border-top:1px solid var(--line);max-width:1180px;margin:0 auto}
+
+.r{opacity:0;transform:translateY(8px);transition:opacity .44s ease,transform .44s ease}
 .r.v{opacity:1;transform:none}
-.prose{font-size:15px;color:var(--dim);line-height:1.84}
 
-@media(max-width:700px){
-  nav{padding:0 20px}.shell{padding:0 20px}
-  .hero{grid-template-columns:1fr}.hero-name{font-size:40px}
+@media(max-width:860px){
+  nav{padding:0 28px}
+  .shell{padding:0 28px}
+  .hero{grid-template-columns:1fr}
+  .hero-name{font-size:46px}
+  .hero-img{width:160px}
   .grid-2,.chip-grid,.hf-pillars,.hobby-grid{grid-template-columns:1fr}
   .hobby-card.wide{grid-column:auto}
-  .row{grid-template-columns:1fr}.row-date{padding:14px 0 3px}.row-body{padding:4px 0 14px}
+  .row{grid-template-columns:1fr}
+  .row-date{padding:14px 0 3px}
+  .row-body{padding:4px 0 16px}
   .g-item:nth-child(even){border-right:1px solid var(--line)}
-  .nav-links{gap:14px}
+  .nav-links{gap:18px}
+  .nav-links a{font-size:11px}
 }
 </style>
 </head>
@@ -208,19 +256,19 @@ footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-fa
 <nav id="nav">
   <a class="nav-name" onclick="go('home')"><span class="ndot"></span>KC</a>
   <ul class="nav-links">
-    <li><a onclick="go('home')" class="nl on">home</a></li>
+    <li><a onclick="go('home')"       class="nl on">home</a></li>
     <li><a onclick="go('experience')" class="nl">experience</a></li>
-    <li><a onclick="go('hackerfab')" class="nl">hackerfab</a></li>
-    <li><a onclick="go('academics')" class="nl">academics</a></li>
-    <li><a onclick="go('hobbies')" class="nl">hobbies</a></li>
-    <li><a onclick="go('cv')" class="nl">cv</a></li>
+    <li><a onclick="go('hackerfab')"  class="nl">hackerfab</a></li>
+    <li><a onclick="go('academics')"  class="nl">academics</a></li>
+    <li><a onclick="go('hobbies')"    class="nl">hobbies</a></li>
+    <li><a onclick="go('cv')"         class="nl">cv</a></li>
   </ul>
   <button class="tbtn" onclick="toggleTheme()" id="themeBtn">[dark]</button>
 </nav>
 
 <div class="shell">
 
-<!-- ══════════════════ HOME ══════════════════ -->
+<!-- HOME -->
 <div id="home" class="page on entering">
   <div class="hero r">
     <div>
@@ -240,9 +288,9 @@ footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-fa
 
   <div class="label r">About</div>
   <p class="prose r">Final-year Dual Degree student in Electrical Engineering at IIT Bombay, specializing in Solid State Devices with a minor in Computer Science. Research spans nanoelectronics, semiconductor physics, and device technology — both theoretical and experimental.</p>
-  <p class="prose r" style="margin-top:10px">Co-founder of <strong style="color:var(--text);font-weight:500;cursor:pointer" onclick="go('hackerfab')">HackerFab IIT Bombay</strong> — India's first student-built microfabrication lab, working to make hands-on chip fabrication accessible across India.</p>
+  <p class="prose r" style="margin-top:12px">Co-founder of <strong style="color:var(--text);font-weight:500;cursor:pointer" onclick="go('hackerfab')">HackerFab IIT Bombay</strong> — India's first student-built microfabrication lab, working to make hands-on chip fabrication accessible across India.</p>
 
-  <div class="label r" style="padding-top:28px">Research Interests</div>
+  <div class="label r" style="padding-top:30px">Research Interests</div>
   <div class="grid-2 r">
     <div class="g-item">Device Physics &amp; Nanoelectronics</div>
     <div class="g-item">Semiconductor Modeling &amp; Simulation</div>
@@ -253,7 +301,7 @@ footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-fa
   </div>
 </div>
 
-<!-- ══════════════════ EXPERIENCE ══════════════════ -->
+<!-- EXPERIENCE -->
 <div id="experience" class="page">
   <div class="label r">Research Experience</div>
   <div class="r">
@@ -271,7 +319,7 @@ footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-fa
   </div>
 </div>
 
-<!-- ══════════════════ HACKERFAB ══════════════════ -->
+<!-- HACKERFAB -->
 <div id="hackerfab" class="page">
   <div class="hf-hero r">
     <div class="hf-kicker">Founded August 2025 · Co-Founder</div>
@@ -286,91 +334,32 @@ footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-fa
 
   <div class="label r">What We're Building</div>
   <div class="hf-pillars r">
-    <div class="hf-pillar">
-      <div class="hf-pillar-icon">Fabrication</div>
-      <div class="hf-pillar-text">Open-source, student-designed fabrication tools. Why should TSMC have all the fun? We're building the machines that build the chips.</div>
-    </div>
-    <div class="hf-pillar">
-      <div class="hf-pillar-icon">Education</div>
-      <div class="hf-pillar-text">Integrating our tools with coursework at IITB. Hands-on chip fabrication as a real learning experience, not just theory.</div>
-    </div>
-    <div class="hf-pillar">
-      <div class="hf-pillar-icon">Community</div>
-      <div class="hf-pillar-text">Part of the global HackerFab network. Growing a pan-India movement to make semiconductor access a reality beyond elite institutions.</div>
-    </div>
+    <div class="hf-pillar"><div class="hf-pillar-icon">Fabrication</div><div class="hf-pillar-text">Open-source, student-designed fabrication tools. Why should TSMC have all the fun? We're building the machines that build the chips.</div></div>
+    <div class="hf-pillar"><div class="hf-pillar-icon">Education</div><div class="hf-pillar-text">Integrating our tools with coursework at IITB. Hands-on chip fabrication as a real learning experience, not just theory.</div></div>
+    <div class="hf-pillar"><div class="hf-pillar-icon">Community</div><div class="hf-pillar-text">Part of the global HackerFab network. Growing a pan-India movement to make semiconductor access a reality beyond elite institutions.</div></div>
   </div>
 
   <div class="label r">Technical Roadmap</div>
   <div class="r">
-    <div class="hf-goal">
-      <div class="hf-goal-status active">IN PROGRESS</div>
-      <div>
-        <div class="hf-goal-title">Maskless Lithography</div>
-        <div class="hf-goal-body">Achieved 1µm feature size patterning on Litho v1. First micrometer-scale patterns captured Dec 2025.</div>
-      </div>
-    </div>
-    <div class="hf-goal">
-      <div class="hf-goal-status active">IN PROGRESS</div>
-      <div>
-        <div class="hf-goal-title">Spin Coater</div>
-        <div class="hf-goal-body">Demonstrated closed-loop control up to 6000 rpm. Enables uniform resist deposition for lithography.</div>
-      </div>
-    </div>
-    <div class="hf-goal">
-      <div class="hf-goal-status planned">PLANNED</div>
-      <div>
-        <div class="hf-goal-title">RF Sputtering</div>
-        <div class="hf-goal-body">First deposition tool. Will enable metal and dielectric thin-film deposition in-house.</div>
-      </div>
-    </div>
-    <div class="hf-goal">
-      <div class="hf-goal-status planned">PLANNED</div>
-      <div>
-        <div class="hf-goal-title">Tube Furnace</div>
-        <div class="hf-goal-body">±2°C precision at temperatures up to 1100°C. Required for oxidation and annealing steps.</div>
-      </div>
-    </div>
+    <div class="hf-goal"><div class="hf-goal-status active">IN PROGRESS</div><div><div class="hf-goal-title">Maskless Lithography</div><div class="hf-goal-body">Achieved 1µm feature size patterning on Litho v1. First micrometer-scale patterns captured Dec 2025.</div></div></div>
+    <div class="hf-goal"><div class="hf-goal-status active">IN PROGRESS</div><div><div class="hf-goal-title">Spin Coater</div><div class="hf-goal-body">Demonstrated closed-loop control up to 6000 rpm. Enables uniform resist deposition for lithography.</div></div></div>
+    <div class="hf-goal"><div class="hf-goal-status planned">PLANNED</div><div><div class="hf-goal-title">RF Sputtering</div><div class="hf-goal-body">First deposition tool. Will enable metal and dielectric thin-film deposition in-house.</div></div></div>
+    <div class="hf-goal"><div class="hf-goal-status planned">PLANNED</div><div><div class="hf-goal-title">Tube Furnace</div><div class="hf-goal-body">±2°C precision at temperatures up to 1100°C. Required for oxidation and annealing steps.</div></div></div>
   </div>
 
   <div class="label r">Timeline</div>
   <div class="hf-timeline r">
-    <div class="hf-event">
-      <div class="hf-event-date">DEC 2025</div>
-      <div class="hf-event-title">Patterns captured on Litho v1</div>
-      <div class="hf-event-body">First micrometer-scale patterns achieved. A major proof-of-concept milestone for the lithography machine.</div>
-    </div>
-    <div class="hf-event">
-      <div class="hf-event-date">DEC 2025</div>
-      <div class="hf-event-title">Community grows to 40+ members</div>
-      <div class="hf-event-body">Expanded outreach beyond IITB, growing a 40-member Discord community across colleges.</div>
-    </div>
-    <div class="hf-event">
-      <div class="hf-event-date">OCT 2025</div>
-      <div class="hf-event-title">Community milestone: 50 members</div>
-      <div class="hf-event-body">First major community milestone on the path to a pan-India network.</div>
-    </div>
-    <div class="hf-event">
-      <div class="hf-event-date">SEP 2025</div>
-      <div class="hf-event-title">Presented at SemiX</div>
-      <div class="hf-event-body">Presented proof-of-concepts for spin coater and lithography. Part of a panel discussion on "Advancing India's Semiconductor Ecosystem".</div>
-    </div>
-    <div class="hf-event">
-      <div class="hf-event-date">SEP 2025</div>
-      <div class="hf-event-title">Lab setup complete</div>
-      <div class="hf-event-body">First functional fabrication workspace established at IIT Bombay.</div>
-    </div>
-    <div class="hf-event">
-      <div class="hf-event-date">AUG 2025</div>
-      <div class="hf-event-title">HackerFab IITB founded</div>
-      <div class="hf-event-body">The beginning. A group of students determined to democratize semiconductor fabrication in India.</div>
-    </div>
+    <div class="hf-event"><div class="hf-event-date">DEC 2025</div><div class="hf-event-title">Patterns captured on Litho v1</div><div class="hf-event-body">First micrometer-scale patterns achieved. A major proof-of-concept milestone for the lithography machine.</div></div>
+    <div class="hf-event"><div class="hf-event-date">DEC 2025</div><div class="hf-event-title">Community grows to 40+ members</div><div class="hf-event-body">Expanded outreach beyond IITB, growing a 40-member Discord community across colleges.</div></div>
+    <div class="hf-event"><div class="hf-event-date">OCT 2025</div><div class="hf-event-title">Community milestone: 50 members</div><div class="hf-event-body">First major community milestone on the path to a pan-India network.</div></div>
+    <div class="hf-event"><div class="hf-event-date">SEP 2025</div><div class="hf-event-title">Presented at SemiX</div><div class="hf-event-body">Presented proof-of-concepts for spin coater and lithography. Part of a panel discussion on "Advancing India's Semiconductor Ecosystem".</div></div>
+    <div class="hf-event"><div class="hf-event-date">SEP 2025</div><div class="hf-event-title">Lab setup complete</div><div class="hf-event-body">First functional fabrication workspace established at IIT Bombay.</div></div>
+    <div class="hf-event"><div class="hf-event-date">AUG 2025</div><div class="hf-event-title">HackerFab IITB founded</div><div class="hf-event-body">The beginning. A group of students determined to democratize semiconductor fabrication in India.</div></div>
   </div>
 </div>
 
-<!-- ══════════════════ ACADEMICS ══════════════════ -->
+<!-- ACADEMICS -->
 <div id="academics" class="page">
-
-  <!-- Projects sub-section -->
   <div class="label r">Projects</div>
   <div class="r">
     <div class="row"><div class="row-date">Mar–May<br>2024</div><div class="row-body"><div class="row-inner"><div class="thumb"><img src="images/724.png" alt="FeFET"></div><div><div class="row-title">Nanowire FeFET Mirrorbit Characterization &amp; Variability Analysis</div><div class="row-org">Nanoelectronics · Prof. Udayan Ganguly · Best Project Award</div><div class="row-desc">Si nanowire FeFET simulation for MirrorBit reliability. Metal grain granularity as dominant Vth variability source.</div><div class="row-tags"><span class="tag">FeFET</span><span class="tag">TCAD</span><span class="tag">Variability</span></div></div></div></div></div>
@@ -381,7 +370,6 @@ footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-fa
     <div class="row"><div class="row-date">2021–22</div><div class="row-body"><div class="row-inner"><div class="thumb"><img src="images/matsya.jpg" alt="AUV"></div><div><div class="row-title">Matsya Autonomous Underwater Vehicle</div><div class="row-org">Team AUV-IITB</div><div class="row-desc">Frame and actuator design for Matsya 6. Mini RC 5-DOF submarine with Drona Aviation.</div><div class="row-tags"><span class="tag">Robotics</span><span class="tag">AUV</span><span class="tag">Mechanical</span></div></div></div></div></div>
   </div>
 
-  <!-- Teaching sub-section -->
   <div class="label r">Teaching &amp; Mentorship</div>
   <div class="r">
     <div class="row"><div class="row-date">2025<br>now</div><div class="row-body"><div class="row-title">Teaching Assistant — VLSI Technology (EE669)</div><div class="row-org">IIT Bombay · Electrical Engineering</div><div class="row-desc">Quiz administration, grading, doubt resolution, exam support for core VLSI course.</div></div></div>
@@ -392,7 +380,6 @@ footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-fa
     <div class="row"><div class="row-date">2023–24</div><div class="row-body"><div class="row-title">Student Mentoring — XLR8 &amp; ITSP</div><div class="row-org">Electronics &amp; Robotics Club · ITC</div><div class="row-desc">Technical guidance across robotics and project initiatives.</div></div></div>
   </div>
 
-  <!-- Coursework sub-section -->
   <div class="label r">Coursework</div>
   <div class="r">
     <div class="course-group"><div class="cg-title">Nanoelectronics &amp; Device Physics</div><div class="chip-grid"><div class="chip">2D Materials and Devices<small>Prof. Saurabh Lodha</small></div><div class="chip">Growth &amp; Characterization of Nanoelectronic Materials<small>Prof. Apurba Laha</small></div><div class="chip">Nanoelectronics<small>Prof. Udayan Ganguly</small></div><div class="chip">Quantum Transport in Nanoscale Devices<small>Prof. Bhaskaran Muralidharan</small></div><div class="chip">Physics of Transistors<small>Prof. Souvik Mahapatra</small></div><div class="chip">Compound Semiconductor Devices<small>Prof. Apurba Laha</small></div></div></div>
@@ -402,45 +389,39 @@ footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-fa
   </div>
 </div>
 
-<!-- ══════════════════ HOBBIES ══════════════════ -->
+<!-- HOBBIES -->
 <div id="hobbies" class="page">
   <div class="label r">Things I Build &amp; Do</div>
   <div class="hobby-grid r">
-
     <a class="hobby-card" href="https://kartikuc.github.io/photobook/" target="_blank" rel="noopener">
       <div class="hobby-kicker">Photography</div>
       <div class="hobby-title">Photobook</div>
       <div class="hobby-desc">A collection of photographs — places, moments, light. Shot mostly on walks and travels.</div>
     </a>
-
     <a class="hobby-card" href="#" target="_blank" rel="noopener">
       <div class="hobby-kicker">Game · Built from scratch</div>
       <div class="hobby-title">Online Cabo</div>
       <div class="hobby-desc">A multiplayer implementation of the card game Cabo. Built for fun, playable in the browser.</div>
     </a>
-
     <a class="hobby-card" href="https://github.com/MonolayerGraphene" target="_blank" rel="noopener">
       <div class="hobby-kicker">Code</div>
       <div class="hobby-title">GitHub</div>
       <div class="hobby-desc">Scripts, simulations, and side projects. Mostly Python, some VHDL, occasional Linux configs.</div>
     </a>
-
     <a class="hobby-card" onclick="go('hackerfab'); return false;" href="#">
       <div class="hobby-kicker">Hardware · Co-Founder</div>
       <div class="hobby-title">HackerFab IIT Bombay</div>
       <div class="hobby-desc">Building lithography machines and spin coaters from scratch. India's first student-run semiconductor fab.</div>
     </a>
-
-    <a class="hobby-card wide" href="#" style="pointer-events:none;opacity:.55">
+    <a class="hobby-card wide" href="#" style="pointer-events:none;opacity:.5">
       <div class="hobby-kicker">Coming soon</div>
       <div class="hobby-title">More projects being added</div>
       <div class="hobby-desc">Hockey on weekends. Drums when the deadline isn't tomorrow. Deep in Linux configs most other times.</div>
     </a>
-
   </div>
 </div>
 
-<!-- ══════════════════ CV ══════════════════ -->
+<!-- CV -->
 <div id="cv" class="page">
   <div class="label r">CV</div>
   <div class="cv-timeline r">
@@ -492,117 +473,73 @@ footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-fa
 <footer>kartik chikkanagoudar · iit bombay · 2026</footer>
 
 <script>
-// ── PCB trace background ─────────────────────────────────────
+/* PCB */
 function drawPCB(dark){
   const canvas=document.getElementById('pcb');
   const W=window.innerWidth,H=window.innerHeight;
   canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext('2d');
   ctx.clearRect(0,0,W,H);
-  const op=dark?0.028:0.032;
-  const fillOp=dark?op*1.4:op*1.4;
+  const op=dark?0.028:0.032,fillOp=op*1.4;
   ctx.strokeStyle=dark?`rgba(255,255,255,${op})`:`rgba(0,0,0,${op})`;
   ctx.lineWidth=1;
-  const spacing=52;
-  const cols=Math.ceil(W/spacing)+1;
-  const rows=Math.ceil(H/spacing)+1;
+  const sp=52,cols=Math.ceil(W/sp)+1,rows=Math.ceil(H/sp)+1;
   let seed=42;
-  function rand(){seed=(seed*1664525+1013904223)&0xffffffff;return(seed>>>0)/0xffffffff;}
-  for(let r=0;r<rows;r++){
-    for(let c=0;c<cols;c++){
-      const x=c*spacing+spacing/2,y=r*spacing+spacing/2;
-      if(c<cols-1&&rand()<0.55){
-        ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+spacing,y);ctx.stroke();
-        if(rand()<0.3){
-          ctx.beginPath();ctx.arc(x+spacing/2,y,2,0,Math.PI*2);
-          ctx.fillStyle=dark?`rgba(255,255,255,${fillOp})`:`rgba(0,0,0,${fillOp})`;
-          ctx.fill();
-        }
-      }
-      if(r<rows-1&&rand()<0.55){
-        ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y+spacing);ctx.stroke();
-      }
-      if(rand()<0.18){
-        ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);
-        ctx.fillStyle=dark?`rgba(255,255,255,${fillOp})`:`rgba(0,0,0,${fillOp})`;
-        ctx.fill();
-      }
-    }
+  const rand=()=>{seed=(seed*1664525+1013904223)&0xffffffff;return(seed>>>0)/0xffffffff;};
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
+    const x=c*sp+sp/2,y=r*sp+sp/2;
+    if(c<cols-1&&rand()<0.55){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+sp,y);ctx.stroke();if(rand()<0.3){ctx.beginPath();ctx.arc(x+sp/2,y,2,0,Math.PI*2);ctx.fillStyle=dark?`rgba(255,255,255,${fillOp})`:`rgba(0,0,0,${fillOp})`;ctx.fill();}}
+    if(r<rows-1&&rand()<0.55){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y+sp);ctx.stroke();}
+    if(rand()<0.18){ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fillStyle=dark?`rgba(255,255,255,${fillOp})`:`rgba(0,0,0,${fillOp})`;ctx.fill();}
   }
 }
+let isDark=false;
 drawPCB(false);
+window.addEventListener('resize',()=>drawPCB(isDark));
 
-// ── Typewriter ───────────────────────────────────────────────
-const phrases=[
-  'Nanoelectronics researcher at IIT Bombay.',
-  'Building India\'s first student-run semiconductor fab.',
-  'Bridging theory and fabrication in solid state devices.',
-  'TCAD · Verilog-A · Cleanroom · Python.'
-];
+/* Typewriter */
+const phrases=['Nanoelectronics researcher at IIT Bombay.','Building India\'s first student-run semiconductor fab.','Bridging theory and fabrication in solid state devices.','TCAD · Verilog-A · Cleanroom · Python.'];
 let pIdx=0,cIdx=0,del=false;
 function typeStep(){
-  const el=document.getElementById('typewriter');
-  if(!el)return;
+  const el=document.getElementById('typewriter');if(!el)return;
   const phrase=phrases[pIdx];
-  if(!del){
-    cIdx++;
-    el.innerHTML=phrase.slice(0,cIdx)+'<span class="typewriter-cursor"></span>';
-    if(cIdx===phrase.length){del=true;setTimeout(typeStep,2000);return;}
-  }else{
-    cIdx--;
-    el.innerHTML=phrase.slice(0,cIdx)+'<span class="typewriter-cursor"></span>';
-    if(cIdx===0){del=false;pIdx=(pIdx+1)%phrases.length;}
-  }
+  if(!del){cIdx++;el.innerHTML=phrase.slice(0,cIdx)+'<span class="typewriter-cursor"></span>';if(cIdx===phrase.length){del=true;setTimeout(typeStep,2000);return;}}
+  else{cIdx--;el.innerHTML=phrase.slice(0,cIdx)+'<span class="typewriter-cursor"></span>';if(cIdx===0){del=false;pIdx=(pIdx+1)%phrases.length;}}
   setTimeout(typeStep,del?36:60);
 }
 setTimeout(typeStep,700);
 
-// ── Cursor ───────────────────────────────────────────────────
+/* Cursor */
 const cur=document.getElementById('cur');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
-document.querySelectorAll('a,button,.row,.g-item,.chip,.hero-img,.hobby-card,.hf-goal,.stat').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
-  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
-});
+document.querySelectorAll('a,button,.row,.g-item,.chip,.hero-img,.hobby-card,.hf-goal').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('big'));el.addEventListener('mouseleave',()=>cur.classList.remove('big'));});
 document.addEventListener('mouseleave',()=>cur.style.opacity='0');
 document.addEventListener('mouseenter',()=>cur.style.opacity='1');
 
-// ── Scroll / nav ─────────────────────────────────────────────
+/* Scroll */
 window.addEventListener('scroll',()=>{
-  const p=document.documentElement.scrollTop/(document.documentElement.scrollHeight-document.documentElement.clientHeight)*100;
-  document.getElementById('bar').style.width=p+'%';
-  document.getElementById('nav').classList.toggle('up',window.scrollY>6);
+  const st=document.documentElement.scrollTop,tot=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  document.getElementById('bar').style.width=(st/tot*100)+'%';
+  document.getElementById('nav').classList.toggle('up',st>4);
 },{passive:true});
 document.getElementById('nav').classList.add('up');
 
-// ── Page transitions ─────────────────────────────────────────
+/* Pages */
 let curPage='home';
 function go(id){
   if(id===curPage)return;
   const out=document.getElementById(curPage),inp=document.getElementById(id);
   out.classList.add('leaving');
   out.addEventListener('animationend',()=>out.classList.remove('on','leaving'),{once:true});
-  setTimeout(()=>{
-    inp.classList.add('on','entering');
-    inp.addEventListener('animationend',()=>inp.classList.remove('entering'),{once:true});
-    triggerReveals(id);
-  },140);
+  setTimeout(()=>{inp.classList.add('on','entering');inp.addEventListener('animationend',()=>inp.classList.remove('entering'),{once:true});triggerReveals(id);},150);
   document.querySelectorAll('.nl').forEach(l=>l.classList.toggle('on',l.getAttribute('onclick')?.includes(`'${id}'`)));
-  curPage=id;
-  window.scrollTo({top:0,behavior:'smooth'});
+  curPage=id;window.scrollTo({top:0,behavior:'smooth'});
 }
 function triggerReveals(id){
-  setTimeout(()=>{
-    document.querySelectorAll('#'+id+' .r').forEach((el,i)=>{
-      el.classList.remove('v');
-      el.style.transitionDelay=(i*.048)+'s';
-      setTimeout(()=>el.classList.add('v'),25);
-    });
-  },55);
+  setTimeout(()=>{document.querySelectorAll('#'+id+' .r').forEach((el,i)=>{el.classList.remove('v');el.style.transitionDelay=(i*.05)+'s';setTimeout(()=>el.classList.add('v'),30);});},60);
 }
 
-// ── Theme ────────────────────────────────────────────────────
-let isDark=false;
+/* Theme */
 function toggleTheme(){
   isDark=!isDark;
   document.body.classList.toggle('dark',isDark);
@@ -610,15 +547,10 @@ function toggleTheme(){
   drawPCB(isDark);
 }
 
-// ── Reveal on scroll ─────────────────────────────────────────
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v');});
-},{threshold:.05});
+/* Reveal */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v');});},{threshold:.06});
 window.addEventListener('DOMContentLoaded',()=>{
-  document.querySelectorAll('.r').forEach((el,i)=>{
-    el.style.transitionDelay=(i*.042)+'s';
-    io.observe(el);
-  });
+  document.querySelectorAll('.r').forEach((el,i)=>{el.style.transitionDelay=(i*.042)+'s';io.observe(el);});
   triggerReveals('home');
 });
 </script>
