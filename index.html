@@ -1,760 +1,629 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kartik Chikkanagoudar</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kartik Chikkanagoudar</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-        :root {
-            --bg: #0a0a0a;
-            --surface: #111111;
-            --surface2: #151515;
-            --border: #1e1e1e;
-            --border2: #2a2a2a;
-            --text: #d4d4d4;
-            --text-muted: #888;
-            --text-dim: #555;
-            --accent: #4a9eff;
-            --accent-glow: rgba(74, 158, 255, 0.12);
-            --white: #ffffff;
-        }
+:root{
+  --bg:#ececea;--bg2:#e3e3e1;--bg3:#d6d6d4;
+  --line:#c4c4c2;--line2:#acacaa;
+  --ghost:#7e7e7c;--muted:#4c4c4a;--dim:#2c2c2a;
+  --text:#161614;--ink:#040402;
+}
+body.dark{
+  --bg:#0c0c0a;--bg2:#121210;--bg3:#181816;
+  --line:#222220;--line2:#30302e;
+  --ghost:#545452;--muted:#888886;--dim:#aeaeac;
+  --text:#d2d2d0;--ink:#eeeeed;
+}
 
-        body.light-mode {
-            --bg: #f8f8f6;
-            --surface: #ffffff;
-            --surface2: #f2f2f0;
-            --border: #e8e8e5;
-            --border2: #d8d8d5;
-            --text: #333333;
-            --text-muted: #666;
-            --text-dim: #999;
-            --accent: #2563eb;
-            --accent-glow: rgba(37, 99, 235, 0.08);
-            --white: #111111;
-        }
+body{background:var(--bg);color:var(--dim);font-family:'DM Sans',sans-serif;font-weight:300;font-size:14px;line-height:1.72;overflow-x:hidden}
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Georgia', 'Times New Roman', serif;
-            line-height: 1.8;
-            transition: background 0.4s ease, color 0.4s ease;
-            overflow-x: hidden;
-        }
+/* PCB background */
+#pcb{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 
-        /* Noise grain overlay */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 1000;
-            opacity: 0.25;
-        }
+/* Cursor */
+#cur{width:10px;height:10px;background:#fff;border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .26s cubic-bezier(.16,1,.3,1),height .26s cubic-bezier(.16,1,.3,1)}
+#cur.big{width:36px;height:36px}
+#bar{position:fixed;top:0;left:0;height:1px;width:0%;background:var(--ink);z-index:600}
 
-        /* Subtle dot grid */
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: radial-gradient(circle, rgba(74,158,255,0.06) 1px, transparent 1px);
-            background-size: 32px 32px;
-            pointer-events: none;
-            z-index: 0;
-        }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:52px;display:flex;align-items:center;padding:0 44px;border-bottom:1px solid transparent;transition:background .3s,border-color .3s}
+nav.up{background:rgba(236,236,234,.95);backdrop-filter:blur(16px);border-color:var(--line)}
+body.dark nav.up{background:rgba(12,12,10,.95)}
+.nav-name{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink);cursor:pointer;text-decoration:none;letter-spacing:.03em;margin-right:auto;display:flex;align-items:center;gap:10px}
+.nav-name .ndot{width:5px;height:5px;border-radius:50%;background:#5a8a5a;flex-shrink:0;animation:ndpulse 2.4s ease-in-out infinite}
+@keyframes ndpulse{0%,100%{opacity:1}50%{opacity:.25}}
+body.dark .nav-name .ndot{background:#6aaa6a}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);text-decoration:none;cursor:pointer;letter-spacing:.07em;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:100%;height:1px;background:var(--ink);transition:right .3s cubic-bezier(.16,1,.3,1)}
+.nav-links a:hover,.nav-links a.on{color:var(--ink)}
+.nav-links a:hover::after,.nav-links a.on::after{right:0}
+.tbtn{margin-left:24px;background:none;border:none;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--line2);letter-spacing:.08em;padding:0;transition:color .2s}
+.tbtn:hover{color:var(--ink)}
 
-        /* Custom cursor */
-        .cursor {
-            width: 7px; height: 7px;
-            background: var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.3s;
-        }
+.shell{max-width:860px;margin:0 auto;padding:0 44px;position:relative;z-index:1}
 
-        .cursor-ring {
-            width: 34px; height: 34px;
-            border: 1px solid rgba(74, 158, 255, 0.35);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s;
-        }
+.page{display:none;padding-top:68px;padding-bottom:72px}
+.page.on{display:block}
+@keyframes pin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pout{from{opacity:1}to{opacity:0;transform:translateY(-8px)}}
+.page.entering{animation:pin .34s cubic-bezier(.16,1,.3,1) both}
+.page.leaving{animation:pout .18s ease forwards;pointer-events:none}
 
-        .cursor-ring.expand { width: 50px; height: 50px; border-color: rgba(74, 158, 255, 0.6); }
+/* ── HERO ── */
+.hero{display:grid;grid-template-columns:1fr 148px;gap:44px;align-items:end;padding-bottom:44px;border-bottom:1px solid var(--line2)}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.hero-name{font-size:50px;font-weight:600;color:var(--ink);letter-spacing:-3px;line-height:.93;margin-bottom:16px}
+.hero-name em{font-style:normal;font-weight:300;color:var(--muted);letter-spacing:-2px}
+.hero-sub{font-size:13.5px;color:var(--muted);line-height:1.76;max-width:400px;margin-bottom:28px;min-height:2.4em}
+.typewriter-cursor{display:inline-block;width:2px;height:.9em;background:var(--ghost);vertical-align:text-bottom;animation:blink .9s step-end infinite;margin-left:1px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.links{display:flex;flex-wrap:wrap;gap:0}
+.links a{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);text-decoration:none;border:1px solid var(--line2);padding:6px 13px;margin-right:-1px;letter-spacing:.07em;transition:color .2s,border-color .2s,background .2s;position:relative;z-index:0}
+.links a:first-child{border-radius:2px 0 0 2px}
+.links a:last-child{border-radius:0 2px 2px 0;margin-right:0}
+.links a:hover{color:var(--ink);border-color:var(--ghost);background:var(--bg3);z-index:1}
+.hero-img{width:148px;aspect-ratio:3/4;overflow:hidden;background:var(--bg3);border:1px solid var(--line2)}
+.hero-img img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(100%) contrast(1.1);transition:filter .5s,transform .5s}
+.hero-img:hover img{filter:grayscale(40%);transform:scale(1.04)}
 
-        /* Scroll progress */
-        .scroll-bar {
-            position: fixed; top: 0; left: 0; height: 2px; width: 0%;
-            background: linear-gradient(90deg, var(--accent), rgba(74,158,255,0.3));
-            z-index: 300;
-            box-shadow: 0 0 8px rgba(74,158,255,0.6);
-            transition: width 0.08s linear;
-        }
+/* ── Section label ── */
+.label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);letter-spacing:.14em;text-transform:uppercase;margin-bottom:18px;padding-top:40px;display:flex;align-items:center;gap:14px}
+.label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+.page>.label:first-child{padding-top:4px}
 
-        /* Page sweep line */
-        .sweep {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 3px;
-            background: var(--accent);
-            transform: scaleX(0); transform-origin: left;
-            z-index: 400;
-            box-shadow: 0 0 16px rgba(74,158,255,0.8);
-            transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
-            pointer-events: none;
-        }
+/* ── Rows ── */
+.row{display:grid;grid-template-columns:80px 1fr;border-top:1px solid var(--line);position:relative;cursor:default;transition:background .16s}
+.row:last-child{border-bottom:1px solid var(--line)}
+.row:hover{background:var(--bg2)}
+.row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .26s cubic-bezier(.16,1,.3,1)}
+.row:hover::before{transform:scaleY(1)}
+.row-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--line2);padding:18px 16px 18px 12px;line-height:1.6;transition:color .2s}
+.row:hover .row-date{color:var(--ghost)}
+.row-body{padding:18px 18px 18px 0}
+.row-title{font-size:13.5px;font-weight:500;color:var(--text);margin-bottom:3px;line-height:1.4;transition:color .2s}
+.row:hover .row-title{color:var(--ink)}
+.row-org{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost)}
+.row-desc{font-size:13px;color:var(--muted);line-height:1.74;max-height:0;opacity:0;overflow:hidden;transition:max-height .38s cubic-bezier(.16,1,.3,1),opacity .28s ease,margin-top .28s ease}
+.row:hover .row-desc{max-height:220px;opacity:1;margin-top:9px}
+.row-tags{display:flex;gap:4px;flex-wrap:wrap;max-height:0;opacity:0;overflow:hidden;transition:max-height .36s,opacity .26s ease .04s,margin-top .26s}
+.row:hover .row-tags{max-height:60px;opacity:1;margin-top:8px}
+.tag{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ghost);border:1px solid var(--line2);padding:2px 6px;letter-spacing:.05em}
+.row-inner{display:grid;grid-template-columns:78px 1fr;gap:14px;align-items:start}
+.thumb{width:78px;aspect-ratio:4/3;overflow:hidden;background:var(--bg3);border:1px solid var(--line);flex-shrink:0}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(100%) brightness(.88);transition:filter .42s,transform .44s}
+.row:hover .thumb img{filter:grayscale(40%) brightness(1);transform:scale(1.07)}
 
-        /* NAV */
-        nav {
-            position: sticky; top: 0; z-index: 100;
-            padding: 18px 0;
-            border-bottom: 1px solid var(--border);
-            background: rgba(10,10,10,0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: background 0.4s, border-color 0.4s;
-        }
+/* ── Interest grid ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line)}
+.g-item{font-size:12.5px;color:var(--muted);padding:11px 15px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;transition:color .18s,background .18s;cursor:default}
+.g-item::before{content:'—';font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--line2);flex-shrink:0;transition:color .18s}
+.g-item:hover::before{color:var(--ghost)}
+.g-item:nth-child(even){border-right:none}
+.g-item:nth-last-child(-n+2){border-bottom:none}
+.g-item:hover{color:var(--ink);background:var(--bg2)}
 
-        body.light-mode nav { background: rgba(248,248,246,0.92); }
+/* ── Courses ── */
+.course-group{margin-bottom:24px}
+.cg-title{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);letter-spacing:.1em;margin-bottom:7px;text-transform:uppercase}
+.chip-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.chip{background:var(--bg);padding:9px 13px;font-size:12.5px;color:var(--dim);transition:color .18s,background .18s;cursor:default;line-height:1.4}
+.chip small{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ghost);margin-top:2px}
+.chip:hover{color:var(--ink);background:var(--bg3)}
+.badge{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ghost);border:1px solid var(--line2);padding:2px 8px;margin-left:10px;vertical-align:middle;letter-spacing:.07em}
 
-        .nav-container {
-            max-width: 920px; margin: 0 auto; padding: 0 28px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
+/* ── HackerFab page ── */
+.hf-hero{padding:32px 0 40px;border-bottom:1px solid var(--line2)}
+.hf-kicker{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.hf-title{font-size:38px;font-weight:600;color:var(--ink);letter-spacing:-2px;line-height:1;margin-bottom:8px}
+.hf-title em{font-style:normal;font-weight:300;color:var(--muted)}
+.hf-tagline{font-size:14px;color:var(--muted);margin-bottom:22px}
+.hf-links{display:flex;gap:0}
+.hf-links a{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);text-decoration:none;border:1px solid var(--line2);padding:6px 13px;margin-right:-1px;letter-spacing:.07em;transition:color .2s,border-color .2s,background .2s;position:relative;z-index:0}
+.hf-links a:first-child{border-radius:2px 0 0 2px}
+.hf-links a:last-child{border-radius:0 2px 2px 0;margin-right:0}
+.hf-links a:hover{color:var(--ink);border-color:var(--ghost);background:var(--bg3);z-index:1}
 
-        .nav-brand {
-            font-family: 'Georgia', serif;
-            font-weight: 400; font-size: 1.05em;
-            color: var(--white); cursor: pointer;
-            text-decoration: none; letter-spacing: -0.2px;
-            position: relative;
-        }
+.hf-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.hf-pillar{background:var(--bg);padding:18px 20px}
+.hf-pillar-icon{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);letter-spacing:.1em;margin-bottom:8px;text-transform:uppercase}
+.hf-pillar-text{font-size:12.5px;color:var(--dim);line-height:1.7}
 
-        .nav-brand::after {
-            content: ''; position: absolute; bottom: -2px; left: 0;
-            width: 0; height: 1px; background: var(--accent);
-            transition: width 0.3s ease;
-        }
-        .nav-brand:hover::after { width: 100%; }
+/* Timeline */
+.hf-timeline{position:relative;padding-left:30px}
+.hf-timeline::before{content:'';position:absolute;left:5px;top:4px;bottom:4px;width:1px;background:var(--line2)}
+.hf-event{position:relative;margin-bottom:22px}
+.hf-event::before{content:'';position:absolute;left:-27px;top:5px;width:6px;height:6px;border-radius:50%;background:var(--bg);border:1px solid var(--ghost)}
+.hf-event-date{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ghost);letter-spacing:.08em;margin-bottom:3px}
+.hf-event-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.hf-event-body{font-size:12.5px;color:var(--muted);line-height:1.7}
 
-        .nav-links { display: flex; gap: 32px; list-style: none; }
+/* Tech roadmap */
+.hf-goal{display:grid;grid-template-columns:80px 1fr;border-top:1px solid var(--line);padding:14px 0}
+.hf-goal:last-child{border-bottom:1px solid var(--line)}
+.hf-goal-status{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.07em;padding-top:2px}
+.hf-goal-status.active{color:#5a8a5a}
+.hf-goal-status.planned{color:var(--ghost)}
+.hf-goal-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.hf-goal-body{font-size:12.5px;color:var(--muted)}
 
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none; cursor: pointer;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            font-size: 0.8em; font-weight: 500;
-            letter-spacing: 0.07em; text-transform: uppercase;
-            transition: color 0.3s;
-            position: relative; padding-bottom: 2px;
-        }
+/* ── Hobbies page ── */
+.hobby-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.hobby-card{background:var(--bg);padding:24px 22px;text-decoration:none;color:inherit;transition:background .18s;display:block;position:relative;overflow:hidden}
+.hobby-card:hover{background:var(--bg2)}
+.hobby-card::after{content:'↗';position:absolute;top:18px;right:18px;font-size:11px;color:var(--line2);transition:color .2s,transform .2s}
+.hobby-card:hover::after{color:var(--ghost);transform:translate(2px,-2px)}
+.hobby-kicker{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ghost);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.hobby-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:8px;line-height:1.3}
+.hobby-desc{font-size:12.5px;color:var(--muted);line-height:1.72}
+/* full-width hobby card */
+.hobby-card.wide{grid-column:1/-1}
 
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: 0; left: 0;
-            width: 0; height: 1px; background: var(--accent);
-            transition: width 0.3s ease;
-        }
+/* ── CV timeline ── */
+.cv-timeline{position:relative;padding-left:32px}
+.cv-timeline::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--line2)}
+.cv-sec{margin-bottom:32px;position:relative}
+.cv-sec::before{content:'';position:absolute;left:-29px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--bg);border:1px solid var(--ghost)}
+.cv-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.cv-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+.cv-item{margin-bottom:13px}
+.cv-title{font-size:13.5px;font-weight:500;color:var(--text);margin-bottom:2px}
+.cv-sub{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--ghost);margin-bottom:5px}
+.cv-body{font-size:12.5px;color:var(--dim);line-height:1.72;margin-left:10px}
+.cv-body ul{margin-left:14px}
+.cv-body li{margin-bottom:3px}
+.cv-body li::marker{color:var(--ghost)}
+.cv-body strong{color:var(--text);font-weight:400}
 
-        .nav-links a:hover, .nav-links a.active { color: var(--white); }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+footer{position:relative;z-index:1;text-align:center;padding:20px 0 28px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--line2);letter-spacing:.08em;border-top:1px solid var(--line);max-width:860px;margin:0 auto}
 
-        .theme-toggle {
-            width: 30px; height: 30px; border-radius: 50%;
-            background: var(--surface2); border: 1px solid var(--border2);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.3s ease;
-        }
-        .theme-toggle:hover { background: var(--border2); border-color: var(--accent); transform: rotate(18deg); }
-        .theme-toggle svg { width: 15px; height: 15px; fill: var(--text-muted); transition: fill 0.3s; }
-        .theme-toggle:hover svg { fill: var(--white); }
+.r{opacity:0;transform:translateY(7px);transition:opacity .42s ease,transform .42s ease}
+.r.v{opacity:1;transform:none}
+.prose{font-size:13.5px;color:var(--dim);line-height:1.84}
 
-        /* Container */
-        .container { max-width: 920px; margin: 0 auto; padding: 56px 28px; position: relative; z-index: 1; }
-
-        /* Pages */
-        .page { display: none; }
-        .page.active { display: block; animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
-
-        @keyframes rise {
-            from { opacity: 0; transform: translateY(18px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* HERO */
-        .hero {
-            display: grid; grid-template-columns: 250px 1fr;
-            gap: 28px; align-items: stretch; margin-bottom: 60px;
-        }
-
-        .profile-image {
-            width: 250px; height: 100%; min-height: 230px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--surface), var(--surface2));
-            border: 1px solid var(--border2);
-            overflow: hidden; position: relative;
-            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s, box-shadow 0.4s;
-        }
-
-        .profile-image::after {
-            content: '';
-            position: absolute; inset: 0;
-            background: linear-gradient(to bottom, transparent 55%, rgba(74,158,255,0.07) 100%);
-            pointer-events: none;
-        }
-
-        .profile-image:hover {
-            transform: scale(1.02) translateY(-4px);
-            border-color: var(--accent);
-            box-shadow: 0 24px 64px rgba(74,158,255,0.18), 0 0 0 1px rgba(74,158,255,0.12);
-        }
-
-        .profile-image img {
-            width: 100%; height: 100%; object-fit: cover;
-            display: block;
-            transition: transform 0.5s ease, filter 0.4s ease;
-            filter: grayscale(10%);
-        }
-        .profile-image:hover img { transform: scale(1.04); filter: grayscale(0%); }
-
-        .hero-text { display: flex; flex-direction: column; justify-content: center; gap: 6px; }
-
-        .hero-text h1 {
-            font-size: 2.7em; color: var(--white); font-weight: 400;
-            letter-spacing: -1.5px; line-height: 1.1;
-            font-family: 'Georgia', serif;
-        }
-
-        .hero-text h1:hover { animation: glitch 0.35s ease; }
-
-        @keyframes glitch {
-            0%,100% { transform: none; }
-            25% { transform: skewX(-1.5deg) translateX(2px); }
-            50% { transform: skewX(0.8deg) translateX(-1px); }
-            75% { transform: translateX(0.5px) skewX(-0.3deg); }
-        }
-
-        .hero-text .subtitle {
-            color: var(--text-muted); font-size: 1em; font-weight: 400;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            margin-top: 10px;
-        }
-
-        .hero-text .institution {
-            color: var(--text-dim); font-size: 0.88em;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            margin-bottom: 22px;
-        }
-
-        /* Contact icons */
-        .contact-icons { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
-
-        .icon-tile {
-            width: 46px; height: 46px;
-            border: 1px solid var(--border2); background: var(--surface2);
-            border-radius: 10px; display: inline-flex; align-items: center; justify-content: center;
-            text-decoration: none; position: relative; overflow: hidden;
-            transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s, background 0.3s, box-shadow 0.3s;
-        }
-
-        .icon-tile::before {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle, var(--accent-glow), transparent 70%);
-            opacity: 0; transition: opacity 0.3s;
-        }
-
-        .icon-tile:hover::before { opacity: 1; }
-        .icon-tile:hover {
-            transform: translateY(-3px) scale(1.08);
-            border-color: var(--accent);
-            box-shadow: 0 8px 24px rgba(74,158,255,0.22);
-        }
-
-        .icon-tile svg {
-            width: 19px; height: 19px; fill: var(--text-muted);
-            transition: fill 0.2s, transform 0.2s;
-            position: relative; z-index: 1;
-        }
-        .icon-tile:hover svg { fill: var(--white); transform: scale(1.12); }
-
-        /* Section headers */
-        h2 {
-            font-size: 1.45em; margin: 44px 0 18px 0;
-            color: var(--white); font-weight: 400;
-            letter-spacing: -0.4px; font-family: 'Georgia', serif;
-            display: flex; align-items: center; gap: 13px;
-        }
-
-        h2::before {
-            content: ''; display: inline-block;
-            width: 3px; height: 1em;
-            background: var(--accent); border-radius: 2px; flex-shrink: 0;
-            box-shadow: 0 0 10px rgba(74,158,255,0.5);
-        }
-
-        .section-intro {
-            color: var(--text-dim); margin-bottom: 22px; font-size: 0.88em;
-            line-height: 1.7; font-style: italic;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-
-        .about-text { color: var(--text); line-height: 1.9; font-size: 1.02em; }
-
-        .about-text a, p a {
-            color: var(--accent); text-decoration: none;
-            border-bottom: 1px solid rgba(74,158,255,0.3);
-            transition: border-color 0.3s;
-        }
-        .about-text a:hover, p a:hover { border-color: var(--accent); }
-
-        .about-list, .course-list { margin: 10px 0 0 22px; }
-
-        .about-list li, .course-list li {
-            margin-bottom: 7px; color: var(--text); line-height: 1.7; font-size: 0.97em;
-            transition: color 0.2s, transform 0.2s ease; cursor: default;
-        }
-
-        .about-list li::marker { color: var(--accent); }
-        .about-list li:hover { color: var(--white); transform: translateX(5px); }
-
-        /* Entries */
-        .entry {
-            margin-bottom: 26px; padding-bottom: 26px;
-            border-bottom: 1px solid var(--border);
-            position: relative;
-            transition: padding-left 0.3s ease;
-        }
-        .entry:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
-
-        /* Accent side bar on hover */
-        .entry::before {
-            content: ''; position: absolute; left: -18px; top: 0; bottom: 0;
-            width: 2px; background: var(--accent); border-radius: 1px;
-            transform: scaleY(0); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
-            box-shadow: 0 0 8px rgba(74,158,255,0.5);
-        }
-        .entry:hover::before { transform: scaleY(1); }
-
-        .entry-grid {
-            display: grid; grid-template-columns: 155px 1fr;
-            gap: 18px; align-items: stretch;
-        }
-
-        .entry-image {
-            width: 155px; height: 100%; min-height: 96px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, var(--surface), var(--surface2));
-            border: 1px solid var(--border); overflow: hidden; flex-shrink: 0;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .entry:hover .entry-image { border-color: var(--border2); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
-
-        .entry-image img {
-            display: block; width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.5s ease, filter 0.3s ease;
-            filter: grayscale(15%);
-        }
-        .entry:hover .entry-image img { transform: scale(1.06); filter: grayscale(0%); }
-
-        .entry-title {
-            font-size: 1.02em; color: var(--white); font-weight: 400;
-            font-family: 'Georgia', serif; margin-bottom: 5px;
-        }
-
-        .entry-meta {
-            color: var(--text-dim); font-size: 0.8em; margin-bottom: 9px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            letter-spacing: 0.02em;
-        }
-
-        .entry-description {
-            color: var(--text-muted); font-size: 0.9em; line-height: 1.75;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-        .entry-description ul { margin-left: 18px; margin-top: 8px; }
-        .entry-description li { margin-bottom: 4px; }
-
-        /* Teaching hover */
-        #teaching .entry {
-            transition: padding-left 0.3s ease, border-left-width 0.3s;
-        }
-        #teaching .entry:hover {
-            padding-left: 8px;
-            border-left: 2px solid var(--accent);
-            margin-left: -10px;
-        }
-
-        /* CV */
-        .cv-section { margin-bottom: 32px; }
-        .cv-section h3 {
-            font-size: 0.78em; color: var(--white); font-weight: 600;
-            margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
-            font-family: -apple-system, sans-serif;
-            letter-spacing: 0.1em; text-transform: uppercase;
-        }
-        .cv-entry { margin-bottom: 16px; }
-        .cv-entry-title { font-weight: 400; color: var(--white); margin-bottom: 3px; font-family: 'Georgia', serif; }
-        .cv-entry-subtitle { font-size: 0.83em; color: var(--text-dim); margin-bottom: 7px; font-family: -apple-system, sans-serif; }
-        .cv-entry-description { font-size: 0.87em; color: var(--text-muted); margin-left: 10px; margin-bottom: 6px; line-height: 1.7; font-family: -apple-system, sans-serif; }
-        .cv-entry-description ul { margin: 5px 0 0 18px; }
-        .cv-entry-description li { font-size: 0.95em; margin-bottom: 4px; }
-        .cv-entry-description strong { color: var(--text); }
-
-        /* CGPA badge */
-        .cgpa-badge {
-            display: inline-flex; align-items: center;
-            background: var(--accent-glow);
-            border: 1px solid rgba(74,158,255,0.2);
-            border-radius: 20px; padding: 2px 11px;
-            font-size: 0.7em; color: var(--accent);
-            font-family: -apple-system, sans-serif;
-            font-weight: 600; letter-spacing: 0.05em;
-            vertical-align: middle; margin-left: 10px;
-        }
-
-        /* Academics sub-headers */
-        .academics-sub { margin-top: 32px; margin-bottom: 0; font-size: 1.05em; }
-        .academics-sub::before { width: 2px; height: 0.85em; background: var(--border2); box-shadow: none; }
-
-        /* Scroll-reveal utility */
-        .reveal {
-            opacity: 0; transform: translateY(18px);
-            transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1);
-        }
-        .reveal.visible { opacity: 1; transform: none; }
-
-        /* Responsive */
-        @media (max-width: 700px) {
-            .hero { grid-template-columns: 1fr; gap: 18px; }
-            .profile-image { width: 100%; height: 230px; }
-            .nav-links { gap: 14px; font-size: 0.72em; }
-            .hero-text h1 { font-size: 1.9em; }
-            h2 { font-size: 1.25em; }
-            .entry-grid { grid-template-columns: 100px 1fr; }
-            .entry-image { width: 100px; }
-        }
-    </style>
+@media(max-width:700px){
+  nav{padding:0 20px}.shell{padding:0 20px}
+  .hero{grid-template-columns:1fr}.hero-name{font-size:36px}
+  .grid-2,.chip-grid,.hf-pillars,.hobby-grid{grid-template-columns:1fr}
+  .hobby-card.wide{grid-column:auto}
+  .row{grid-template-columns:1fr}.row-date{padding:14px 0 3px}.row-body{padding:4px 0 14px}
+  .g-item:nth-child(even){border-right:1px solid var(--line)}
+  .nav-links{gap:14px}
+}
+</style>
 </head>
 <body>
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
-    <div class="scroll-bar" id="scrollBar"></div>
-    <div class="sweep" id="sweep"></div>
+<canvas id="pcb" aria-hidden="true"></canvas>
+<div id="cur"></div>
+<div id="bar"></div>
 
-    <nav>
-        <div class="nav-container">
-            <a class="nav-brand" onclick="showPage('home')">Kartik C.</a>
-            <ul class="nav-links">
-                <li><a onclick="showPage('home')" class="nav-link active">Home</a></li>
-                <li><a onclick="showPage('experience')" class="nav-link">Experience</a></li>
-                <li><a onclick="showPage('projects')" class="nav-link">Projects</a></li>
-                <li><a onclick="showPage('teaching')" class="nav-link">Teaching</a></li>
-                <li><a onclick="showPage('academics')" class="nav-link">Academics</a></li>
-                <li><a onclick="showPage('cv')" class="nav-link">CV</a></li>
-            </ul>
-            <div class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-                <svg id="themeIcon" viewBox="0 0 24 24">
-                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
-                </svg>
-            </div>
-        </div>
-    </nav>
+<nav id="nav">
+  <a class="nav-name" onclick="go('home')"><span class="ndot"></span>KC</a>
+  <ul class="nav-links">
+    <li><a onclick="go('home')" class="nl on">home</a></li>
+    <li><a onclick="go('experience')" class="nl">experience</a></li>
+    <li><a onclick="go('hackerfab')" class="nl">hackerfab</a></li>
+    <li><a onclick="go('academics')" class="nl">academics</a></li>
+    <li><a onclick="go('hobbies')" class="nl">hobbies</a></li>
+    <li><a onclick="go('cv')" class="nl">cv</a></li>
+  </ul>
+  <button class="tbtn" onclick="toggleTheme()" id="themeBtn">[dark]</button>
+</nav>
 
-    <div class="container">
-        <!-- HOME -->
-        <div id="home" class="page active">
-            <div class="hero">
-                <div class="profile-image">
-                    <img id="profileImg" src="images/me.jpg" alt="Profile photo of Kartik">
-                </div>
-                <div class="hero-text">
-                    <h1>Kartik Chikkanagoudar</h1>
-                    <p class="subtitle">Electrical Engineering &middot; Solid State Devices</p>
-                    <p class="institution">Dual Degree (B.Tech + M.Tech) &middot; IIT Bombay &middot; 2026</p>
-                    <div class="contact-icons">
-                        <a class="icon-tile" href="mailto:kartikuc@iitb.ac.in" aria-label="Email">
-                            <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 3.2-8 5.3-8-5.3V6l8 5.3L20 6v1.2z"/></svg>
-                        </a>
-                        <a class="icon-tile" href="tel:+919969012868" aria-label="Phone">
-                            <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.7 15.7 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1.1-.23c1.2.48 2.5.75 3.8.8a1 1 0 0 1 1 1v3.3a1 1 0 0 1-1 1C10.3 22 2 13.7 2 3.7a1 1 0 0 1 1-1h3.3a1 1 0 0 1 1 1c.05 1.3.32 2.6.8 3.8a1 1 0 0 1-.23 1.1l-2.3 2.2z"/></svg>
-                        </a>
-                        <a class="icon-tile" href="https://github.com/MonolayerGraphene" target="_blank" rel="noopener" aria-label="GitHub">
-                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.85 9.71.5.09.69-.22.69-.49 0-.24-.01-.87-.01-1.71-2.79.62-3.38-1.36-3.38-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05 .9 1.57 2.36 1.12 2.94.86 .09-.67 .35-1.12 .63-1.38-2.23-.26-4.58-1.13-4.58-5 0-1.1 .38-2 .99-2.7-.1-.26-.43-1.32 .09-2.75 0 0 .84-.27 2.75 1.03 .8-.23 1.66-.35 2.52-.35s1.72.12 2.52.35c1.91-1.3 2.75-1.03 2.75-1.03 .52 1.43 .19 2.49 .09 2.75 .61.7 .99 1.6 .99 2.7 0 3.88-2.36 4.73-4.6 4.99 .36.32 .68.94 .68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27 .18.58 .69.49A10.04 10.04 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
-                        </a>
-                        <a class="icon-tile" href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank" rel="noopener" aria-label="LinkedIn">
-                            <svg viewBox="0 0 24 24"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V23h-4V8zM8 8h3.8v2.05h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.79 2.66 4.79 6.12V23h-4v-7.03c0-1.68-.03-3.84-2.34-3.84-2.35 0-2.71 1.83-2.71 3.72V23h-4V8z"/></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
+<div class="shell">
 
-            <h2 class="reveal">About Me</h2>
-            <p class="about-text reveal">I am a final-year Dual Degree student in Electrical Engineering at IIT Bombay, specializing in Solid State Devices with a minor in Computer Science. My research interests include nanoelectronics, semiconductor physics, and device technology. Through various academic projects, I have explored different aspects of these areas and developed a strong foundation in both theory and experimentation. I believe in learning through practical application and have promoted this mindset as a co-founder of the HackerFab IIT Bombay chapter. I am driven by the immense scope for discovery and innovation in this field, which continues to inspire my academic and research pursuits.</p>
-            <p style="margin-top:16px;color:var(--text);font-size:1.02em;line-height:1.9;" class="reveal">Outside academics, I enjoy playing hockey, drumming, and tinkering around in Linux. I am also passionate about photography — you can find some of my favorite shots <a href="https://kartikuc.github.io/photobook/" target="_blank">here</a>.</p>
-
-            <h2 class="reveal">Research Interests</h2>
-            <ul class="about-list reveal">
-                <li>Device Physics &amp; Nanoelectronics</li>
-                <li>Semiconductor Modeling &amp; Simulation</li>
-                <li>III Nitride material and applications</li>
-                <li>2D materials and devices</li>
-                <li>Photonics &amp; Neuromorphic Computing</li>
-                <li>Physics-Based TCAD Simulations, Compact Modeling</li>
-            </ul>
-        </div>
-
-        <!-- EXPERIENCE -->
-        <div id="experience" class="page">
-            <h2>Research Experience</h2>
-            <p class="section-intro">Current and completed research projects in nanoelectronics, device physics, and semiconductor design</p>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/pcmo.png" alt="PCMO RRAMs"></div><div><div class="entry-title">Modeling and Simulation of PCMO RRAMs</div><div class="entry-meta">MeLoDe Lab, IIT Bombay &middot; Prof. Udayan Ganguly &middot; Feb 2025 – Present</div><div class="entry-description">Characterizing stochasticity in resistive random access memories through random variations in compact model parameters. Building unified physics-based TCAD models with SET/RESET transient modeling using advanced physics models.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/aln.png" alt="AlN BAW Resonator"></div><div><div class="entry-title">AlN BAW SMR Resonator and Filter Design</div><div class="entry-meta">Research Project, IIT Bombay &middot; Prof. Apurba Laha &middot; Jul 2024 – Dec 2024</div><div class="entry-description">Designed and optimized aluminum nitride bulk acoustic wave resonators with distributed Bragg reflectors. Achieved 3.6 GHz center frequency with high quality factor through systematic optimization.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/moke.png" alt="Magneto-optic Synapse"></div><div><div class="entry-title">Magneto-optic Synapse for Photonics-based Neuromorphic Computing</div><div class="entry-meta">Research Project, IIT Bombay &middot; Prof. Debanjan Bhowmik &middot; Dec 2023 – Apr 2024</div><div class="entry-description">Analytically examined perpendicular magnetic anisotropy materials for MOKE-based photonic memory applications. Developed Python simulations for magnetic domain-wall formation and propagation.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/755.png" alt="Coulomb Blockade"></div><div><div class="entry-title">Coulomb Blockade Spectroscopy in 2D Quantum Dots</div><div class="entry-meta">Research Project, IIT Bombay &middot; Prof. Bhaskaran Muralidharan &middot; Jul 2023 – Dec 2023</div><div class="entry-description">Developed Python-based simulation of Coulomb blockade phenomena using multi-electron Fock space representation. Examined current variations via SCF and Master equation procedures.</div></div></div></div>
-            <h2>Professional Experience</h2>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/bsim4.jpeg" alt="BSIM4"></div><div><div class="entry-title">BSIM4 Verilog-A Model Development</div><div class="entry-meta">Summer Intern, Micron Technology &middot; Jun 2025 – Jul 2025</div><div class="entry-description">Developed robust and augmentable MOSFET compact models by translating BSIM4 C code to VerilogA. Validated model performance across all operating points and conducted geometric parameter tuning.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/tifr.png" alt="TIFR"></div><div><div class="entry-title">Superconducting Resonator Design and Fabrication</div><div class="entry-meta">Research Intern, TIFR &middot; May 2024 – Jul 2024</div><div class="entry-description">Simulated superconducting resonator cavities optimizing bias filter configurations. Gained hands-on cleanroom experience fabricating van der Waals heterostructures.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/aerb.png" alt="AERB"></div><div><div class="entry-title">Reactor Physics and Control</div><div class="entry-meta">Project Intern, AERB &middot; May 2023 – Jul 2023</div><div class="entry-description">Simulated pressurized water reactor cores with neutron kinetics and xenon feedback. Designed and tuned PID controllers for reactor power regulation.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/hackerfab.jpg" alt="HackerFab"></div><div><div class="entry-title">HackerFab IITB Initiative</div><div class="entry-meta">Co-Founder &middot; Aug 2025 – Present</div><div class="entry-description">Co-founding India's first bottom-up, student-led semiconductor fabrication facility. Leading development of low-cost maskless photolithography and automated processing systems.</div></div></div></div>
-        </div>
-
-        <!-- PROJECTS -->
-        <div id="projects" class="page">
-            <h2>Projects</h2>
-            <p class="section-intro">Technical projects, course work, and competitions</p>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/724.png" alt="Nanowire FeFET"></div><div><div class="entry-title">Nanowire FeFET Mirrorbit Characterization and Variability Analysis</div><div class="entry-meta">Nanoelectronics Course, IIT Bombay &middot; Prof. Udayan Ganguly &middot; Mar 2024 – May 2024</div><div class="entry-description">Simulated silicon-based nanowire ferroelectric FETs to analyze reliability and memory state differentiation in MirrorBit architecture. Identified metal grain granularity as dominant source of threshold voltage variability.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/edl.jpg" alt="Electroluminescence"></div><div><div class="entry-title">Electroluminescence Imaging of Solar Cells</div><div class="entry-meta">Electronic Design Lab, IIT Bombay &middot; Prof. Siddharth Tallur &middot; Jan 2024 – Apr 2024</div><div class="entry-description">Developed cost-effective portable device for contactless fault detection and quality assessment of solar cells. Integrated embedded systems with image processing for local series resistance extraction.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/618.png" alt="OTA"></div><div><div class="entry-title">Simulation of PMOS Two-Stage OTA</div><div class="entry-meta">CMOS Analog VLSI Design, IIT Bombay &middot; Prof. Rajesh Zele &middot; Sep 2024 – Nov 2024</div><div class="entry-description">Designed differential two-stage PMOS operational transconductance amplifier in Cadence Virtuoso with post-layout parasitic extraction and validation.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/309.png" alt="RISC"></div><div><div class="entry-title">Pipeline RISC Processor Design</div><div class="entry-meta">Microprocessors Course, IIT Bombay &middot; Prof. Virendra Singh &middot; Mar 2024 – May 2024</div><div class="entry-description">Designed and simulated 16-bit superscalar RISC processor with two-way fetch and advanced pipeline architecture. Implemented load queue and store buffer for enhanced parallelization.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/jlr.png" alt="Chiplet"></div><div><div class="entry-title">Chiplet Technology in Automotive Systems</div><div class="entry-meta">Inter IIT Tech Meet 12.0, JLR &middot; Nov 2023 – Dec 2023</div><div class="entry-description">Engineered specialized chiplets for ADAS and autonomous vehicle applications. Developed micro-architecture for L4–L5 driving systems with extensive market research and analysis.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/matsya.jpg" alt="AUV"></div><div><div class="entry-title">Matsya Autonomous Underwater Vehicle</div><div class="entry-meta">Team AUV-IITB &middot; Dec 2021 – Dec 2022</div><div class="entry-description">Designed and optimized front frame of Matsya 6 AUV with actuator positioning. Collaborated on Mini RC 5-DOF submarine prototype with Drona Aviation.</div></div></div></div>
-            <div class="entry reveal"><div class="entry-grid"><div class="entry-image"><img src="images/755.png" alt="Graphene"></div><div><div class="entry-title">Transport in Few-Layer Graphene Nanoscale Devices</div><div class="entry-meta">Quantum Transport in Nanoscale Devices, IIT Bombay &middot; Dec 2022 – Jun 2023</div><div class="entry-description">Simulated current flow in graphene ribbons using KWANT software in ballistic and quantum regimes. Analyzed quantization of conductance in 2D electron gas.</div></div></div></div>
-        </div>
-
-        <!-- TEACHING -->
-        <div id="teaching" class="page">
-            <h2>Teaching &amp; Mentorship</h2>
-            <p class="section-intro">Teaching assistant roles, mentorship, and student guidance</p>
-            <div class="entry reveal"><div class="entry-title">Teaching Assistant – VLSI Technology</div><div class="entry-meta">Department of Electrical Engineering, IIT Bombay &middot; Aug 2025 – Present</div><div class="entry-description">Teaching assistant for core VLSI technology course. Responsibilities include quiz administration, paper grading, doubt resolution sessions, and exam support.</div></div>
-            <div class="entry reveal"><div class="entry-title">Teaching Assistant – 28nm CMOS Device &amp; Process Technology</div><div class="entry-meta">Department of Electrical Engineering, IIT Bombay &middot; Nov 2025 (Upcoming)</div><div class="entry-description">Upcoming TA role for advanced device and process technology course focusing on modern semiconductor technology nodes.</div></div>
-            <div class="entry reveal"><div class="entry-title">Teaching Assistant – Introduction to Biology</div><div class="entry-meta">Department of Biosciences and Bioengineering, IIT Bombay &middot; Aug 2024 – Dec 2024</div><div class="entry-description">Teaching assistant for foundational biology course with 35+ students. Conducted weekly live tutorial sessions, quiz administration, grading, and exam support.</div></div>
-            <div class="entry reveal"><div class="entry-title">Institute Student Mentor</div><div class="entry-meta">Student Mentorship Program, IIT Bombay &middot; Jun 2023 – May 2024</div><div class="entry-description">Handpicked as Institute Student Mentor (1 among 13 positions from 350+ candidates). Mentored 12 first-year students through personal and academic development.</div></div>
-            <div class="entry reveal"><div class="entry-title">Department Academic Mentor</div><div class="entry-meta">Student Mentorship Program, IIT Bombay &middot; Jun 2023 – May 2024</div><div class="entry-description">Selected among 50 students from 150 candidates. Provided academic mentorship to 6 second-year students and curated course resources for Electrical Engineering students.</div></div>
-            <div class="entry reveal"><div class="entry-title">Student Mentoring – XLR8 Initiative</div><div class="entry-meta">Electronics and Robotics Club, IIT Bombay &middot; 2023, 2024</div><div class="entry-description">Mentored groups of 4 students for XLR8 robotics initiative. Provided technical guidance and project support.</div></div>
-            <div class="entry reveal"><div class="entry-title">Student Mentoring – ITSP 2023</div><div class="entry-meta">Institute Technical Council, IIT Bombay &middot; 2023</div><div class="entry-description">Mentored group of 4 students for Institute Technical Summer Project providing technical guidance and project supervision.</div></div>
-        </div>
-
-        <!-- ACADEMICS -->
-        <div id="academics" class="page">
-            <h2>Academic Coursework <span class="cgpa-badge">CGPA 8.74 / 10.0</span></h2>
-            <p class="section-intro">Relevant courses from B.Tech and M.Tech curriculum at IIT Bombay</p>
-            <h2 class="academics-sub reveal">Nanoelectronics &amp; Device Physics</h2>
-            <ul class="course-list reveal">
-                <li>2D Materials and Devices (Prof. Saurabh Lodha)</li>
-                <li>Growth and Characterization of Nano-electronic Materials (Prof. Apurba Laha)</li>
-                <li>Nanoelectronics (Prof. Udayan Ganguly)</li>
-                <li>Quantum Transport in Nanoscale Devices (Prof. Bhaskaran Muralidharan)</li>
-                <li>Physics of Transistors (Prof. Souvik Mahapatra)</li>
-                <li>Compound Semiconductor Material and Devices (Prof. Apurba Laha)</li>
-            </ul>
-            <h2 class="academics-sub reveal">VLSI &amp; Circuit Design</h2>
-            <ul class="course-list reveal">
-                <li>VLSI Technology (Prof. Anil Kottantharayil)</li>
-                <li>Microelectronics Lab (Prof. Veeresh Deshpande)</li>
-                <li>Microelectronics Simulations Lab (Prof. Sandip Mondal)</li>
-                <li>CMOS Analog VLSI Design (Prof. Rajesh Zele)</li>
-                <li>VLSI Design (Prof. Dinesh Kumar)</li>
-                <li>Processor Design (Prof. Virendra Singh)</li>
-            </ul>
-            <h2 class="academics-sub reveal">Electrical Engineering Core</h2>
-            <ul class="course-list reveal">
-                <li>Photonics System Engineering (Prof. Arun Surendran)</li>
-                <li>Electromagnetic Waves (Prof. Bhaskaran Muralidharan)</li>
-                <li>Communication Systems – I (Prof. Gaurav Kasbekar)</li>
-                <li>Control Systems (Prof. Debraj Chakraborty)</li>
-                <li>Microprocessors (Prof. Virendra Singh)</li>
-                <li>Electronic Design Lab (Prof. Saurabh Lodha)</li>
-            </ul>
-            <h2 class="academics-sub reveal">Computer Science (Minor)</h2>
-            <ul class="course-list reveal">
-                <li>Logic for Computer Science (Prof. Supratik Chakraborty)</li>
-                <li>Operating Systems (Prof. Mythili Vutukurru)</li>
-                <li>Data Structures and Algorithms (Prof. Milind Sohoni)</li>
-                <li>Introduction to Machine Learning (Prof. Amit Sethi)</li>
-            </ul>
-        </div>
-
-        <!-- CV -->
-        <div id="cv" class="page">
-            <h2>Curriculum Vitae</h2>
-            <div class="cv-section reveal">
-                <h3>Education</h3>
-                <div class="cv-entry"><div class="cv-entry-title">Indian Institute of Technology Bombay</div><div class="cv-entry-subtitle">Integrated B.Tech + M.Tech in Electrical Engineering (Solid State Devices) | CGPA: 8.74/10.0 | 2021 – 2026</div><div class="cv-entry-description">Major in Electrical Engineering with specialization in Solid State Devices and a minor in Computer Science</div></div>
-            </div>
-            <div class="cv-section reveal">
-                <h3>Honors and Awards</h3>
-                <div class="cv-entry-description"><ul>
-                    <li>Recipient of Micron Scholars fellowship, entailing industrial mentorship and a scholarship of 0.25+ Mn (2025)</li>
-                    <li>Recognized for providing the best solution to fabrication problem statement at Micron Day Hackathon (2025)</li>
-                    <li>Received the best project award in Nanoelectronics course for exemplary performance among 10+ teams (2024)</li>
-                    <li>Ranked among top 10 out of 60+ projects in the Electronic Design Lab for exceptional performance (2024)</li>
-                    <li>Secured a change of branch to Electrical Engineering Dual Degree, awarded to only 2% out of 1400+ (2022)</li>
-                    <li>JEE Advanced: 98.33 percentile | JEE Mains: 99.82 percentile | Maharashtra HSC INSPIRE Scholarship (2021)</li>
-                </ul></div>
-            </div>
-            <div class="cv-section reveal">
-                <h3>Research Experience</h3>
-                <div class="cv-entry"><div class="cv-entry-title">Modeling and Simulation of PCMO RRAMs</div><div class="cv-entry-subtitle">MeLoDe Lab, IIT Bombay | Prof. Udayan Ganguly &middot; Feb 2025 – Present</div><div class="cv-entry-description"><ul><li>Characterizing stochasticity in resistive random access memories through random variations in compact model parameters.</li><li>Building unified physics-based TCAD models with transient SET/RESET simulation using advanced physical mechanisms.</li></ul></div></div>
-                <div class="cv-entry"><div class="cv-entry-title">Magneto-optic Synapse for Photonics-based Neuromorphic Computing</div><div class="cv-entry-subtitle">IIT Bombay | Prof. Debanjan Bhowmik &middot; Dec 2023 – Apr 2024</div><div class="cv-entry-description"><ul><li>Analytically examined perpendicular magnetic anisotropy materials for MOKE-based photonic memory applications.</li><li>Developed Python simulations for domain-wall propagation and magnetic switching dynamics.</li></ul></div></div>
-                <div class="cv-entry"><div class="cv-entry-title">Coulomb Blockade Spectroscopy in 2D Quantum Dots</div><div class="cv-entry-subtitle">IIT Bombay | Prof. Bhaskaran Muralidharan &middot; Jul 2023 – Dec 2023</div><div class="cv-entry-description"><ul><li>Developed simulation framework using Fock-space and master equations for quantum dot transport.</li><li>Analyzed current quantization and electrostatic coupling effects in nanoscale systems.</li></ul></div></div>
-            </div>
-            <div class="cv-section reveal">
-                <h3>Professional Experience</h3>
-                <div class="cv-entry"><div class="cv-entry-title">BSIM4 Verilog-A Model Development</div><div class="cv-entry-subtitle">Micron Technology &middot; Summer Intern &middot; Jun 2025 – Jul 2025</div><div class="cv-entry-description"><ul><li>Translated BSIM4 C model to Verilog-A ensuring functional equivalence and simulation stability.</li><li>Validated and benchmarked model across process corners and device geometries.</li></ul></div></div>
-                <div class="cv-entry"><div class="cv-entry-title">Superconducting Resonator Design and Fabrication</div><div class="cv-entry-subtitle">TIFR &middot; May 2024 – Jul 2024</div><div class="cv-entry-description"><ul><li>Simulated superconducting resonator architectures and bias-filter networks.</li><li>Performed cleanroom fabrication and characterization of van der Waals heterostructures.</li></ul></div></div>
-                <div class="cv-entry"><div class="cv-entry-title">Reactor Physics and Control</div><div class="cv-entry-subtitle">Atomic Energy Regulatory Board (AERB) &middot; May 2023 – Jul 2023</div><div class="cv-entry-description"><ul><li>Simulated pressurized water reactor kinetics with xenon feedback and reactivity control.</li><li>Implemented PID control for automatic power regulation in transient conditions.</li></ul></div></div>
-            </div>
-            <div class="cv-section reveal">
-                <h3>Academic Projects</h3>
-                <div class="cv-entry"><div class="cv-entry-title">Nanowire FeFET Mirrorbit Characterization</div><div class="cv-entry-subtitle">Nanoelectronics | Prof. Udayan Ganguly &middot; Mar 2024 – May 2024</div><div class="cv-entry-description"><ul><li>Simulated silicon nanowire FeFETs to evaluate threshold variability from metal grain granularity.</li></ul></div></div>
-                <div class="cv-entry"><div class="cv-entry-title">Electroluminescence Imaging of Solar Cells</div><div class="cv-entry-subtitle">Electronic Design Lab | Prof. Siddharth Tallur &middot; Jan 2024 – Apr 2024</div><div class="cv-entry-description"><ul><li>Developed portable system integrating embedded imaging and analysis for contactless solar cell diagnostics.</li></ul></div></div>
-                <div class="cv-entry"><div class="cv-entry-title">Pipeline RISC Processor Design</div><div class="cv-entry-subtitle">Microprocessors | Prof. Virendra Singh &middot; Mar 2024 – May 2024</div><div class="cv-entry-description"><ul><li>Designed a 16-bit superscalar processor with two-way instruction fetch and pipelined architecture.</li></ul></div></div>
-            </div>
-            <div class="cv-section reveal">
-                <h3>Teaching and Mentorship</h3>
-                <div class="cv-entry-description"><ul>
-                    <li>Teaching Assistant – VLSI Technology (EE669) &middot; Aug 2025 – Present</li>
-                    <li>Teaching Assistant – 28nm CMOS Device &amp; Process Technology &middot; Nov 2025 (Upcoming)</li>
-                    <li>Teaching Assistant – Introduction to Biology (BS101) &middot; Aug 2024 – Dec 2024</li>
-                    <li>Institute Student Mentor &middot; Jun 2023 – May 2024</li>
-                    <li>Department Academic Mentor &middot; Jun 2023 – May 2024</li>
-                    <li>Student Mentor – ITSP &amp; XLR8 Initiatives &middot; 2023–2024</li>
-                </ul></div>
-            </div>
-            <div class="cv-section reveal">
-                <h3>Technical Skills</h3>
-                <div class="cv-entry-description"><ul>
-                    <li><strong>Simulation Tools:</strong> Synopsys Sentaurus TCAD, Silvaco ATLAS, Cadence Virtuoso, KWANT, COMSOL, Lumerical FDTD</li>
-                    <li><strong>Programming:</strong> Python, MATLAB, C/C++, Verilog-A, VHDL, Shell scripting</li>
-                    <li><strong>Design Tools:</strong> KiCad, LTspice, Fusion 360, AutoCAD, GDSII Layout Editing</li>
-                    <li><strong>Expertise:</strong> Semiconductor Device Physics, Compact Modeling, RRAM Characterization, Resonator Design, Quantum Transport</li>
-                </ul></div>
-            </div>
-            <div class="cv-section reveal">
-                <h3>Extracurricular Activities</h3>
-                <div class="cv-entry-description"><ul>
-                    <li>Co-Founder, <strong>HackerFab IITB</strong> — India's first student-led semiconductor fabrication initiative.</li>
-                    <li>Mentor, <strong>Electronics and Robotics Club</strong> — Guided multiple student projects and robotics initiatives.</li>
-                    <li>Member, <strong>Team AUV-IITB</strong> — Designed frame and control systems for Matsya 6 Autonomous Underwater Vehicle.</li>
-                </ul></div>
-            </div>
-        </div>
+<!-- ══════════════════ HOME ══════════════════ -->
+<div id="home" class="page on entering">
+  <div class="hero r">
+    <div>
+      <div class="hero-eyebrow">IIT Bombay · EE · Solid State Devices · 2026</div>
+      <h1 class="hero-name">Kartik<br><em>Chikkanagoudar</em></h1>
+      <p class="hero-sub" id="typewriter"><span class="typewriter-cursor"></span></p>
+      <div class="links">
+        <a href="mailto:kartikuc@iitb.ac.in">email</a>
+        <a href="tel:+919969012868">phone</a>
+        <a href="https://github.com/MonolayerGraphene" target="_blank">github</a>
+        <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank">linkedin</a>
+        <a href="https://kartikuc.github.io/photobook/" target="_blank">photos</a>
+      </div>
     </div>
+    <div class="hero-img"><img src="images/me.jpg" alt="Kartik"></div>
+  </div>
 
-    <script>
-    // ── Custom cursor ──────────────────────────────
-    const cursor = document.getElementById('cursor');
-    const ring   = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
+  <div class="label r">About</div>
+  <p class="prose r">Final-year Dual Degree student in Electrical Engineering at IIT Bombay, specializing in Solid State Devices with a minor in Computer Science. Research spans nanoelectronics, semiconductor physics, and device technology — both theoretical and experimental.</p>
+  <p class="prose r" style="margin-top:10px">Co-founder of <strong style="color:var(--text);font-weight:500;cursor:pointer" onclick="go('hackerfab')">HackerFab IIT Bombay</strong> — India's first student-built microfabrication lab, working to make hands-on chip fabrication accessible across India.</p>
 
-    document.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        cursor.style.left = mx + 'px';
-        cursor.style.top  = my + 'px';
-    });
+  <div class="label r" style="padding-top:32px">Research Interests</div>
+  <div class="grid-2 r">
+    <div class="g-item">Device Physics &amp; Nanoelectronics</div>
+    <div class="g-item">Semiconductor Modeling &amp; Simulation</div>
+    <div class="g-item">III-Nitride Materials &amp; Applications</div>
+    <div class="g-item">2D Materials and Devices</div>
+    <div class="g-item">Photonics &amp; Neuromorphic Computing</div>
+    <div class="g-item">TCAD Simulations &amp; Compact Modeling</div>
+  </div>
+</div>
 
-    (function animRing() {
-        rx += (mx - rx) * 0.11;
-        ry += (my - ry) * 0.11;
-        ring.style.left = rx + 'px';
-        ring.style.top  = ry + 'px';
-        requestAnimationFrame(animRing);
-    })();
+<!-- ══════════════════ EXPERIENCE ══════════════════ -->
+<div id="experience" class="page">
+  <div class="label r">Research Experience</div>
+  <div class="r">
+    <div class="row"><div class="row-date">2025<br>now</div><div class="row-body"><div class="row-title">Modeling and Simulation of PCMO RRAMs</div><div class="row-org">MeLoDe Lab, IIT Bombay · Prof. Udayan Ganguly</div><div class="row-desc">Characterizing stochasticity via compact model parameter variations. Building unified physics-based TCAD models with SET/RESET transient simulation.</div><div class="row-tags"><span class="tag">TCAD</span><span class="tag">RRAM</span><span class="tag">Compact Modeling</span></div></div></div>
+    <div class="row"><div class="row-date">Jul–Dec<br>2024</div><div class="row-body"><div class="row-title">AlN BAW SMR Resonator and Filter Design</div><div class="row-org">IIT Bombay · Prof. Apurba Laha</div><div class="row-desc">AlN bulk acoustic wave resonators with distributed Bragg reflectors. 3.6 GHz center frequency with high quality factor.</div><div class="row-tags"><span class="tag">MEMS</span><span class="tag">RF Design</span><span class="tag">AlN</span></div></div></div>
+    <div class="row"><div class="row-date">Dec 23<br>Apr 24</div><div class="row-body"><div class="row-title">Magneto-optic Synapse for Neuromorphic Computing</div><div class="row-org">IIT Bombay · Prof. Debanjan Bhowmik</div><div class="row-desc">PMA materials for MOKE-based photonic memory. Python simulations for domain-wall formation and propagation.</div><div class="row-tags"><span class="tag">Photonics</span><span class="tag">Neuromorphic</span><span class="tag">Python</span></div></div></div>
+    <div class="row"><div class="row-date">Jul–Dec<br>2023</div><div class="row-body"><div class="row-title">Coulomb Blockade Spectroscopy in 2D Quantum Dots</div><div class="row-org">IIT Bombay · Prof. Bhaskaran Muralidharan</div><div class="row-desc">Python simulation via multi-electron Fock space. Current analysis via SCF and Master equation procedures.</div><div class="row-tags"><span class="tag">Quantum Transport</span><span class="tag">2D Materials</span><span class="tag">Python</span></div></div></div>
+  </div>
 
-    document.querySelectorAll('a, button, .icon-tile, .entry, .profile-image, .theme-toggle, .nav-link')
-        .forEach(el => {
-            el.addEventListener('mouseenter', () => ring.classList.add('expand'));
-            el.addEventListener('mouseleave', () => ring.classList.remove('expand'));
-        });
+  <div class="label r">Professional Experience</div>
+  <div class="r">
+    <div class="row"><div class="row-date">Jun–Jul<br>2025</div><div class="row-body"><div class="row-title">BSIM4 Verilog-A Model Development</div><div class="row-org">Micron Technology · Summer Intern</div><div class="row-desc">Translated BSIM4 C code to VerilogA. Validated across all operating points and device geometries. Geometric parameter tuning.</div><div class="row-tags"><span class="tag">Verilog-A</span><span class="tag">MOSFET</span><span class="tag">BSIM4</span></div></div></div>
+    <div class="row"><div class="row-date">May–Jul<br>2024</div><div class="row-body"><div class="row-title">Superconducting Resonator Design &amp; Fabrication</div><div class="row-org">TIFR</div><div class="row-desc">Resonator cavity simulation and bias filter optimization. Cleanroom fabrication of van der Waals heterostructures.</div><div class="row-tags"><span class="tag">Superconducting</span><span class="tag">Cleanroom</span><span class="tag">vdW</span></div></div></div>
+    <div class="row"><div class="row-date">May–Jul<br>2023</div><div class="row-body"><div class="row-title">Reactor Physics and Control</div><div class="row-org">Atomic Energy Regulatory Board (AERB)</div><div class="row-desc">PWR core simulation with neutron kinetics and xenon feedback. PID controllers for reactor power regulation.</div><div class="row-tags"><span class="tag">Reactor Physics</span><span class="tag">PID</span><span class="tag">Control</span></div></div></div>
+  </div>
+</div>
 
-    document.addEventListener('mouseleave', () => { cursor.style.opacity=0; ring.style.opacity=0; });
-    document.addEventListener('mouseenter', () => { cursor.style.opacity=1; ring.style.opacity=1; });
+<!-- ══════════════════ HACKERFAB ══════════════════ -->
+<div id="hackerfab" class="page">
+  <div class="hf-hero r">
+    <div class="hf-kicker">Founded August 2025 · Co-Founder</div>
+    <h2 class="hf-title">HackerFab<br><em>IIT Bombay</em></h2>
+    <p class="hf-tagline">India's first student-built microfabrication lab.</p>
+    <div class="hf-links">
+      <a href="https://hackerfabiitb.github.io/" target="_blank">website ↗</a>
+      <a href="mailto:hackerfabiitb@gmail.com">contact</a>
+      <a href="https://docs.hackerfab.org/home/" target="_blank">docs ↗</a>
+    </div>
+  </div>
 
-    // ── Scroll progress ────────────────────────────
-    const scrollBar = document.getElementById('scrollBar');
-    window.addEventListener('scroll', () => {
-        const pct = (document.documentElement.scrollTop /
-            (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100;
-        scrollBar.style.width = pct + '%';
-    });
+  <div class="label r">What We're Building</div>
+  <div class="hf-pillars r">
+    <div class="hf-pillar">
+      <div class="hf-pillar-icon">Fabrication</div>
+      <div class="hf-pillar-text">Open-source, student-designed fabrication tools. Why should TSMC have all the fun? We're building the machines that build the chips.</div>
+    </div>
+    <div class="hf-pillar">
+      <div class="hf-pillar-icon">Education</div>
+      <div class="hf-pillar-text">Integrating our tools with coursework at IITB. Hands-on chip fabrication as a real learning experience, not just theory.</div>
+    </div>
+    <div class="hf-pillar">
+      <div class="hf-pillar-icon">Community</div>
+      <div class="hf-pillar-text">Part of the global HackerFab network. Growing a pan-India movement to make semiconductor access a reality beyond elite institutions.</div>
+    </div>
+  </div>
 
-    // ── Page transitions ───────────────────────────
-    const sweep = document.getElementById('sweep');
+  <div class="label r">Technical Roadmap</div>
+  <div class="r">
+    <div class="hf-goal">
+      <div class="hf-goal-status active">IN PROGRESS</div>
+      <div>
+        <div class="hf-goal-title">Maskless Lithography</div>
+        <div class="hf-goal-body">Achieved 1µm feature size patterning on Litho v1. First micrometer-scale patterns captured Dec 2025.</div>
+      </div>
+    </div>
+    <div class="hf-goal">
+      <div class="hf-goal-status active">IN PROGRESS</div>
+      <div>
+        <div class="hf-goal-title">Spin Coater</div>
+        <div class="hf-goal-body">Demonstrated closed-loop control up to 6000 rpm. Enables uniform resist deposition for lithography.</div>
+      </div>
+    </div>
+    <div class="hf-goal">
+      <div class="hf-goal-status planned">PLANNED</div>
+      <div>
+        <div class="hf-goal-title">RF Sputtering</div>
+        <div class="hf-goal-body">First deposition tool. Will enable metal and dielectric thin-film deposition in-house.</div>
+      </div>
+    </div>
+    <div class="hf-goal">
+      <div class="hf-goal-status planned">PLANNED</div>
+      <div>
+        <div class="hf-goal-title">Tube Furnace</div>
+        <div class="hf-goal-body">±2°C precision at temperatures up to 1100°C. Required for oxidation and annealing steps.</div>
+      </div>
+    </div>
+  </div>
 
-    function showPage(pageId) {
-        sweep.style.transform = 'scaleX(1)';
-        setTimeout(() => { sweep.style.transform = 'scaleX(0)'; sweep.style.transformOrigin = 'right'; }, 500);
-        setTimeout(() => { sweep.style.transformOrigin = 'left'; }, 600);
+  <div class="label r">Timeline</div>
+  <div class="hf-timeline r">
+    <div class="hf-event">
+      <div class="hf-event-date">DEC 2025</div>
+      <div class="hf-event-title">Patterns captured on Litho v1</div>
+      <div class="hf-event-body">First micrometer-scale patterns achieved. A major proof-of-concept milestone for the lithography machine.</div>
+    </div>
+    <div class="hf-event">
+      <div class="hf-event-date">DEC 2025</div>
+      <div class="hf-event-title">Community grows to 40+ members</div>
+      <div class="hf-event-body">Expanded outreach beyond IITB, growing a 40-member Discord community across colleges.</div>
+    </div>
+    <div class="hf-event">
+      <div class="hf-event-date">OCT 2025</div>
+      <div class="hf-event-title">Community milestone: 50 members</div>
+      <div class="hf-event-body">First major community milestone on the path to a pan-India network.</div>
+    </div>
+    <div class="hf-event">
+      <div class="hf-event-date">SEP 2025</div>
+      <div class="hf-event-title">Presented at SemiX</div>
+      <div class="hf-event-body">Presented proof-of-concepts for spin coater and lithography. Part of a panel discussion on "Advancing India's Semiconductor Ecosystem".</div>
+    </div>
+    <div class="hf-event">
+      <div class="hf-event-date">SEP 2025</div>
+      <div class="hf-event-title">Lab setup complete</div>
+      <div class="hf-event-body">First functional fabrication workspace established at IIT Bombay.</div>
+    </div>
+    <div class="hf-event">
+      <div class="hf-event-date">AUG 2025</div>
+      <div class="hf-event-title">HackerFab IITB founded</div>
+      <div class="hf-event-body">The beginning. A group of students determined to democratize semiconductor fabrication in India.</div>
+    </div>
+  </div>
+</div>
 
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        event.target.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+<!-- ══════════════════ ACADEMICS ══════════════════ -->
+<div id="academics" class="page">
 
-        // Re-trigger reveals
-        setTimeout(() => {
-            document.querySelectorAll('#' + pageId + ' .reveal').forEach((el, i) => {
-                el.classList.remove('visible');
-                el.style.transitionDelay = (i * 0.055) + 's';
-                setTimeout(() => el.classList.add('visible'), 40);
-            });
-        }, 60);
-    }
+  <!-- Projects sub-section -->
+  <div class="label r">Projects</div>
+  <div class="r">
+    <div class="row"><div class="row-date">Mar–May<br>2024</div><div class="row-body"><div class="row-inner"><div class="thumb"><img src="images/724.png" alt="FeFET"></div><div><div class="row-title">Nanowire FeFET Mirrorbit Characterization &amp; Variability Analysis</div><div class="row-org">Nanoelectronics · Prof. Udayan Ganguly · Best Project Award</div><div class="row-desc">Si nanowire FeFET simulation for MirrorBit reliability. Metal grain granularity as dominant Vth variability source.</div><div class="row-tags"><span class="tag">FeFET</span><span class="tag">TCAD</span><span class="tag">Variability</span></div></div></div></div></div>
+    <div class="row"><div class="row-date">Jan–Apr<br>2024</div><div class="row-body"><div class="row-inner"><div class="thumb"><img src="images/edl.jpg" alt="EL"></div><div><div class="row-title">Electroluminescence Imaging of Solar Cells</div><div class="row-org">Electronic Design Lab · Prof. Siddharth Tallur · Top 10 of 60+</div><div class="row-desc">Portable contactless solar cell fault detection. Embedded + image processing for series resistance extraction.</div><div class="row-tags"><span class="tag">Embedded</span><span class="tag">Imaging</span><span class="tag">Solar</span></div></div></div></div></div>
+    <div class="row"><div class="row-date">Sep–Nov<br>2024</div><div class="row-body"><div class="row-inner"><div class="thumb"><img src="images/618.png" alt="OTA"></div><div><div class="row-title">PMOS Two-Stage OTA Design</div><div class="row-org">CMOS Analog VLSI · Prof. Rajesh Zele</div><div class="row-desc">Differential two-stage PMOS OTA in Cadence Virtuoso. Post-layout parasitic extraction.</div><div class="row-tags"><span class="tag">Cadence</span><span class="tag">Analog</span><span class="tag">VLSI</span></div></div></div></div></div>
+    <div class="row"><div class="row-date">Mar–May<br>2024</div><div class="row-body"><div class="row-inner"><div class="thumb"><img src="images/309.png" alt="RISC"></div><div><div class="row-title">Pipeline RISC Processor Design</div><div class="row-org">Microprocessors · Prof. Virendra Singh</div><div class="row-desc">16-bit superscalar RISC with two-way fetch, load queue, store buffer.</div><div class="row-tags"><span class="tag">RISC</span><span class="tag">Pipeline</span><span class="tag">VHDL</span></div></div></div></div></div>
+    <div class="row"><div class="row-date">Nov–Dec<br>2023</div><div class="row-body"><div class="row-inner"><div class="thumb"><img src="images/jlr.png" alt="Chiplet"></div><div><div class="row-title">Chiplet Technology in Automotive Systems</div><div class="row-org">Inter IIT Tech Meet 12.0 · JLR</div><div class="row-desc">Specialized chiplets for ADAS. Micro-architecture for L4–L5 autonomous driving.</div><div class="row-tags"><span class="tag">Chiplet</span><span class="tag">ADAS</span><span class="tag">Automotive</span></div></div></div></div></div>
+    <div class="row"><div class="row-date">2021–22</div><div class="row-body"><div class="row-inner"><div class="thumb"><img src="images/matsya.jpg" alt="AUV"></div><div><div class="row-title">Matsya Autonomous Underwater Vehicle</div><div class="row-org">Team AUV-IITB</div><div class="row-desc">Frame and actuator design for Matsya 6. Mini RC 5-DOF submarine with Drona Aviation.</div><div class="row-tags"><span class="tag">Robotics</span><span class="tag">AUV</span><span class="tag">Mechanical</span></div></div></div></div></div>
+  </div>
 
-    // ── Theme toggle ───────────────────────────────
-    function toggleTheme() {
-        document.body.classList.toggle('light-mode');
-        const icon = document.getElementById('themeIcon');
-        if (document.body.classList.contains('light-mode')) {
-            icon.innerHTML = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a1 1 0 0 0-1.41 0 1 1 0 0 0 0 1.41l1.06 1.06a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41L5.99 4.58zm12.37 12.37a1 1 0 0 0-1.41 0 1 1 0 0 0 0 1.41l1.06 1.06a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-1.06-1.06zm1.06-10.96a1 1 0 0 0 0-1.41 1 1 0 0 0-1.41 0l-1.06 1.06a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l1.06-1.06zM7.05 18.36a1 1 0 0 0 0-1.41 1 1 0 0 0-1.41 0l-1.06 1.06a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l1.06-1.06z"/>';
-        } else {
-            icon.innerHTML = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
+  <!-- Teaching sub-section -->
+  <div class="label r">Teaching &amp; Mentorship</div>
+  <div class="r">
+    <div class="row"><div class="row-date">2025<br>now</div><div class="row-body"><div class="row-title">Teaching Assistant — VLSI Technology (EE669)</div><div class="row-org">IIT Bombay · Electrical Engineering</div><div class="row-desc">Quiz administration, grading, doubt resolution, exam support for core VLSI course.</div></div></div>
+    <div class="row"><div class="row-date">Nov 2025</div><div class="row-body"><div class="row-title">Teaching Assistant — 28nm CMOS Device &amp; Process Technology</div><div class="row-org">IIT Bombay · Electrical Engineering</div><div class="row-desc">Advanced course on modern semiconductor technology nodes.</div></div></div>
+    <div class="row"><div class="row-date">Aug–Dec<br>2024</div><div class="row-body"><div class="row-title">Teaching Assistant — Introduction to Biology (BS101)</div><div class="row-org">IIT Bombay · Biosciences</div><div class="row-desc">35+ students. Weekly tutorials, quizzes, grading, exam support.</div></div></div>
+    <div class="row"><div class="row-date">Jun 23<br>May 24</div><div class="row-body"><div class="row-title">Institute Student Mentor</div><div class="row-org">Student Mentorship Program · 1 of 13 from 350+</div><div class="row-desc">Mentored 12 first-year students through academic and personal development.</div></div></div>
+    <div class="row"><div class="row-date">Jun 23<br>May 24</div><div class="row-body"><div class="row-title">Department Academic Mentor</div><div class="row-org">Student Mentorship Program · Selected from 150</div><div class="row-desc">Academic guidance for 6 second-year EE students. Curated course resources for the department.</div></div></div>
+    <div class="row"><div class="row-date">2023–24</div><div class="row-body"><div class="row-title">Student Mentoring — XLR8 &amp; ITSP</div><div class="row-org">Electronics &amp; Robotics Club · ITC</div><div class="row-desc">Technical guidance across robotics and project initiatives.</div></div></div>
+  </div>
+
+  <!-- Coursework sub-section -->
+  <div class="label r">Coursework</div>
+  <div class="r">
+    <div class="course-group"><div class="cg-title">Nanoelectronics &amp; Device Physics</div><div class="chip-grid"><div class="chip">2D Materials and Devices<small>Prof. Saurabh Lodha</small></div><div class="chip">Growth &amp; Characterization of Nanoelectronic Materials<small>Prof. Apurba Laha</small></div><div class="chip">Nanoelectronics<small>Prof. Udayan Ganguly</small></div><div class="chip">Quantum Transport in Nanoscale Devices<small>Prof. Bhaskaran Muralidharan</small></div><div class="chip">Physics of Transistors<small>Prof. Souvik Mahapatra</small></div><div class="chip">Compound Semiconductor Devices<small>Prof. Apurba Laha</small></div></div></div>
+    <div class="course-group"><div class="cg-title">VLSI &amp; Circuit Design</div><div class="chip-grid"><div class="chip">VLSI Technology<small>Prof. Anil Kottantharayil</small></div><div class="chip">Microelectronics Lab<small>Prof. Veeresh Deshpande</small></div><div class="chip">Microelectronics Simulations Lab<small>Prof. Sandip Mondal</small></div><div class="chip">CMOS Analog VLSI Design<small>Prof. Rajesh Zele</small></div><div class="chip">VLSI Design<small>Prof. Dinesh Kumar</small></div><div class="chip">Processor Design<small>Prof. Virendra Singh</small></div></div></div>
+    <div class="course-group"><div class="cg-title">Electrical Engineering Core</div><div class="chip-grid"><div class="chip">Photonics System Engineering<small>Prof. Arun Surendran</small></div><div class="chip">Electromagnetic Waves<small>Prof. Bhaskaran Muralidharan</small></div><div class="chip">Communication Systems – I<small>Prof. Gaurav Kasbekar</small></div><div class="chip">Control Systems<small>Prof. Debraj Chakraborty</small></div><div class="chip">Microprocessors<small>Prof. Virendra Singh</small></div><div class="chip">Electronic Design Lab<small>Prof. Saurabh Lodha</small></div></div></div>
+    <div class="course-group"><div class="cg-title">Computer Science Minor</div><div class="chip-grid"><div class="chip">Logic for Computer Science<small>Prof. Supratik Chakraborty</small></div><div class="chip">Operating Systems<small>Prof. Mythili Vutukurru</small></div><div class="chip">Data Structures and Algorithms<small>Prof. Milind Sohoni</small></div><div class="chip">Introduction to Machine Learning<small>Prof. Amit Sethi</small></div></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════ HOBBIES ══════════════════ -->
+<div id="hobbies" class="page">
+  <div class="label r">Things I Build &amp; Do</div>
+  <div class="hobby-grid r">
+
+    <a class="hobby-card" href="https://kartikuc.github.io/photobook/" target="_blank" rel="noopener">
+      <div class="hobby-kicker">Photography</div>
+      <div class="hobby-title">Photobook</div>
+      <div class="hobby-desc">A collection of photographs — places, moments, light. Shot mostly on walks and travels.</div>
+    </a>
+
+    <a class="hobby-card" href="#" target="_blank" rel="noopener">
+      <div class="hobby-kicker">Game · Built from scratch</div>
+      <div class="hobby-title">Online Cabo</div>
+      <div class="hobby-desc">A multiplayer implementation of the card game Cabo. Built for fun, playable in the browser.</div>
+    </a>
+
+    <a class="hobby-card" href="https://github.com/MonolayerGraphene" target="_blank" rel="noopener">
+      <div class="hobby-kicker">Code</div>
+      <div class="hobby-title">GitHub</div>
+      <div class="hobby-desc">Scripts, simulations, and side projects. Mostly Python, some VHDL, occasional Linux configs.</div>
+    </a>
+
+    <a class="hobby-card" onclick="go('hackerfab'); return false;" href="#">
+      <div class="hobby-kicker">Hardware · Co-Founder</div>
+      <div class="hobby-title">HackerFab IIT Bombay</div>
+      <div class="hobby-desc">Building lithography machines and spin coaters from scratch. India's first student-run semiconductor fab.</div>
+    </a>
+
+    <a class="hobby-card wide" href="#" style="pointer-events:none;opacity:.55">
+      <div class="hobby-kicker">Coming soon</div>
+      <div class="hobby-title">More projects being added</div>
+      <div class="hobby-desc">Hockey on weekends. Drums when the deadline isn't tomorrow. Deep in Linux configs most other times.</div>
+    </a>
+
+  </div>
+</div>
+
+<!-- ══════════════════ CV ══════════════════ -->
+<div id="cv" class="page">
+  <div class="label r">CV</div>
+  <div class="cv-timeline r">
+    <div class="cv-sec">
+      <div class="cv-label">Education</div>
+      <div class="cv-item">
+        <div class="cv-title">Indian Institute of Technology Bombay</div>
+        <div class="cv-sub">B.Tech + M.Tech · Electrical Engineering (Solid State Devices) · 2021–2026</div>
+        <div class="cv-body">Major in EE with specialization in Solid State Devices. Minor in Computer Science.</div>
+      </div>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-label">Honours &amp; Awards</div>
+      <div class="cv-body"><ul>
+        <li>Micron Scholars fellowship — mentorship + scholarship of 0.25+ Mn (2025)</li>
+        <li>Best solution, Micron Day Hackathon fabrication problem (2025)</li>
+        <li>Best project award, Nanoelectronics course among 10+ teams (2024)</li>
+        <li>Top 10 of 60+, Electronic Design Lab (2024)</li>
+        <li>Branch change to EE Dual Degree — awarded to 2% of 1400+ (2022)</li>
+        <li>JEE Advanced 98.33 percentile · INSPIRE Scholarship (2021)</li>
+      </ul></div>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-label">Research</div>
+      <div class="cv-item"><div class="cv-title">Modeling and Simulation of PCMO RRAMs</div><div class="cv-sub">MeLoDe Lab, IIT Bombay · Feb 2025–present</div><div class="cv-body">Physics-based TCAD SET/RESET transient modeling. Stochasticity via compact model parameter variations.</div></div>
+      <div class="cv-item"><div class="cv-title">AlN BAW SMR Resonator and Filter Design</div><div class="cv-sub">IIT Bombay · Jul–Dec 2024</div><div class="cv-body">3.6 GHz bulk acoustic wave resonators with distributed Bragg reflectors.</div></div>
+      <div class="cv-item"><div class="cv-title">Magneto-optic Synapse for Neuromorphic Computing</div><div class="cv-sub">IIT Bombay · Dec 2023–Apr 2024</div><div class="cv-body">MOKE photonic memory. Domain-wall propagation simulations in Python.</div></div>
+      <div class="cv-item"><div class="cv-title">Coulomb Blockade Spectroscopy in 2D Quantum Dots</div><div class="cv-sub">IIT Bombay · Jul–Dec 2023</div><div class="cv-body">Fock-space + master equation framework for quantum dot transport.</div></div>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-label">Professional</div>
+      <div class="cv-item"><div class="cv-title">BSIM4 Verilog-A Model Development · Micron Technology</div><div class="cv-sub">Summer Intern · Jun–Jul 2025</div><div class="cv-body">BSIM4 C → VerilogA. Validation across process corners and geometries.</div></div>
+      <div class="cv-item"><div class="cv-title">Superconducting Resonator · TIFR</div><div class="cv-sub">May–Jul 2024</div><div class="cv-body">Resonator simulation. Cleanroom vdW heterostructure fabrication.</div></div>
+      <div class="cv-item"><div class="cv-title">Reactor Physics and Control · AERB</div><div class="cv-sub">May–Jul 2023</div><div class="cv-body">PWR kinetics with xenon feedback. PID power regulation.</div></div>
+      <div class="cv-item"><div class="cv-title">HackerFab IIT Bombay · Co-Founder</div><div class="cv-sub">Aug 2025–present</div><div class="cv-body">India's first student-built microfabrication lab. Maskless lithography to 1µm feature size. 50+ member community.</div></div>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-label">Technical Skills</div>
+      <div class="cv-body"><ul>
+        <li><strong>Simulation:</strong> Sentaurus TCAD, Silvaco ATLAS, Cadence Virtuoso, KWANT, COMSOL, Lumerical FDTD</li>
+        <li><strong>Programming:</strong> Python, MATLAB, C/C++, Verilog-A, VHDL, Shell</li>
+        <li><strong>Tools:</strong> KiCad, LTspice, Fusion 360, AutoCAD, GDSII</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /shell -->
+<footer>kartik chikkanagoudar · iit bombay · 2026</footer>
+
+<script>
+// ── PCB trace background — lower opacity ────────────────────
+function drawPCB(dark){
+  const canvas=document.getElementById('pcb');
+  const W=window.innerWidth,H=window.innerHeight;
+  canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+
+  // Reduced opacity: 0.028 dark, 0.032 light (was 0.045/0.055)
+  const op=dark?0.028:0.032;
+  const fillOp=dark?op*1.4:op*1.4;
+  ctx.strokeStyle=dark?`rgba(255,255,255,${op})`:`rgba(0,0,0,${op})`;
+  ctx.lineWidth=1;
+
+  const spacing=52;
+  const cols=Math.ceil(W/spacing)+1;
+  const rows=Math.ceil(H/spacing)+1;
+
+  // Deterministic pseudo-random
+  let seed=42;
+  function rand(){seed=(seed*1664525+1013904223)&0xffffffff;return(seed>>>0)/0xffffffff;}
+
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const x=c*spacing+spacing/2,y=r*spacing+spacing/2;
+      if(c<cols-1&&rand()<0.55){
+        ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+spacing,y);ctx.stroke();
+        if(rand()<0.3){
+          ctx.beginPath();ctx.arc(x+spacing/2,y,2,0,Math.PI*2);
+          ctx.fillStyle=dark?`rgba(255,255,255,${fillOp})`:`rgba(0,0,0,${fillOp})`;
+          ctx.fill();
         }
+      }
+      if(r<rows-1&&rand()<0.55){
+        ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y+spacing);ctx.stroke();
+      }
+      if(rand()<0.18){
+        ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);
+        ctx.fillStyle=dark?`rgba(255,255,255,${fillOp})`:`rgba(0,0,0,${fillOp})`;
+        ctx.fill();
+      }
     }
+  }
+}
+drawPCB(false);
 
-    // ── Intersection Observer (scroll reveal) ──────
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+// ── Typewriter ───────────────────────────────────────────────
+const phrases=[
+  'Nanoelectronics researcher at IIT Bombay.',
+  'Building India\'s first student-run semiconductor fab.',
+  'Bridging theory and fabrication in solid state devices.',
+  'TCAD · Verilog-A · Cleanroom · Python.'
+];
+let pIdx=0,cIdx=0,del=false;
+function typeStep(){
+  const el=document.getElementById('typewriter');
+  if(!el)return;
+  const phrase=phrases[pIdx];
+  if(!del){
+    cIdx++;
+    el.innerHTML=phrase.slice(0,cIdx)+'<span class="typewriter-cursor"></span>';
+    if(cIdx===phrase.length){del=true;setTimeout(typeStep,2000);return;}
+  }else{
+    cIdx--;
+    el.innerHTML=phrase.slice(0,cIdx)+'<span class="typewriter-cursor"></span>';
+    if(cIdx===0){del=false;pIdx=(pIdx+1)%phrases.length;}
+  }
+  setTimeout(typeStep,del?36:60);
+}
+setTimeout(typeStep,700);
 
-    function observeReveals() {
-        document.querySelectorAll('.reveal').forEach((el, i) => {
-            el.style.transitionDelay = (i * 0.05) + 's';
-            io.observe(el);
-        });
-    }
+// ── Cursor ───────────────────────────────────────────────────
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
+document.querySelectorAll('a,button,.row,.g-item,.chip,.hero-img,.hobby-card,.hf-goal,.stat').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('big'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
+});
+document.addEventListener('mouseleave',()=>cur.style.opacity='0');
+document.addEventListener('mouseenter',()=>cur.style.opacity='1');
 
-    // ── Init ───────────────────────────────────────
-    window.addEventListener('DOMContentLoaded', () => {
-        observeReveals();
-        // Trigger home page reveals
-        setTimeout(() => {
-            document.querySelectorAll('#home .reveal').forEach((el, i) => {
-                el.style.transitionDelay = (0.1 + i * 0.07) + 's';
-                el.classList.add('visible');
-            });
-        }, 100);
+// ── Scroll / nav ─────────────────────────────────────────────
+window.addEventListener('scroll',()=>{
+  const p=document.documentElement.scrollTop/(document.documentElement.scrollHeight-document.documentElement.clientHeight)*100;
+  document.getElementById('bar').style.width=p+'%';
+  document.getElementById('nav').classList.toggle('up',window.scrollY>6);
+},{passive:true});
+document.getElementById('nav').classList.add('up');
+
+// ── Page transitions ─────────────────────────────────────────
+let curPage='home';
+function go(id){
+  if(id===curPage)return;
+  const out=document.getElementById(curPage),inp=document.getElementById(id);
+  out.classList.add('leaving');
+  out.addEventListener('animationend',()=>out.classList.remove('on','leaving'),{once:true});
+  setTimeout(()=>{
+    inp.classList.add('on','entering');
+    inp.addEventListener('animationend',()=>inp.classList.remove('entering'),{once:true});
+    triggerReveals(id);
+  },140);
+  document.querySelectorAll('.nl').forEach(l=>l.classList.toggle('on',l.getAttribute('onclick')?.includes(`'${id}'`)));
+  curPage=id;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function triggerReveals(id){
+  setTimeout(()=>{
+    document.querySelectorAll('#'+id+' .r').forEach((el,i)=>{
+      el.classList.remove('v');
+      el.style.transitionDelay=(i*.048)+'s';
+      setTimeout(()=>el.classList.add('v'),25);
     });
-    </script>
+  },55);
+}
+
+// ── Theme ────────────────────────────────────────────────────
+let isDark=false;
+function toggleTheme(){
+  isDark=!isDark;
+  document.body.classList.toggle('dark',isDark);
+  document.getElementById('themeBtn').textContent=isDark?'[light]':'[dark]';
+  drawPCB(isDark);
+}
+
+// ── Reveal on scroll ─────────────────────────────────────────
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v');});
+},{threshold:.05});
+window.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.r').forEach((el,i)=>{
+    el.style.transitionDelay=(i*.042)+'s';
+    io.observe(el);
+  });
+  triggerReveals('home');
+});
+</script>
 </body>
 </html>
