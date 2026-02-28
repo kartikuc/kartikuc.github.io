@@ -51,9 +51,7 @@ body.dark nav.up{background:rgba(12,12,10,.96)}
   letter-spacing:.04em;margin-right:auto;
   display:flex;align-items:center;gap:12px;
 }
-.nav-name .ndot{width:7px;height:7px;border-radius:50%;background:#5a8a5a;flex-shrink:0;animation:ndpulse 2.4s ease-in-out infinite}
-@keyframes ndpulse{0%,100%{opacity:1}50%{opacity:.2}}
-body.dark .nav-name .ndot{background:#6aaa6a}
+.nav-name .ndot{display:none}
 
 .nav-links{display:flex;gap:36px;list-style:none}
 .nav-links a{
@@ -226,6 +224,17 @@ body.dark .nav-name .ndot{background:#6aaa6a}
 
 .prose{font-size:15.5px;color:var(--dim);line-height:1.84}
 
+/* visitor counter */
+.visitor-counter{
+  margin-top:36px;
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  color:var(--ghost);letter-spacing:.08em;
+  border:1px solid var(--line);padding:7px 14px;
+}
+.visitor-counter .vc-dot{width:5px;height:5px;border-radius:50%;background:var(--line2);flex-shrink:0}
+.visitor-counter .vc-num{color:var(--dim);font-weight:500}
+
 footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--line2);letter-spacing:.09em;border-top:1px solid var(--line);max-width:1180px;margin:0 auto}
 
 .r{opacity:0;transform:translateY(8px);transition:opacity .44s ease,transform .44s ease}
@@ -276,7 +285,7 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
       <h1 class="hero-name">Kartik<br><em>Chikkanagoudar</em></h1>
       <p class="hero-sub" id="typewriter"><span class="typewriter-cursor"></span></p>
       <div class="links">
-        <a href="mailto:kartikuc@iitb.ac.in">email</a>
+        <a href="/cdn-cgi/l/email-protection#d0bbb1a2a4b9bba5b390b9b9a4b2feb1b3feb9be">email</a>
         <a href="tel:+919969012868">phone</a>
         <a href="https://github.com/MonolayerGraphene" target="_blank">github</a>
         <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank">linkedin</a>
@@ -298,6 +307,14 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
     <div class="g-item">2D Materials and Devices</div>
     <div class="g-item">Photonics &amp; Neuromorphic Computing</div>
     <div class="g-item">TCAD Simulations &amp; Compact Modeling</div>
+  </div>
+
+  <div class="r" style="margin-top:36px">
+    <div class="visitor-counter">
+      <span class="vc-dot"></span>
+      <span>visitors</span>
+      <span class="vc-num" id="vc-count">—</span>
+    </div>
   </div>
 </div>
 
@@ -327,7 +344,7 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
     <p class="hf-tagline">India's first student-built microfabrication lab.</p>
     <div class="hf-links">
       <a href="https://hackerfabiitb.github.io/" target="_blank">website ↗</a>
-      <a href="mailto:hackerfabiitb@gmail.com">contact</a>
+      <a href="/cdn-cgi/l/email-protection#83ebe2e0e8e6f1e5e2e1eaeaf7e1c3e4eee2eaefade0ecee">contact</a>
       <a href="https://docs.hackerfab.org/home/" target="_blank">docs ↗</a>
     </div>
   </div>
@@ -398,7 +415,7 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
       <div class="hobby-title">Photobook</div>
       <div class="hobby-desc">A collection of photographs — places, moments, light. Shot mostly on walks and travels.</div>
     </a>
-    <a class="hobby-card" href="#" target="_blank" rel="noopener">
+    <a class="hobby-card" href="https://kartikuc.github.io/caboonline/" target="_blank" rel="noopener">
       <div class="hobby-kicker">Game · Built from scratch</div>
       <div class="hobby-title">Online Cabo</div>
       <div class="hobby-desc">A multiplayer implementation of the card game Cabo. Built for fun, playable in the browser.</div>
@@ -413,10 +430,10 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
       <div class="hobby-title">HackerFab IIT Bombay</div>
       <div class="hobby-desc">Building lithography machines and spin coaters from scratch. India's first student-run semiconductor fab.</div>
     </a>
-    <a class="hobby-card wide" href="#" style="pointer-events:none;opacity:.5">
-      <div class="hobby-kicker">Coming soon</div>
-      <div class="hobby-title">More projects being added</div>
-      <div class="hobby-desc">Hockey on weekends. Drums when the deadline isn't tomorrow. Deep in Linux configs most other times.</div>
+    <a class="hobby-card wide" href="https://kartikuc.github.io/byob/" target="_blank" rel="noopener">
+      <div class="hobby-kicker">Music · Work in progress</div>
+      <div class="hobby-title">BYOB — Be Your Own Band</div>
+      <div class="hobby-desc">A small browser-based music synthesizer. Play, layer, and experiment with sounds directly in the browser. Hockey on weekends. Drums when the deadline isn't tomorrow.</div>
     </a>
   </div>
 </div>
@@ -472,7 +489,7 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
 </div><!-- /shell -->
 <footer>kartik chikkanagoudar · iit bombay · 2026</footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* PCB */
 function drawPCB(dark){
   const canvas=document.getElementById('pcb');
@@ -498,7 +515,7 @@ drawPCB(false);
 window.addEventListener('resize',()=>drawPCB(isDark));
 
 /* Typewriter */
-const phrases=['Nanoelectronics researcher at IIT Bombay.','Building India\'s first student-run semiconductor fab.','Bridging theory and fabrication in solid state devices.','TCAD · Verilog-A · Cleanroom · Python.'];
+const phrases=['Nanoelectronics researcher at IIT Bombay.','Building India\'s first student-run semiconductor fab.','Bridging theory and fabrication in solid state devices.'];
 let pIdx=0,cIdx=0,del=false;
 function typeStep(){
   const el=document.getElementById('typewriter');if(!el)return;
@@ -547,12 +564,19 @@ function toggleTheme(){
   drawPCB(isDark);
 }
 
+/* Visitor counter */
+(async()=>{
+  try{
+    const res=await fetch('https://api.countapi.xyz/hit/kartikuc.github.io/visits');
+    const data=await res.json();
+    const el=document.getElementById('vc-count');
+    if(el&&data.value)el.textContent=data.value.toLocaleString();
+  }catch(e){
+    const el=document.getElementById('vc-count');
+    if(el)el.textContent='—';
+  }
+})();
+
 /* Reveal */
 const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('v');});},{threshold:.06});
-window.addEventListener('DOMContentLoaded',()=>{
-  document.querySelectorAll('.r').forEach((el,i)=>{el.style.transitionDelay=(i*.042)+'s';io.observe(el);});
-  triggerReveals('home');
-});
-</script>
-</body>
-</html>
+window.addEventLi
