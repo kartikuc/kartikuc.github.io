@@ -52,7 +52,6 @@ body.dark nav.up{background:rgba(12,12,10,.96)}
   letter-spacing:.04em;margin-right:auto;
   display:flex;align-items:center;
 }
-/* green dot removed */
 .nav-name .ndot{display:none}
 
 .nav-links{display:flex;gap:36px;list-style:none}
@@ -72,6 +71,48 @@ body.dark nav.up{background:rgba(12,12,10,.96)}
   color:var(--line2);letter-spacing:.09em;padding:0;transition:color .2s;
 }
 .tbtn:hover{color:var(--ink)}
+
+/* Hamburger button */
+.hamburger{
+  display:none;background:none;border:none;cursor:pointer;
+  padding:6px;margin-left:16px;flex-direction:column;
+  justify-content:center;align-items:center;gap:5px;
+}
+.hamburger span{
+  display:block;width:22px;height:1.5px;background:var(--ink);
+  transition:transform .28s cubic-bezier(.16,1,.3,1),opacity .2s;
+}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* Mobile menu drawer */
+.mobile-menu{
+  display:none;position:fixed;top:var(--nav-h);left:0;right:0;
+  background:rgba(236,236,234,.98);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);z-index:199;
+  padding:16px 28px 24px;
+  transform:translateY(-8px);opacity:0;
+  transition:transform .28s cubic-bezier(.16,1,.3,1),opacity .22s ease;
+  pointer-events:none;
+}
+body.dark .mobile-menu{background:rgba(12,12,10,.98)}
+.mobile-menu.open{transform:none;opacity:1;pointer-events:auto}
+.mobile-menu ul{list-style:none;display:flex;flex-direction:column;gap:0}
+.mobile-menu ul li{border-bottom:1px solid var(--line)}
+.mobile-menu ul li:first-child{border-top:1px solid var(--line)}
+.mobile-menu ul a{
+  display:block;padding:14px 0;
+  font-family:'JetBrains Mono',monospace;font-size:13px;
+  color:var(--ghost);text-decoration:none;cursor:pointer;
+  letter-spacing:.09em;transition:color .18s;
+}
+.mobile-menu ul a:hover,.mobile-menu ul a.on{color:var(--ink)}
+.mobile-menu .mobile-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:16px;
+}
+.mobile-menu .tbtn{margin-left:0}
 
 .shell{max-width:1180px;margin:0 auto;padding:0 72px;position:relative;z-index:1}
 
@@ -106,7 +147,7 @@ body.dark nav.up{background:rgba(12,12,10,.96)}
 .links a:last-child{border-radius:0 2px 2px 0;margin-right:0}
 .links a:hover{color:var(--ink);border-color:var(--ghost);background:var(--bg3);z-index:1}
 
-/* Hero image — larger, always full colour */
+/* Hero image */
 .hero-img{width:230px;aspect-ratio:3/4;overflow:hidden;background:var(--bg3);border:1px solid var(--line2)}
 .hero-img img{width:100%;height:100%;object-fit:cover;display:block;filter:none;transition:transform .5s ease}
 .hero-img:hover img{transform:scale(1.05)}
@@ -140,7 +181,6 @@ body.dark nav.up{background:rgba(12,12,10,.96)}
 .tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);border:1px solid var(--line2);padding:2px 7px;letter-spacing:.05em}
 .row-inner{display:grid;grid-template-columns:106px 1fr;gap:18px;align-items:start}
 .thumb{width:106px;aspect-ratio:4/3;overflow:hidden;background:var(--bg3);border:1px solid var(--line);flex-shrink:0}
-/* Always colour — no grayscale */
 .thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:none;transition:transform .46s ease}
 .row:hover .thumb img{transform:scale(1.08)}
 
@@ -247,8 +287,11 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
   .row-date{padding:14px 0 3px}
   .row-body{padding:4px 0 16px}
   .g-item:nth-child(even){border-right:1px solid var(--line)}
-  .nav-links{gap:18px}
-  .nav-links a{font-size:11px}
+  /* Hide desktop nav links, show hamburger */
+  .nav-links{display:none}
+  .tbtn{display:none}
+  .hamburger{display:flex}
+  .mobile-menu{display:block}
 }
 </style>
 </head>
@@ -268,7 +311,25 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
     <li><a onclick="go('cv')"         class="nl">cv</a></li>
   </ul>
   <button class="tbtn" onclick="toggleTheme()" id="themeBtn">[dark]</button>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile menu drawer -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a onclick="goMobile('home')"       class="mnl on">home</a></li>
+    <li><a onclick="goMobile('experience')" class="mnl">experience</a></li>
+    <li><a onclick="goMobile('hackerfab')"  class="mnl">hackerfab</a></li>
+    <li><a onclick="goMobile('academics')"  class="mnl">academics</a></li>
+    <li><a onclick="goMobile('hobbies')"    class="mnl">hobbies</a></li>
+    <li><a onclick="goMobile('cv')"         class="mnl">cv</a></li>
+  </ul>
+  <div class="mobile-bottom">
+    <button class="tbtn" onclick="toggleTheme()" id="themeBtnMobile">[dark]</button>
+  </div>
+</div>
 
 <div class="shell">
 
@@ -281,10 +342,8 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
       <p class="hero-sub" id="typewriter"><span class="typewriter-cursor"></span></p>
       <div class="links">
         <a href="mailto:kartikuc@iitb.ac.in">email</a>
-        <a href="tel:+919969012868">phone</a>
         <a href="https://github.com/MonolayerGraphene" target="_blank">github</a>
         <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank">linkedin</a>
-        <a href="https://kartikuc.github.io/photobook/" target="_blank">photos</a>
       </div>
     </div>
     <div class="hero-img"><img src="images/me.jpg" alt="Kartik"></div>
@@ -827,7 +886,7 @@ let isDark = false;
 drawPCB(false);
 window.addEventListener('resize', () => drawPCB(isDark));
 
-/* ── Typewriter — 3 phrases, TCAD line removed ── */
+/* ── Typewriter ── */
 const phrases = [
   'Nanoelectronics researcher at IIT Bombay.',
   "Building India's first student-run semiconductor fab.",
@@ -870,6 +929,25 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 document.getElementById('nav').classList.add('up');
 
+/* ── Mobile menu ── */
+let menuOpen = false;
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  document.getElementById('hamburger').classList.toggle('open', menuOpen);
+  document.getElementById('mobileMenu').classList.toggle('open', menuOpen);
+}
+function closeMenu() {
+  menuOpen = false;
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+function goMobile(id) {
+  closeMenu();
+  go(id);
+  // sync mobile nav active state
+  document.querySelectorAll('.mnl').forEach(l => l.classList.toggle('on', l.getAttribute('onclick')?.includes(`'${id}'`)));
+}
+
 /* ── Page transitions ── */
 let curPage = 'home';
 function go(id) {
@@ -901,6 +979,7 @@ function toggleTheme() {
   isDark = !isDark;
   document.body.classList.toggle('dark', isDark);
   document.getElementById('themeBtn').textContent = isDark ? '[light]' : '[dark]';
+  document.getElementById('themeBtnMobile').textContent = isDark ? '[light]' : '[dark]';
   drawPCB(isDark);
 }
 
