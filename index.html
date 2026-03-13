@@ -211,8 +211,27 @@ body.dark .mobile-menu{background:rgba(12,12,10,.98)}
 .chip small{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);margin-top:2px}
 .chip:hover{color:var(--ink);background:var(--bg3)}
 
-/* HackerFab */
-.hf-hero{padding:30px 0 40px;border-bottom:1px solid var(--line2)}
+/* HackerFab compact two-column layout */
+.hf-compact{
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;
+  height:calc(100vh - var(--nav-h) - 28px);
+  padding-top:24px;align-items:start;
+}
+.hf-left{display:flex;flex-direction:column}
+.hf-right{border-left:1px solid var(--line);padding-left:40px}
+.hf-pillars-v{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:auto}
+.hf-pillar-v{background:var(--bg);padding:12px 16px;display:grid;grid-template-columns:80px 1fr;gap:12px;align-items:start}
+.hf-col-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ghost);letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:12px}
+.hf-col-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+.hf-mile-grid{display:flex;flex-direction:column;gap:0}
+.hf-mile{font-size:13.5px;color:var(--muted);padding:8px 0;border-top:1px solid var(--line);display:flex;align-items:baseline;gap:12px}
+.hf-mile-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ghost);white-space:nowrap;flex-shrink:0;width:56px}
+
+@media(max-width:860px){
+  .hf-compact{grid-template-columns:1fr;height:auto}
+  .hf-right{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:24px;margin-top:8px}
+  .hf-pillars-v .hf-pillar-v{grid-template-columns:1fr}
+}
 .hf-kicker{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ghost);letter-spacing:.13em;text-transform:uppercase;margin-bottom:14px}
 .hf-title{font-size:52px;font-weight:600;color:var(--ink);letter-spacing:-2.5px;line-height:1;margin-bottom:10px}
 .hf-title em{font-style:normal;font-weight:300;color:var(--muted)}
@@ -341,7 +360,7 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
       <h1 class="hero-name">Kartik<br><em>Chikkanagoudar</em></h1>
       <p class="hero-sub" id="typewriter"><span class="typewriter-cursor"></span></p>
       <div class="links">
-        <a href="mailto:kartikuc@iitb.ac.in">email</a>
+        <a href="/cdn-cgi/l/email-protection#5932382b2d30322c3a1930302d3b77383a773037">email</a>
         <a href="https://github.com/MonolayerGraphene" target="_blank">github</a>
         <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank">linkedin</a>
       </div>
@@ -373,37 +392,57 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
     <div class="row">
       <div class="row-date">2025<br>now</div>
       <div class="row-body">
-        <div class="row-title">Modeling and Simulation of PCMO RRAMs</div>
-        <div class="row-org">MeLoDe Lab, IIT Bombay · Prof. Udayan Ganguly</div>
-        <div class="row-desc">Characterizing stochasticity via compact model parameter variations. Building unified physics-based TCAD models with SET/RESET transient simulation.</div>
-        <div class="row-tags"><span class="tag">TCAD</span><span class="tag">RRAM</span><span class="tag">Compact Modeling</span></div>
+        <div class="row-inner">
+          <div class="thumb"><img src="images/exp_rram.jpg" alt="PCMO RRAM"></div>
+          <div>
+            <div class="row-title">Modeling and Simulation of PCMO RRAMs</div>
+            <div class="row-org">MeLoDe Lab, IIT Bombay · Prof. Udayan Ganguly</div>
+            <div class="row-desc">Characterizing stochasticity via compact model parameter variations. Building unified physics-based TCAD models with SET/RESET transient simulation.</div>
+            <div class="row-tags"><span class="tag">TCAD</span><span class="tag">RRAM</span><span class="tag">Compact Modeling</span></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="row-date">Jul–Dec<br>2024</div>
       <div class="row-body">
-        <div class="row-title">AlN BAW SMR Resonator and Filter Design</div>
-        <div class="row-org">IIT Bombay · Prof. Apurba Laha</div>
-        <div class="row-desc">AlN bulk acoustic wave resonators with distributed Bragg reflectors. 3.6 GHz center frequency with high quality factor.</div>
-        <div class="row-tags"><span class="tag">MEMS</span><span class="tag">RF Design</span><span class="tag">AlN</span></div>
+        <div class="row-inner">
+          <div class="thumb"><img src="images/exp_aln.jpg" alt="AlN BAW Resonator"></div>
+          <div>
+            <div class="row-title">AlN BAW SMR Resonator and Filter Design</div>
+            <div class="row-org">IIT Bombay · Prof. Apurba Laha</div>
+            <div class="row-desc">AlN bulk acoustic wave resonators with distributed Bragg reflectors. 3.6 GHz center frequency with high quality factor.</div>
+            <div class="row-tags"><span class="tag">MEMS</span><span class="tag">RF Design</span><span class="tag">AlN</span></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="row-date">Dec 23<br>Apr 24</div>
       <div class="row-body">
-        <div class="row-title">Magneto-optic Synapse for Neuromorphic Computing</div>
-        <div class="row-org">IIT Bombay · Prof. Debanjan Bhowmik</div>
-        <div class="row-desc">PMA materials for MOKE-based photonic memory. Python simulations for domain-wall formation and propagation.</div>
-        <div class="row-tags"><span class="tag">Photonics</span><span class="tag">Neuromorphic</span><span class="tag">Python</span></div>
+        <div class="row-inner">
+          <div class="thumb"><img src="images/exp_magneto.jpg" alt="Magneto-optic Synapse"></div>
+          <div>
+            <div class="row-title">Magneto-optic Synapse for Neuromorphic Computing</div>
+            <div class="row-org">IIT Bombay · Prof. Debanjan Bhowmik</div>
+            <div class="row-desc">PMA materials for MOKE-based photonic memory. Python simulations for domain-wall formation and propagation.</div>
+            <div class="row-tags"><span class="tag">Photonics</span><span class="tag">Neuromorphic</span><span class="tag">Python</span></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="row-date">Jul–Dec<br>2023</div>
       <div class="row-body">
-        <div class="row-title">Coulomb Blockade Spectroscopy in 2D Quantum Dots</div>
-        <div class="row-org">IIT Bombay · Prof. Bhaskaran Muralidharan</div>
-        <div class="row-desc">Python simulation via multi-electron Fock space. Current analysis via SCF and Master equation procedures.</div>
-        <div class="row-tags"><span class="tag">Quantum Transport</span><span class="tag">2D Materials</span><span class="tag">Python</span></div>
+        <div class="row-inner">
+          <div class="thumb"><img src="images/exp_qdot.jpg" alt="Quantum Dots"></div>
+          <div>
+            <div class="row-title">Coulomb Blockade Spectroscopy in 2D Quantum Dots</div>
+            <div class="row-org">IIT Bombay · Prof. Bhaskaran Muralidharan</div>
+            <div class="row-desc">Python simulation via multi-electron Fock space. Current analysis via SCF and Master equation procedures.</div>
+            <div class="row-tags"><span class="tag">Quantum Transport</span><span class="tag">2D Materials</span><span class="tag">Python</span></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -413,28 +452,43 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
     <div class="row">
       <div class="row-date">Jun–Jul<br>2025</div>
       <div class="row-body">
-        <div class="row-title">BSIM4 Verilog-A Model Development</div>
-        <div class="row-org">Micron Technology · Summer Intern</div>
-        <div class="row-desc">Translated BSIM4 C code to VerilogA. Validated across all operating points and device geometries. Geometric parameter tuning.</div>
-        <div class="row-tags"><span class="tag">Verilog-A</span><span class="tag">MOSFET</span><span class="tag">BSIM4</span></div>
+        <div class="row-inner">
+          <div class="thumb"><img src="images/exp_micron.jpg" alt="Micron Technology"></div>
+          <div>
+            <div class="row-title">BSIM4 Verilog-A Model Development</div>
+            <div class="row-org">Micron Technology · Summer Intern</div>
+            <div class="row-desc">Translated BSIM4 C code to VerilogA. Validated across all operating points and device geometries. Geometric parameter tuning.</div>
+            <div class="row-tags"><span class="tag">Verilog-A</span><span class="tag">MOSFET</span><span class="tag">BSIM4</span></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="row-date">May–Jul<br>2024</div>
       <div class="row-body">
-        <div class="row-title">Superconducting Resonator Design &amp; Fabrication</div>
-        <div class="row-org">TIFR</div>
-        <div class="row-desc">Resonator cavity simulation and bias filter optimization. Cleanroom fabrication of van der Waals heterostructures.</div>
-        <div class="row-tags"><span class="tag">Superconducting</span><span class="tag">Cleanroom</span><span class="tag">vdW</span></div>
+        <div class="row-inner">
+          <div class="thumb"><img src="images/exp_tifr.jpg" alt="TIFR"></div>
+          <div>
+            <div class="row-title">Superconducting Resonator Design &amp; Fabrication</div>
+            <div class="row-org">TIFR</div>
+            <div class="row-desc">Resonator cavity simulation and bias filter optimization. Cleanroom fabrication of van der Waals heterostructures.</div>
+            <div class="row-tags"><span class="tag">Superconducting</span><span class="tag">Cleanroom</span><span class="tag">vdW</span></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="row-date">May–Jul<br>2023</div>
       <div class="row-body">
-        <div class="row-title">Reactor Physics and Control</div>
-        <div class="row-org">Atomic Energy Regulatory Board (AERB)</div>
-        <div class="row-desc">PWR core simulation with neutron kinetics and xenon feedback. PID controllers for reactor power regulation.</div>
-        <div class="row-tags"><span class="tag">Reactor Physics</span><span class="tag">PID</span><span class="tag">Control</span></div>
+        <div class="row-inner">
+          <div class="thumb"><img src="images/exp_aerb.jpg" alt="AERB"></div>
+          <div>
+            <div class="row-title">Reactor Physics and Control</div>
+            <div class="row-org">Atomic Energy Regulatory Board (AERB)</div>
+            <div class="row-desc">PWR core simulation with neutron kinetics and xenon feedback. PID controllers for reactor power regulation.</div>
+            <div class="row-tags"><span class="tag">Reactor Physics</span><span class="tag">PID</span><span class="tag">Control</span></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -442,96 +496,70 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
 
 <!-- ══ HACKERFAB ══ -->
 <div id="hackerfab" class="page">
-  <div class="hf-hero r">
-    <div class="hf-kicker">Founded August 2025 · Co-Founder</div>
-    <h2 class="hf-title">HackerFab<br><em>IIT Bombay</em></h2>
-    <p class="hf-tagline">India's first student-built microfabrication lab.</p>
-    <div class="hf-links">
-      <a href="https://hackerfabiitb.github.io/" target="_blank">website ↗</a>
-      <a href="mailto:hackerfabiitb@gmail.com">contact</a>
-      <a href="https://docs.hackerfab.org/home/" target="_blank">docs ↗</a>
-    </div>
-  </div>
-
-  <div class="label r">What We're Building</div>
-  <div class="hf-pillars r">
-    <div class="hf-pillar">
-      <div class="hf-pillar-icon">Fabrication</div>
-      <div class="hf-pillar-text">Open-source, student-designed fabrication tools. Why should TSMC have all the fun? We're building the machines that build the chips.</div>
-    </div>
-    <div class="hf-pillar">
-      <div class="hf-pillar-icon">Education</div>
-      <div class="hf-pillar-text">Integrating our tools with coursework at IITB. Hands-on chip fabrication as a real learning experience, not just theory.</div>
-    </div>
-    <div class="hf-pillar">
-      <div class="hf-pillar-icon">Community</div>
-      <div class="hf-pillar-text">Part of the global HackerFab network. Growing a pan-India movement to make semiconductor access a reality beyond elite institutions.</div>
-    </div>
-  </div>
-
-  <div class="label r">Technical Roadmap</div>
-  <div class="r">
-    <div class="hf-goal">
-      <div class="hf-goal-status active">IN PROGRESS</div>
-      <div>
-        <div class="hf-goal-title">Maskless Lithography</div>
-        <div class="hf-goal-body">Achieved 1µm feature size patterning on Litho v1. First micrometer-scale patterns captured Dec 2025.</div>
+  <div class="hf-compact r">
+    <!-- Left column: hero + pillars -->
+    <div class="hf-left">
+      <div class="hf-kicker">Founded August 2025 · Co-Founder</div>
+      <h2 class="hf-title">HackerFab<br><em>IIT Bombay</em></h2>
+      <p class="hf-tagline">India's first student-built microfabrication lab.</p>
+      <div class="hf-links" style="margin-bottom:20px">
+        <a href="https://hackerfabiitb.github.io/" target="_blank">website ↗</a>
+        <a href="mailto:hackerfabiitb@gmail.com">contact</a>
+        <a href="https://docs.hackerfab.org/home/" target="_blank">docs ↗</a>
+      </div>
+      <div class="hf-pillars-v">
+        <div class="hf-pillar-v">
+          <div class="hf-pillar-icon">Fabrication</div>
+          <div class="hf-pillar-text">Open-source, student-designed tools. Building the machines that build the chips.</div>
+        </div>
+        <div class="hf-pillar-v">
+          <div class="hf-pillar-icon">Education</div>
+          <div class="hf-pillar-text">Integrating with IITB coursework. Hands-on chip fabrication as real learning.</div>
+        </div>
+        <div class="hf-pillar-v">
+          <div class="hf-pillar-icon">Community</div>
+          <div class="hf-pillar-text">Part of the global HackerFab network. Growing pan-India semiconductor access.</div>
+        </div>
       </div>
     </div>
-    <div class="hf-goal">
-      <div class="hf-goal-status active">IN PROGRESS</div>
-      <div>
-        <div class="hf-goal-title">Spin Coater</div>
-        <div class="hf-goal-body">Demonstrated closed-loop control up to 6000 rpm. Enables uniform resist deposition for lithography.</div>
+    <!-- Right column: roadmap + key milestones -->
+    <div class="hf-right">
+      <div class="hf-col-label">Technical Roadmap</div>
+      <div class="hf-goal" style="padding:12px 0">
+        <div class="hf-goal-status active">IN PROGRESS</div>
+        <div>
+          <div class="hf-goal-title">Maskless Lithography</div>
+          <div class="hf-goal-body">2µm linewidth on DLP-projector design. Patterns captured Dec 2025.</div>
+        </div>
       </div>
-    </div>
-    <div class="hf-goal">
-      <div class="hf-goal-status planned">PLANNED</div>
-      <div>
-        <div class="hf-goal-title">RF Sputtering</div>
-        <div class="hf-goal-body">First deposition tool. Will enable metal and dielectric thin-film deposition in-house.</div>
+      <div class="hf-goal" style="padding:12px 0">
+        <div class="hf-goal-status active">IN PROGRESS</div>
+        <div>
+          <div class="hf-goal-title">Spin Coater</div>
+          <div class="hf-goal-body">Closed-loop control, 500–8000 RPM. Uniform resist deposition.</div>
+        </div>
       </div>
-    </div>
-    <div class="hf-goal">
-      <div class="hf-goal-status planned">PLANNED</div>
-      <div>
-        <div class="hf-goal-title">Tube Furnace</div>
-        <div class="hf-goal-body">±2°C precision at temperatures up to 1100°C. Required for oxidation and annealing steps.</div>
+      <div class="hf-goal" style="padding:12px 0">
+        <div class="hf-goal-status planned">PLANNED</div>
+        <div>
+          <div class="hf-goal-title">RF Sputtering</div>
+          <div class="hf-goal-body">Metal and dielectric thin-film deposition in-house.</div>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <div class="label r">Timeline</div>
-  <div class="hf-timeline r">
-    <div class="hf-event">
-      <div class="hf-event-date">DEC 2025</div>
-      <div class="hf-event-title">Patterns captured on Litho v1</div>
-      <div class="hf-event-body">First micrometer-scale patterns achieved. A major proof-of-concept milestone for the lithography machine.</div>
-    </div>
-    <div class="hf-event">
-      <div class="hf-event-date">DEC 2025</div>
-      <div class="hf-event-title">Community grows to 40+ members</div>
-      <div class="hf-event-body">Expanded outreach beyond IITB, growing a 40-member Discord community across colleges.</div>
-    </div>
-    <div class="hf-event">
-      <div class="hf-event-date">OCT 2025</div>
-      <div class="hf-event-title">Community milestone: 50 members</div>
-      <div class="hf-event-body">First major community milestone on the path to a pan-India network.</div>
-    </div>
-    <div class="hf-event">
-      <div class="hf-event-date">SEP 2025</div>
-      <div class="hf-event-title">Presented at SemiX</div>
-      <div class="hf-event-body">Presented proof-of-concepts for spin coater and lithography. Part of a panel discussion on "Advancing India's Semiconductor Ecosystem".</div>
-    </div>
-    <div class="hf-event">
-      <div class="hf-event-date">SEP 2025</div>
-      <div class="hf-event-title">Lab setup complete</div>
-      <div class="hf-event-body">First functional fabrication workspace established at IIT Bombay.</div>
-    </div>
-    <div class="hf-event">
-      <div class="hf-event-date">AUG 2025</div>
-      <div class="hf-event-title">HackerFab IITB founded</div>
-      <div class="hf-event-body">The beginning. A group of students determined to democratize semiconductor fabrication in India.</div>
+      <div class="hf-goal" style="padding:12px 0;border-bottom:1px solid var(--line)">
+        <div class="hf-goal-status planned">PLANNED</div>
+        <div>
+          <div class="hf-goal-title">Tube Furnace</div>
+          <div class="hf-goal-body">±2°C at up to 1100°C. For oxidation and annealing steps.</div>
+        </div>
+      </div>
+      <div class="hf-col-label" style="margin-top:18px">Key Milestones</div>
+      <div class="hf-mile-grid">
+        <div class="hf-mile"><span class="hf-mile-date">Dec 2025</span>First 1µm patterns on Litho v1</div>
+        <div class="hf-mile"><span class="hf-mile-date">Oct 2025</span>50-member community across colleges</div>
+        <div class="hf-mile"><span class="hf-mile-date">Sep 2025</span>Presented at SemiX Summit, IITB</div>
+        <div class="hf-mile"><span class="hf-mile-date">Aug 2025</span>HackerFab IITB founded</div>
+      </div>
     </div>
   </div>
 </div>
@@ -765,76 +793,140 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
       <div class="cv-label">Education</div>
       <div class="cv-item">
         <div class="cv-title">Indian Institute of Technology Bombay</div>
-        <div class="cv-sub">B.Tech + M.Tech · Electrical Engineering (Solid State Devices) · 2021–2026</div>
+        <div class="cv-sub">B.Tech + M.Tech · Electrical Engineering (Solid State Devices) · 2021–2026 · CPI 8.74</div>
         <div class="cv-body">Major in EE with specialization in Solid State Devices. Minor in Computer Science.</div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-title">Pace Junior Science College</div>
+        <div class="cv-sub">Matriculation · 2021 · 96.5%</div>
       </div>
     </div>
     <div class="cv-sec">
       <div class="cv-label">Honours &amp; Awards</div>
       <div class="cv-body">
         <ul>
-          <li>Micron Scholars fellowship — mentorship + scholarship of 0.25+ Mn (2025)</li>
-          <li>Best solution, Micron Day Hackathon fabrication problem (2025)</li>
-          <li>Best project award, Nanoelectronics course among 10+ teams (2024)</li>
-          <li>Top 10 of 60+, Electronic Design Lab (2024)</li>
+          <li>Atomic Fellowship from GradCapital — 0.25+ Mn INR grant to start HackerFab IITB (2025)</li>
+          <li>Micron Scholars fellowship — industrial mentorship + scholarship of 0.25+ Mn INR (2025)</li>
+          <li>Micron Day Hackathon winner, lithography problem statement, Micron URAM program (2025)</li>
+          <li>Best project award, Nanoelectronics course, among 10+ teams (2024)</li>
+          <li>Top 10 of 60+ projects, Electronic Design Lab (2024)</li>
           <li>Branch change to EE Dual Degree — awarded to 2% of 1400+ (2022)</li>
-          <li>JEE Advanced 98.33 percentile · INSPIRE Scholarship (2021)</li>
+          <li>JEE Advanced 98.33%tile · JEE Mains 99.82%tile · Maharashtra HSC INSPIRE Scholarship (2021)</li>
         </ul>
       </div>
     </div>
     <div class="cv-sec">
-      <div class="cv-label">Research</div>
+      <div class="cv-label">Research Experience</div>
       <div class="cv-item">
-        <div class="cv-title">Modeling and Simulation of PCMO RRAMs</div>
-        <div class="cv-sub">MeLoDe Lab, IIT Bombay · Feb 2025–present</div>
-        <div class="cv-body">Physics-based TCAD SET/RESET transient modeling. Stochasticity via compact model parameter variations.</div>
+        <div class="cv-title">Modeling and Simulation of Pr(1-x)Ca(x)MnO₃ RRAMs</div>
+        <div class="cv-sub">Masters Thesis · Prof. Udayan Ganguly, MeLoDe Lab, IITB · Feb 2025–present</div>
+        <div class="cv-body"><ul>
+          <li>Building unified Sentaurus TCAD framework implementing Kinetic Monte-Carlo model for PCMO RRAM</li>
+          <li>Simulated analytical model in MATLAB to study and refine underlying device physics</li>
+          <li>Characterising devices using Agilent Keysight B1500 to acquire IV data for model fitting</li>
+          <li>Modeling RESET transient and device characteristics using MSC model in Sentaurus TCAD</li>
+        </ul></div>
       </div>
       <div class="cv-item">
         <div class="cv-title">AlN BAW SMR Resonator and Filter Design</div>
-        <div class="cv-sub">IIT Bombay · Jul–Dec 2024</div>
-        <div class="cv-body">3.6 GHz bulk acoustic wave resonators with distributed Bragg reflectors.</div>
+        <div class="cv-sub">Prof. Apurba Laha, IITB · Jul–Dec 2024</div>
+        <div class="cv-body"><ul>
+          <li>Designed AlN-based BAW resonator with W/SiO₂ DBR in COMSOL, achieving 3.6 GHz center frequency</li>
+          <li>Optimized AlN, electrode, and reflector layer thicknesses to suppress spurious resonances and improve QF</li>
+          <li>Developed Python script using BVD/Mason models emulating 99.1 MHz filter with 3.4/3.6 GHz resonators</li>
+        </ul></div>
       </div>
       <div class="cv-item">
-        <div class="cv-title">Magneto-optic Synapse for Neuromorphic Computing</div>
-        <div class="cv-sub">IIT Bombay · Dec 2023–Apr 2024</div>
-        <div class="cv-body">MOKE photonic memory. Domain-wall propagation simulations in Python.</div>
+        <div class="cv-title">Superconducting Resonator Design Optimization</div>
+        <div class="cv-sub">Research Intern · Prof. Mandar Deshmukh, TIFR · May–Jul 2024</div>
+        <div class="cv-body"><ul>
+          <li>Simulated superconducting resonator cavities in COMSOL, optimizing bias filter configuration and QF</li>
+          <li>Analyzed resonator circuit model in Cadence Microwave AWR, optimizing bias filter values for minimal SNR</li>
+          <li>Fabricated graphene/hBN-based vdW heterostructures in cleanroom</li>
+        </ul></div>
+      </div>
+      <div class="cv-item">
+        <div class="cv-title">Magneto-optic Synapse for Photonics-based Computing</div>
+        <div class="cv-sub">Prof. Debanjan Bhowmik, IITB · Dec 2023–Apr 2024</div>
+        <div class="cv-body"><ul>
+          <li>Analytically examined PMA materials for MOKE-based photonic memory array design</li>
+          <li>Derived TE-mode Kerr rotation for waveguide, mapped to memory element in 2×2 photonic-read array</li>
+          <li>Developed Python simulations for PMA-based magnetic domain-wall formation along easy/hard axes</li>
+        </ul></div>
       </div>
       <div class="cv-item">
         <div class="cv-title">Coulomb Blockade Spectroscopy in 2D Quantum Dots</div>
-        <div class="cv-sub">IIT Bombay · Jul–Dec 2023</div>
-        <div class="cv-body">Fock-space + master equation framework for quantum dot transport.</div>
+        <div class="cv-sub">Prof. Bhaskaran Muralidharan, IITB · Jul–Dec 2023</div>
+        <div class="cv-body"><ul>
+          <li>Developed Python simulation using multi-electron Fock space representation</li>
+          <li>Examined current variations via SCF and Master Equation procedures to study channel potential variations</li>
+        </ul></div>
       </div>
     </div>
     <div class="cv-sec">
-      <div class="cv-label">Professional</div>
+      <div class="cv-label">Professional Experience</div>
+      <div class="cv-item">
+        <div class="cv-title">HackerFab IITB · Co-Founder</div>
+        <div class="cv-sub">Aug 2025–present · Advisors: Prof. Deshpande, Kottantharayil, Udayan Ganguly, Swaroop Ganguly</div>
+        <div class="cv-body"><ul>
+          <li>Co-founded IITB chapter of HackerFab — India's first bottom-up, student-led chip fab</li>
+          <li>Building 2µm linewidth, low-cost maskless photolithography system based on DLP-projector design</li>
+          <li>Designing spin coater with programmable speed profiles (500–8000 RPM) for photoresist coating</li>
+          <li>Presented V0 versions of lithography and spin-coater at SemiX Summit 2025, IIT Bombay</li>
+        </ul></div>
+      </div>
       <div class="cv-item">
         <div class="cv-title">BSIM4 Verilog-A Model Development · Micron Technology</div>
         <div class="cv-sub">Summer Intern · Jun–Jul 2025</div>
-        <div class="cv-body">BSIM4 C → VerilogA. Validation across process corners and geometries.</div>
-      </div>
-      <div class="cv-item">
-        <div class="cv-title">Superconducting Resonator · TIFR</div>
-        <div class="cv-sub">May–Jul 2024</div>
-        <div class="cv-body">Resonator simulation. Cleanroom vdW heterostructure fabrication.</div>
+        <div class="cv-body"><ul>
+          <li>Developed robust MOSFET compact model by translating BSIM4 from C to VerilogA</li>
+          <li>Validated by benchmarking against BSIM4 output at all operating points, eliminating convergence errors</li>
+          <li>Conducted geometric tuning, fitting to empirical data with >95% agreement using BSIMProPlus</li>
+        </ul></div>
       </div>
       <div class="cv-item">
         <div class="cv-title">Reactor Physics and Control · AERB</div>
         <div class="cv-sub">May–Jul 2023</div>
-        <div class="cv-body">PWR kinetics with xenon feedback. PID power regulation.</div>
+        <div class="cv-body"><ul>
+          <li>PWR core simulation with neutron kinetics and xenon feedback</li>
+          <li>PID controllers for reactor power regulation</li>
+        </ul></div>
       </div>
-      <div class="cv-item">
-        <div class="cv-title">HackerFab IIT Bombay · Co-Founder</div>
-        <div class="cv-sub">Aug 2025–present</div>
-        <div class="cv-body">India's first student-built microfabrication lab. Maskless lithography to 1µm feature size. 50+ member community.</div>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-label">Teaching &amp; Mentorship</div>
+      <div class="cv-body">
+        <ul>
+          <li>Teaching Assistant — 28nm CMOS Device &amp; Process Tech · Prof. Udayan Ganguly (Nov 2025)</li>
+          <li>Speaker — Semiconductor careers panel · SemiX, IIT Bombay (Aug 2025)</li>
+          <li>Teaching Assistant — VLSI Technology · Prof. Anil Kottantharayil (Aug–Dec 2025)</li>
+          <li>Teaching Assistant — Introduction to Biology · Prof. Sanjeeva Srivastava (Aug–Dec 2024)</li>
+          <li>Institute Student Mentor · Student Mentorship Program, IITB (Jun 2023–May 2024)</li>
+          <li>Department Academic Mentor · Student Mentorship Program, IITB (Jun 2023–May 2024)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cv-sec">
+      <div class="cv-label">Extracurricular</div>
+      <div class="cv-body">
+        <ul>
+          <li>Gold medal — Inter-Hostel Hockey General Championship, IITB (2025)</li>
+          <li>Silver medal — Inter IIT Sports Meet 57, IIT Kanpur (Hockey, 2024)</li>
+          <li>Gold medal — Institute Mixed Hockey League, IITB (2024)</li>
+          <li>Gold medal — Inter-Hostel Badminton General Championship, IITB (2023)</li>
+          <li>Qualified — Kishore Vaigyanik Protsahan Yojana interview round, IISc Bangalore (2019)</li>
+          <li>Qualified — Regional Mathematics Olympiad among 0.2+ million candidates, IAPT (2019)</li>
+          <li>AIR 74 — All India Open Mathematics Examination scholarship (2017)</li>
+        </ul>
       </div>
     </div>
     <div class="cv-sec">
       <div class="cv-label">Technical Skills</div>
       <div class="cv-body">
         <ul>
-          <li><strong>Simulation:</strong> Sentaurus TCAD, Silvaco ATLAS, Cadence Virtuoso, KWANT, COMSOL, Lumerical FDTD</li>
-          <li><strong>Programming:</strong> Python, MATLAB, C/C++, Verilog-A, VHDL, Shell</li>
-          <li><strong>Tools:</strong> KiCad, LTspice, Fusion 360, AutoCAD, GDSII</li>
+          <li><strong>FEA / Simulation:</strong> Sentaurus TCAD, COMSOL Multiphysics, ANSYS Structural, ANSYS Fluent, Optolithium, Cadence Microwave AWR, Lumerical FDTD, KWANT</li>
+          <li><strong>Design:</strong> Cadence Virtuoso, ngSpice, Quartus, SOLIDWORKS, EAGLE, Qiskit, Simulink</li>
+          <li><strong>Programming:</strong> Python, C/C++, MATLAB, Embedded C, VHDL, VerilogA</li>
         </ul>
       </div>
     </div>
@@ -850,7 +942,7 @@ footer{position:relative;z-index:1;text-align:center;padding:22px 0 30px;font-fa
     <span class="vc-num" id="vc-count">—</span>
   </div>
 </footer>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── PCB background ── */
 function drawPCB(dark) {
   const canvas = document.getElementById('pcb');
@@ -1001,13 +1093,4 @@ const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('v'); });
 }, { threshold: 0.06 });
 
-window.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.r').forEach((el, i) => {
-    el.style.transitionDelay = (i * 0.042) + 's';
-    io.observe(el);
-  });
-  triggerReveals('home');
-});
-</script>
-</body>
-</html>
+window.addEventListener('DOMContentLoaded',
