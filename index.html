@@ -38,6 +38,7 @@ body{
   font-size:15px;line-height:1.6;
   transition:background .35s var(--ease),color .35s var(--ease);
   -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
 }
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.001s!important;transition-duration:.001s!important;scroll-behavior:auto!important}
@@ -68,15 +69,17 @@ body.light nav.up{background:rgba(246,245,240,.86)}
   color:var(--ink);cursor:pointer;text-decoration:none;
   margin-right:auto;letter-spacing:.02em;
   display:flex;align-items:center;gap:6px;
+  flex-shrink:0;
 }
 .nav-name::before{content:'';width:6px;height:6px;background:var(--accent);flex-shrink:0}
 
-.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links{display:flex;gap:28px;list-style:none;flex-shrink:1}
 .nav-links a{
   font-family:var(--font-mono);font-size:11px;font-weight:400;
   color:var(--ghost);text-decoration:none;cursor:pointer;
   letter-spacing:.06em;text-transform:uppercase;transition:color .2s;
   position:relative;padding-bottom:3px;
+  display:inline-block;padding-top:20px;margin-top:-20px;
 }
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:100%;height:1px;background:var(--accent);transition:right .3s var(--ease)}
 .nav-links a:hover,.nav-links a.on{color:var(--ink)}
@@ -88,6 +91,7 @@ body.light nav.up{background:rgba(246,245,240,.86)}
   color:var(--ghost);transition:color .2s,border-color .2s;
   display:flex;align-items:center;justify-content:center;
 }
+.tbtn::before{content:'';position:absolute;top:50%;left:50%;width:44px;height:44px;transform:translate(-50%,-50%)}
 .tbtn:hover{color:var(--accent);border-color:var(--accent)}
 .tbtn svg{width:13px;height:13px;display:block}
 
@@ -117,8 +121,8 @@ body.light nav.up{background:rgba(246,245,240,.86)}
 }
 .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(35%) contrast(1.05)}
 .hero-photo::after{content:'';position:absolute;top:-1px;left:-1px;width:9px;height:9px;background:var(--accent);clip-path:polygon(0 0,100% 0,0 100%)}
-.hero-text{display:flex;flex-direction:column;justify-content:center}
-.hero-name{font-family:var(--font-disp);font-size:clamp(28px,5vw,34px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.15;margin-bottom:9px}
+.hero-text{display:flex;flex-direction:column;justify-content:center;min-width:180px}
+.hero-name{font-family:var(--font-disp);font-size:clamp(26px,5vw,34px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.15;margin-bottom:9px}
 .hero-name span{font-weight:400;color:var(--muted)}
 
 .links{display:flex;flex-wrap:wrap;gap:14px}
@@ -126,6 +130,7 @@ body.light nav.up{background:rgba(246,245,240,.86)}
   font-family:var(--font-mono);font-size:11px;font-weight:400;
   color:var(--muted);text-decoration:none;letter-spacing:.02em;
   transition:color .2s;
+  display:inline-block;padding:4px 0;
 }
 .links a::before{content:'[';color:var(--ghost)}
 .links a::after{content:']';color:var(--ghost)}
@@ -168,7 +173,7 @@ body.light nav.up{background:rgba(246,245,240,.86)}
 @media(min-width:960px){.grid.work-grid{grid-template-columns:repeat(4,1fr)}}
 @media(min-width:1180px){.grid:not(.work-grid){grid-template-columns:repeat(4,1fr)}}
 
-.card{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:var(--bg2)}
+.card{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:var(--bg2);-webkit-tap-highlight-color:transparent}
 .card img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(45%) contrast(1.05) brightness(.92);opacity:0;transition:transform .45s var(--ease),filter .3s,opacity .3s}
 .card img.loaded{opacity:1}
 .card:hover img{transform:scale(1.06);filter:grayscale(0%) contrast(1.05) brightness(1)}
@@ -185,9 +190,9 @@ body.light nav.up{background:rgba(246,245,240,.86)}
 /* Modal popup */
 .modal-backdrop{position:fixed;inset:0;background:rgba(4,4,4,.68);backdrop-filter:blur(3px);z-index:900;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease)}
 .modal-backdrop.open{opacity:1;pointer-events:auto}
-.modal{background:var(--bg2);width:100%;max-width:410px;max-height:84vh;overflow:auto;border:1px solid var(--line2);border-radius:3px;position:relative;transform:translateY(6px) scale(.98);transition:transform .28s var(--ease);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.modal{background:var(--bg2);width:100%;max-width:410px;max-height:84vh;overflow:auto;border:1px solid var(--line2);border-radius:3px;position:relative;transform:translateY(6px) scale(.98);transition:transform .28s var(--ease);box-shadow:0 24px 60px rgba(0,0,0,.5);-webkit-overflow-scrolling:touch}
 .modal-backdrop.open .modal{transform:none}
-.modal-close{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;border:none;cursor:pointer;font-size:15px;line-height:1;z-index:2;display:flex;align-items:center;justify-content:center}
+.modal-close{position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;border:none;cursor:pointer;font-size:17px;line-height:1;z-index:2;display:flex;align-items:center;justify-content:center}
 .modal-img{width:100%;aspect-ratio:16/10;overflow:hidden;background:var(--bg3)}
 .modal-img img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(30%) contrast(1.03)}
 .modal-body{padding:20px 22px 22px}
@@ -196,17 +201,41 @@ body.light nav.up{background:rgba(246,245,240,.86)}
 .modal-desc{font-size:13px;color:var(--dim);line-height:1.75;margin-bottom:14px;font-weight:300}
 .modal-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
 .modal-tags span{font-family:var(--font-mono);font-size:9.5px;color:var(--muted);border:1px solid var(--line2);padding:3px 7px;border-radius:2px}
-.modal-link{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:1px;letter-spacing:.02em}
+.modal-link{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:1px;letter-spacing:.02em;display:inline-block;padding-top:2px}
 
 footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(--font-mono);font-size:10.5px;color:var(--ghost);letter-spacing:.03em;border-top:1px solid var(--line);max-width:1320px;margin:0 auto}
 
 .r{opacity:0;transform:translateY(8px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
 .r.v{opacity:1;transform:none}
 
+/* ── Phone / narrow-screen tuning ── */
+@media(max-width:600px){
+  .hero{gap:16px}
+  .hero-photo{width:78px}
+  .hero-text{min-width:0}
+  .hero-name{font-size:24px;margin-bottom:7px}
+  .links{gap:10px 14px}
+  .links a{font-size:10.5px}
+  .prose{font-size:14px;line-height:1.7}
+  .card-title{font-size:11.5px}
+  .card-meta{font-size:8.5px}
+  .modal{max-width:100%;border-radius:6px 6px 0 0;align-self:flex-end}
+  .modal-backdrop{padding:0;align-items:flex-end}
+  .modal-body{padding:18px 18px 20px}
+  .trow{gap:8px}
+  .trow-main{font-size:12.5px}
+}
 @media(max-width:480px){
   .nav-links{gap:14px}
-  .nav-links a{font-size:10px}
-  .tbtn{margin-left:14px}
+  .nav-links a{font-size:9.5px}
+  .tbtn{margin-left:12px}
+  .grid{gap:1px}
+}
+@media(max-width:360px){
+  .nav-name{font-size:12px}
+  .nav-links{gap:10px}
+  .nav-links a{font-size:9px;letter-spacing:.03em}
+  :root{--gut:16px}
 }
 </style>
 </head>
@@ -335,7 +364,12 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 <!-- ══ HOBBIES ══ -->
 <div id="hobbies" class="page">
   <div class="label r" style="padding-top:0"><svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>Things I Build &amp; Do</div>
+  <p class="prose r" style="max-width:620px;margin-bottom:26px">Outside the lab, I like building small self-contained things end to end — hardware, games, browser toys — mostly as an excuse to learn something new and ship it. A mix of that is below.</p>
   <div class="grid r">
+    <div class="card" id="hf-card" onclick="openCard(this)" data-img="images/hackerfab.jpg" data-title="HackerFab IIT Bombay" data-meta="Hardware · Co-Founder" data-desc="Building lithography machines and spin coaters from scratch. India's first student-run semiconductor fab." data-url="https://hackerfabiitb.github.io/">
+      <img src="images/hackerfab.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
+      <div class="card-overlay"><div class="card-title">HackerFab IITB</div><div class="card-meta">Hardware</div></div>
+    </div>
     <div class="card" onclick="openCard(this)" data-img="images/photobook.jpg" data-title="Photobook" data-meta="Photography" data-desc="A collection of photographs — places, moments, light. Shot mostly on walks and travels." data-url="https://kartikuc.github.io/photobook/">
       <img src="images/photobook.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
       <div class="card-overlay"><div class="card-title">Photobook</div><div class="card-meta">Photography</div></div>
@@ -344,10 +378,6 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
       <img src="images/cabo.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
       <div class="card-overlay"><div class="card-title">Online Cabo</div><div class="card-meta">Game</div></div>
     </div>
-    <div class="card" id="hf-card" onclick="openCard(this)" data-img="images/hackerfab.jpg" data-title="HackerFab IIT Bombay" data-meta="Hardware · Co-Founder" data-desc="Building lithography machines and spin coaters from scratch. India's first student-run semiconductor fab." data-url="https://hackerfabiitb.github.io/">
-      <img src="images/hackerfab.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
-      <div class="card-overlay"><div class="card-title">HackerFab IITB</div><div class="card-meta">Hardware</div></div>
-    </div>
     <div class="card" onclick="openCard(this)" data-img="images/byob.jpg" data-title="BYOB — Be Your Own Band" data-meta="Music · Work in progress" data-desc="A browser-based music synthesizer: play, layer, and experiment with sounds, no installs, no DAW." data-url="https://kartikuc.github.io/byob/">
       <img src="images/byob.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
       <div class="card-overlay"><div class="card-title">BYOB</div><div class="card-meta">Music</div></div>
@@ -355,6 +385,10 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
     <div class="card" onclick="openCard(this)" data-img="images/tictacbruh.jpg" data-title="Tic Tac Bruh" data-meta="Game · Built from scratch" data-desc="A browser-based twist on tic-tac-toe, playable online." data-url="https://kartikuc.github.io/tictacbruh/">
       <img src="images/tictacbruh.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
       <div class="card-overlay"><div class="card-title">Tic Tac Bruh</div><div class="card-meta">Game</div></div>
+    </div>
+    <div class="card" onclick="openCard(this)" data-img="images/gameoflife.jpg" data-title="Conway's Game of Life" data-meta="Simulation · Built from scratch" data-desc="An interactive browser implementation of Conway's Game of Life — the classic cellular automaton, click-to-seed and watch patterns evolve." data-tags="Cellular Automaton,JavaScript,Simulation" data-url="https://kartikuc.github.io/gameoflife/">
+      <img src="images/gameoflife.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
+      <div class="card-overlay"><div class="card-title">Game of Life</div><div class="card-meta">Simulation</div></div>
     </div>
   </div>
 </div>
