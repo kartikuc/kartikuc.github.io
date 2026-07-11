@@ -53,27 +53,19 @@ body{
 .amark{width:11px;height:11px;flex-shrink:0;color:var(--accent)}
 .amark circle,.amark path{stroke:currentColor}
 
-/* NAV */
+/* NAV — slim top bar on phones, left sidebar from tablet up */
+:root{--side-w:186px}
 nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  height:var(--nav-h);display:flex;align-items:center;
+  height:var(--nav-h);display:flex;align-items:center;justify-content:center;
   padding:0 var(--gut);
-  border-bottom:1px solid transparent;
+  background:rgba(10,10,11,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
   transition:background .35s,border-color .35s;
 }
-nav.up{background:rgba(10,10,11,.86);backdrop-filter:blur(14px);border-color:var(--line)}
-body.light nav.up{background:rgba(246,245,240,.86)}
+body.light nav{background:rgba(246,245,240,.86)}
 
-.nav-name{
-  font-family:var(--font-mono);font-weight:500;font-size:13px;
-  color:var(--ink);cursor:pointer;text-decoration:none;
-  margin-right:auto;letter-spacing:.02em;
-  display:flex;align-items:center;gap:6px;
-  flex-shrink:0;
-}
-.nav-name::before{content:'';width:6px;height:6px;background:var(--accent);flex-shrink:0}
-
-.nav-links{display:flex;gap:28px;list-style:none;flex-shrink:1}
+.nav-links{display:flex;gap:28px;list-style:none;margin-right:38px}
 .nav-links a{
   font-family:var(--font-mono);font-size:11px;font-weight:400;
   color:var(--ghost);text-decoration:none;cursor:pointer;
@@ -86,14 +78,29 @@ body.light nav.up{background:rgba(246,245,240,.86)}
 .nav-links a:hover::after,.nav-links a.on::after{right:0}
 
 .tbtn{
-  margin-left:24px;background:none;border:1px solid var(--line2);border-radius:2px;cursor:pointer;
-  width:26px;height:26px;position:relative;flex-shrink:0;
+  background:none;border:1px solid var(--line2);border-radius:2px;cursor:pointer;
+  width:26px;height:26px;position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);
   color:var(--ghost);transition:color .2s,border-color .2s;
   display:flex;align-items:center;justify-content:center;
 }
 .tbtn::before{content:'';position:absolute;top:50%;left:50%;width:44px;height:44px;transform:translate(-50%,-50%)}
 .tbtn:hover{color:var(--accent);border-color:var(--accent)}
 .tbtn svg{width:13px;height:13px;display:block}
+
+@media(min-width:768px){
+  nav{
+    left:0;right:auto;top:0;bottom:0;height:auto;width:var(--side-w);
+    flex-direction:column;align-items:flex-start;justify-content:flex-start;
+    padding:52px 32px;
+    border-bottom:none;border-right:1px solid var(--line);
+  }
+  .nav-links{flex-direction:column;gap:26px;margin-right:0}
+  .nav-links a::after{display:none}
+  .nav-links a::before{content:'';position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:0;height:1px;background:var(--accent);transition:width .25s var(--ease)}
+  .nav-links a:hover::before,.nav-links a.on::before{width:9px}
+  .tbtn{position:static;transform:none;margin-top:auto}
+  body{padding-left:var(--side-w)}
+}
 
 .shell{max-width:1320px;margin:0 auto;padding:0 var(--gut);position:relative;z-index:1}
 
@@ -103,6 +110,9 @@ body.light nav.up{background:rgba(246,245,240,.86)}
 @keyframes pout{from{opacity:1}to{opacity:0}}
 .page.entering{animation:pin .32s var(--ease) both}
 .page.leaving{animation:pout .15s ease forwards;pointer-events:none}
+@media(min-width:768px){
+  .page{padding-top:46px}
+}
 
 /* Two-column split — stacks on narrow screens, side-by-side on laptop+ */
 .split{display:block}
@@ -110,7 +120,7 @@ body.light nav.up{background:rgba(246,245,240,.86)}
 .split-side{min-width:0;border-top:1px solid var(--line);margin-top:44px;padding-top:8px}
 @media(min-width:960px){
   .split{display:grid;grid-template-columns:1fr 300px;gap:64px;align-items:start}
-  .split-side{border-top:none;border-left:1px solid var(--line);margin-top:0;padding-top:0;padding-left:40px;position:sticky;top:calc(var(--nav-h) + 34px)}
+  .split-side{border-top:none;border-left:1px solid var(--line);margin-top:0;padding-top:0;padding-left:40px;position:sticky;top:46px}
 }
 
 /* HERO */
@@ -228,13 +238,11 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 @media(max-width:480px){
   .nav-links{gap:14px}
   .nav-links a{font-size:9.5px}
-  .tbtn{margin-left:12px}
   .grid{gap:1px}
 }
 @media(max-width:360px){
-  .nav-name{font-size:12px}
-  .nav-links{gap:10px}
-  .nav-links a{font-size:9px;letter-spacing:.03em}
+  .nav-links{gap:9px}
+  .nav-links a{font-size:8.5px;letter-spacing:.03em}
   :root{--gut:16px}
 }
 </style>
@@ -243,7 +251,6 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 <div id="bar"></div>
 
 <nav id="nav">
-  <a class="nav-name" onclick="go('home')">KC</a>
   <ul class="nav-links">
     <li><a onclick="go('home')" class="nl on">home</a></li>
     <li><a onclick="go('work')" class="nl">work</a></li>
@@ -418,9 +425,7 @@ window.addEventListener('scroll', () => {
   const st = document.documentElement.scrollTop;
   const tot = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   document.getElementById('bar').style.width = (tot > 0 ? st / tot * 100 : 0) + '%';
-  document.getElementById('nav').classList.toggle('up', st > 4);
 }, { passive: true });
-document.getElementById('nav').classList.add('up');
 
 /* ── Page transitions ── */
 let curPage = 'home';
