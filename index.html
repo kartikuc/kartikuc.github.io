@@ -19,7 +19,7 @@
   --font-disp:'Space Grotesk',sans-serif;
   --font-body:'Inter',Arial,Helvetica,sans-serif;
   --font-mono:'IBM Plex Mono',ui-monospace,monospace;
-  --nav-h:60px;
+  --nav-h:50px;
   --gut:clamp(16px,4vw,56px);
   --ease:cubic-bezier(.19,1,.22,1);
 }
@@ -55,7 +55,7 @@ img{max-width:100%}
 .amark circle,.amark path{stroke:currentColor}
 
 /* NAV — slim top bar on phones, left sidebar from tablet up */
-:root{--side-w:150px}
+:root{--side-w:132px}
 nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
   height:var(--nav-h);display:flex;align-items:center;justify-content:center;
@@ -78,6 +78,12 @@ body.light nav{background:rgba(246,245,240,.86)}
 .nav-links a:hover,.nav-links a.on{color:var(--ink)}
 .nav-links a:hover::after,.nav-links a.on::after{right:0}
 
+/* Social / email icon row — lives in the sidebar on tablet+ only */
+.nav-icons{display:none;gap:14px;margin:22px 0 4px;flex-wrap:wrap}
+.nav-icons a{color:var(--ghost);transition:color .2s;display:flex;align-items:center;justify-content:center}
+.nav-icons a:hover{color:var(--accent)}
+.nav-icons svg{width:16px;height:16px;display:block}
+
 .tbtn{
   background:none;border:1px solid var(--line2);border-radius:2px;cursor:pointer;
   width:26px;height:26px;position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);
@@ -93,13 +99,14 @@ body.light nav{background:rgba(246,245,240,.86)}
   nav{
     left:0;right:auto;top:0;bottom:0;height:auto;width:var(--side-w);
     flex-direction:column;align-items:flex-start;justify-content:flex-start;
-    padding:52px 26px;
+    padding:40px 22px;
     border-bottom:none;border-right:1px solid var(--line);
   }
   .nav-links{flex-direction:column;gap:26px;margin-right:0}
   .nav-links a::after{display:none}
   .nav-links a::before{content:'';position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:0;height:1px;background:var(--accent);transition:width .25s var(--ease)}
   .nav-links a:hover::before,.nav-links a.on::before{width:9px}
+  .nav-icons{display:flex}
   .tbtn{position:static;transform:none;margin-top:auto}
   body{padding-left:var(--side-w)}
 }
@@ -117,35 +124,30 @@ body.light nav{background:rgba(246,245,240,.86)}
   #teaching{scroll-margin-top:34px}
 }
 
-/* HERO — side-by-side grid: photo column stretches to match the text column's height */
+/* HERO — side-by-side grid: text column first, photo column on the right (order-flipped on desktop only) */
 .hero{margin-bottom:0}
 @media(min-width:768px){
-  .hero{display:grid;grid-template-columns:minmax(220px,38%) 1fr;gap:36px;align-items:stretch}
+  .hero{display:grid;grid-template-columns:1fr minmax(220px,38%);gap:36px;align-items:stretch}
+  .hero-photo{order:2}
+  .hero-text{order:1}
 }
 .hero-photo{
   width:100%;position:relative;margin-bottom:28px;
   border:1px solid var(--line2);border-radius:3px;background:var(--bg2);
   aspect-ratio:16/6;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
 }
 @media(min-width:768px){
   .hero-photo{aspect-ratio:auto;height:100%;margin-bottom:0}
 }
-.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;filter:grayscale(35%) contrast(1.05)}
-.hero-photo::after{content:'';position:absolute;top:-1px;left:-1px;width:9px;height:9px;background:var(--accent);clip-path:polygon(0 0,100% 0,0 100%)}
-.hero-text{display:flex;flex-direction:column;justify-content:center;min-width:0}
-.hero-name{font-family:var(--font-disp);font-size:clamp(34px,6vw,64px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.08;margin-bottom:14px;word-break:break-word}
-.hero-name span{font-weight:400;color:var(--muted)}
-
-.links{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:26px}
-.links a{
-  font-family:var(--font-mono);font-size:11px;font-weight:400;
-  color:var(--muted);text-decoration:none;letter-spacing:.02em;
-  transition:color .2s;
-  display:inline-block;padding:4px 0;
+.hero-photo img{
+  width:100%;height:100%;object-fit:contain;object-position:center center;display:block;
+  filter:grayscale(35%) contrast(1.05);
 }
-.links a::before{content:'[';color:var(--ghost)}
-.links a::after{content:']';color:var(--ghost)}
-.links a:hover{color:var(--accent)}
+.hero-photo::after{content:'';position:absolute;top:-1px;left:-1px;width:9px;height:9px;background:var(--accent);clip-path:polygon(0 0,100% 0,0 100%);z-index:1}
+.hero-text{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.hero-name{font-family:var(--font-disp);font-size:clamp(34px,6vw,64px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.08;margin-bottom:22px;word-break:break-word}
+.hero-name span{font-weight:400;color:var(--muted)}
 
 /* Section label */
 .label{
@@ -170,6 +172,18 @@ body.light nav{background:rgba(246,245,240,.86)}
 .trow-main{font-size:13px;color:var(--text);line-height:1.45;font-weight:300}
 .trow-main .org{color:var(--ghost);font-weight:300}
 .trow-date{font-family:var(--font-mono);font-size:10px;color:var(--ghost);white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
+
+/* Course rows — name/code + one-line description, grouped by category */
+.course-cat{max-width:760px}
+.course-cat-title{font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin:26px 0 6px}
+.course-cat:first-of-type .course-cat-title{margin-top:0}
+.crow{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.crow:last-child{border-bottom:none}
+.crow-main{flex:1;min-width:220px}
+.crow-name{font-size:13px;color:var(--text);font-weight:400;line-height:1.4}
+.crow-name .code{font-family:var(--font-mono);font-size:10px;color:var(--ghost);margin-right:7px;letter-spacing:.02em}
+.crow-desc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.55;font-weight:300}
+.crow-date{font-family:var(--font-mono);font-size:10px;color:var(--ghost);white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
 
 /* Block grid — experiences, projects. Click a tile to open details. Denser grid: 6-up on wide screens. */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:var(--line)}
@@ -231,9 +245,7 @@ body.light .vcount{background:rgba(246,245,240,.8)}
 /* ── Phone / narrow-screen tuning ── */
 @media(max-width:600px){
   .hero-photo{aspect-ratio:4/3;margin-bottom:20px}
-  .hero-name{font-size:32px;margin-bottom:10px}
-  .links{gap:10px 14px}
-  .links a{font-size:10.5px}
+  .hero-name{font-size:32px;margin-bottom:14px}
   .prose{font-size:14px;line-height:1.7}
   .card-title{font-size:11px}
   .card-meta{font-size:8.5px}
@@ -242,6 +254,7 @@ body.light .vcount{background:rgba(246,245,240,.8)}
   .modal-body{padding:18px 18px 20px}
   .trow{gap:8px}
   .trow-main{font-size:12.5px}
+  .crow{gap:8px}
 }
 @media(max-width:480px){
   .nav-links{gap:14px}
@@ -257,12 +270,12 @@ body.light .vcount{background:rgba(246,245,240,.8)}
 
 /* ── Wide-screen scaling: let the page fill bigger monitors instead of floating in empty space ── */
 @media(min-width:1600px){
-  :root{--side-w:170px}
+  :root{--side-w:150px}
   .shell{max-width:1440px}
   .prose{max-width:740px}
 }
 @media(min-width:1900px){
-  :root{--side-w:190px;--gut:clamp(40px,3.4vw,72px)}
+  :root{--side-w:168px;--gut:clamp(40px,3.4vw,72px)}
   .shell{max-width:1680px}
   body{font-size:15.5px}
   .prose{max-width:780px;font-size:15px}
@@ -281,6 +294,20 @@ body.light .vcount{background:rgba(246,245,240,.8)}
     <li><a href="#work" class="nl" data-target="work">work</a></li>
     <li><a href="#teaching" class="nl" data-target="teaching">teaching</a></li>
   </ul>
+  <div class="nav-icons">
+    <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="7" cy="7.3" r="0.9" fill="currentColor" stroke="none"/><line x1="7" y1="10.5" x2="7" y2="17"/><path d="M11 17v-6.2M11 10.8c0-1.4 1-2.3 2.6-2.3S16 9.4 16 11.3V17"/></svg>
+    </a>
+    <a href="https://github.com/MonolayerGraphene" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+    </a>
+    <a href="mailto:kartikuc2004@gmail.com" title="Email (Gmail)" aria-label="Email — Gmail">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="M3 6l9 6.5L21 6"/></svg>
+    </a>
+    <a href="mailto:kartikuc@uchicago.edu" title="Email (UChicago)" aria-label="Email — UChicago">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.3v4.7c0 1.1 2.5 2 6 2s6-.9 6-2v-4.7"/><path d="M22 9v6.2"/></svg>
+    </a>
+  </div>
   <button class="tbtn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
     <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
   </button>
@@ -294,11 +321,6 @@ body.light .vcount{background:rgba(246,245,240,.8)}
     <div class="hero-photo"><img src="images/me.png" alt="Kartik"></div>
     <div class="hero-text">
       <h1 class="hero-name">Kartik <span>Chikkanagoudar</span></h1>
-      <div class="links">
-        <a href="/cdn-cgi/l/email-protection#5932382b2d30322c3a1930302d3b77383a773037">email</a>
-        <a href="https://github.com/MonolayerGraphene" target="_blank">github</a>
-        <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank">linkedin</a>
-      </div>
       <div class="label" style="padding-top:0;margin-bottom:12px">About</div>
       <p class="prose">I'm a final-year Dual Degree student in Electrical Engineering at IIT Bombay, and I've spent most of that time falling further down the rabbit hole of solid state devices — the stuff of nanoelectronics, semiconductor physics, and device technology, chased through both simulation and the messier reality of the lab bench. I like problems that make you sit with a material's physics until it finally clicks: how vacancies move through an oxide, why a transistor's threshold drifts, what a 2D crystal actually does under bias.</p>
       <p class="prose">That curiosity spills into a few adjacent corners too — III-nitride devices, 2D materials, photonics and neuromorphic computing, TCAD and compact modeling — less a checklist and more the set of things I keep getting pulled back to.</p>
@@ -374,8 +396,100 @@ body.light .vcount{background:rgba(246,245,240,.8)}
   </div>
 
   <div class="label r" id="courses">Courses</div>
-  <div class="r teaching-list">
-    <div class="trow"><div class="trow-main">Course Name <span class="org">· IIT Bombay</span></div><div class="trow-date">Sem — Year</div></div>
+  <div class="r">
+
+    <div class="course-cat">
+      <div class="course-cat-title">Nanoelectronics &amp; Semiconductors</div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 207</span>Electronic Devices &amp; Circuits</div><div class="crow-desc">Semiconductor diode, BJT, and MOSFET fundamentals underlying analog design.</div></div><div class="crow-date">Spring 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 755</span>Quantum Transport in Nanoscale Devices</div><div class="crow-desc">NEGF-based transport formalism for nanoscale semiconductor devices.</div></div><div class="crow-date">Spring 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 236</span>Electronic Devices Lab</div><div class="crow-desc">Hands-on characterization of diodes, BJTs, and MOSFETs.</div></div><div class="crow-date">Autumn 2023–24</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 620</span>Physics of Transistors</div><div class="crow-desc">Device physics governing MOSFET operation and scaling limits.</div></div><div class="crow-date">Spring 2023–24</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 724</span>Nanoelectronics</div><div class="crow-desc">Quantum-confined and nanoscale device phenomena beyond classical MOSFETs.</div></div><div class="crow-date">Spring 2023–24</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 457</span>Compound Semiconductor Material and Devices</div><div class="crow-desc">III-V material properties and heterostructure device design.</div></div><div class="crow-date">Autumn 2024–25</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 669</span>VLSI Technology</div><div class="crow-desc">Semiconductor fabrication process flow, from wafer to transistor.</div></div><div class="crow-date">Autumn 2024–25</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 672</span>Microelectronics Lab</div><div class="crow-desc">Cleanroom fabrication of microelectronic devices.</div></div><div class="crow-date">Spring 2024–25</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 728</span>Growth and Characterization of Nano-electronic Materials</div><div class="crow-desc">Thin-film growth techniques and materials characterization methods.</div></div><div class="crow-date">Spring 2024–25</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 735</span>Microelectronics Simulations Lab</div><div class="crow-desc">TCAD simulation of semiconductor device behavior.</div></div><div class="crow-date">Spring 2024–25</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 767</span>Photonics System Engineering</div><div class="crow-desc">Photonic device design and optical system integration.</div></div><div class="crow-date">Spring 2024–25</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 784</span>2D Materials and Devices</div><div class="crow-desc">Transport and device physics of 2D crystals such as graphene and TMDs.</div></div><div class="crow-date">Spring 2024–25</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 746</span>Neuromorphic Engineering</div><div class="crow-desc">Device and circuit approaches to brain-inspired computing.</div></div><div class="crow-date">Autumn 2025–26</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 765</span>Reliability and Failure Analysis of Electronic Devices</div><div class="crow-desc">Degradation mechanisms and reliability testing of semiconductor devices.</div></div><div class="crow-date">Autumn 2025–26</div></div>
+    </div>
+
+    <div class="course-cat">
+      <div class="course-cat-title">Electrical Engineering</div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 114</span>Power Engineering I</div><div class="crow-desc">Fundamentals of power generation and transmission systems.</div></div><div class="crow-date">Autumn 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 204</span>Analog Circuits</div><div class="crow-desc">Design and analysis of transistor-based analog amplifier circuits.</div></div><div class="crow-date">Autumn 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 214</span>Digital Circuits Lab</div><div class="crow-desc">Design and testing of combinational and sequential digital circuits.</div></div><div class="crow-date">Autumn 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 224</span>Digital Systems</div><div class="crow-desc">Boolean logic, combinational/sequential design, and digital system architecture.</div></div><div class="crow-date">Autumn 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 229</span>Signal Processing I</div><div class="crow-desc">Continuous- and discrete-time signal analysis and transforms.</div></div><div class="crow-date">Autumn 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 325</span>Probability and Random Processes</div><div class="crow-desc">Probabilistic models and stochastic processes for engineering systems.</div></div><div class="crow-date">Autumn 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 230</span>Analog Lab</div><div class="crow-desc">Practical design and testing of analog circuits.</div></div><div class="crow-date">Spring 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 238</span>Power Engineering II</div><div class="crow-desc">Advanced topics in power systems and electrical machines.</div></div><div class="crow-date">Spring 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 240</span>Power Engineering Lab</div><div class="crow-desc">Experiments with electrical machines and power systems.</div></div><div class="crow-date">Spring 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 302</span>Control Systems</div><div class="crow-desc">Feedback control theory and system stability analysis.</div></div><div class="crow-date">Spring 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 309</span>Microprocessors</div><div class="crow-desc">Architecture and programming of microprocessor-based systems.</div></div><div class="crow-date">Spring 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 337</span>Microprocessors Laboratory</div><div class="crow-desc">Hands-on interfacing and programming of microprocessor systems.</div></div><div class="crow-date">Spring 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 301</span>Electromagnetic Waves</div><div class="crow-desc">Maxwell's equations and wave propagation in guided and unguided media.</div></div><div class="crow-date">Autumn 2023–24</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 324</span>Control Systems Lab</div><div class="crow-desc">Experimental validation of feedback control system design.</div></div><div class="crow-date">Autumn 2023–24</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 340</span>Communications Lab</div><div class="crow-desc">Implementation and testing of analog and digital communication systems.</div></div><div class="crow-date">Autumn 2023–24</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 341</span>Communication Systems I</div><div class="crow-desc">Analog and digital modulation techniques for communication systems.</div></div><div class="crow-date">Autumn 2023–24</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 671</span>VLSI Design</div><div class="crow-desc">Digital and analog integrated circuit design methodology.</div></div><div class="crow-date">Autumn 2023–24</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 739</span>Processor Design</div><div class="crow-desc">Microarchitecture and datapath design of processors.</div></div><div class="crow-date">Autumn 2023–24</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 344</span>Electronic Design Lab</div><div class="crow-desc">Open-ended electronic system design and prototyping project.</div></div><div class="crow-date">Spring 2023–24</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 618</span>CMOS Analog VLSI Design</div><div class="crow-desc">Analog integrated circuit design techniques in CMOS technology.</div></div><div class="crow-date">Autumn 2024–25</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 706</span>Communication Networks</div><div class="crow-desc">Network protocols and architectures for data communication.</div></div><div class="crow-date">Spring 2025–26</div></div>
+    </div>
+
+    <div class="course-cat">
+      <div class="course-cat-title">Computer Science</div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">CS 101</span>Computer Programming and Utilization</div><div class="crow-desc">Introductory programming and computational problem-solving.</div></div><div class="crow-date">Spring 2021–22</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">CS 213</span>Data Structures and Algorithms</div><div class="crow-desc">Core data structures and algorithmic design and analysis.</div></div><div class="crow-date">Spring 2022–23</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">CS 347</span>Operating Systems</div><div class="crow-desc">Process management, memory management, and OS design principles.</div></div><div class="crow-date">Autumn 2024–25</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">CS 228</span>Logic for Computer Science</div><div class="crow-desc">Propositional and predicate logic for computer science applications.</div></div><div class="crow-date">Spring 2024–25</div></div>
+
+      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">CS 224</span>Computer Networks</div><div class="crow-desc">Principles of computer network design and protocols.</div></div><div class="crow-date">Spring 2025–26</div></div>
+    </div>
+
   </div>
 </section>
 
@@ -403,7 +517,6 @@ body.light .vcount{background:rgba(246,245,240,.8)}
   <span class="vcount-num" id="vcountNum">···</span>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
 /* ── Scroll progress + nav bg ── */
 window.addEventListener('scroll', () => {
