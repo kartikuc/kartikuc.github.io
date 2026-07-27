@@ -177,7 +177,7 @@ body.light nav{background:rgba(246,245,240,.86)}
   color:var(--ink);
   letter-spacing:-.02em;
   line-height:1.15;
-  margin-bottom:12px;
+  margin-bottom:24px; /* Increased vspace between Name and Intro */
   white-space:nowrap;
 }
 .hero-name span{font-weight:400;color:var(--muted)}
@@ -188,7 +188,7 @@ body.light nav{background:rgba(246,245,240,.86)}
   color:var(--dim);
   line-height:1.65;
   max-width:540px;
-  margin-bottom:20px;
+  margin-bottom:32px; /* Increased vspace between Intro and Icons */
   font-weight:300;
 }
 
@@ -196,7 +196,7 @@ body.light nav{background:rgba(246,245,240,.86)}
 .hero-socials{
   display:flex;
   flex-direction:row;
-  gap:10px;
+  gap:18px; /* Increased hspace between icons */
   margin-top:0;
   flex-wrap:wrap;
 }
@@ -204,10 +204,10 @@ body.light nav{background:rgba(246,245,240,.86)}
   display:flex;
   align-items:center;
   justify-content:center;
-  width:40px;
-  height:40px;
+  width:48px; /* Increased icon box width */
+  height:48px; /* Increased icon box height */
   border:1px solid var(--line2);
-  border-radius:4px;
+  border-radius:6px;
   background:var(--bg2);
   color:var(--ink); /* Pure crisp text color (white in dark mode) */
   transition:background .2s, border-color .2s, color .2s, transform .2s var(--ease);
@@ -219,8 +219,8 @@ body.light nav{background:rgba(246,245,240,.86)}
   color:#ffffff;
 }
 .hero-socials svg{
-  width:20px;
-  height:20px;
+  width:26px; /* Increased SVG icon size */
+  height:26px; /* Increased SVG icon size */
   display:block;
 }
 
@@ -240,6 +240,10 @@ body.light nav{background:rgba(246,245,240,.86)}
     white-space:normal;
     word-break:keep-all;
     font-size:clamp(24px, 7vw, 36px);
+    margin-bottom:18px;
+  }
+  .hero-intro{
+    margin-bottom:24px;
   }
 }
 
@@ -332,7 +336,6 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 
 /* Phone tuning */
 @media(max-width:600px){
-  .hero-name{font-size:28px;margin-bottom:10px}
   .prose{font-size:clamp(11.5px, 3.2vw, 13.5px);line-height:1.7;text-align:justify}
   .card-title{font-size:11px}
   .card-meta{font-size:8.5px}
