@@ -110,9 +110,11 @@ body.light nav{background:rgba(246,245,240,.86)}
 .section{scroll-margin-top:calc(var(--nav-h) + 16px);padding-bottom:64px}
 #home{padding-top:calc(var(--nav-h) + 34px)}
 #work{padding-top:52px;margin-top:8px;border-top:1px solid var(--line)}
+#teaching{scroll-margin-top:calc(var(--nav-h) + 16px)}
 @media(min-width:768px){
   #home{padding-top:46px}
   .section{scroll-margin-top:34px}
+  #teaching{scroll-margin-top:34px}
 }
 
 /* Two-column split — stacks on narrow screens, side-by-side on laptop+ */
@@ -125,12 +127,12 @@ body.light nav{background:rgba(246,245,240,.86)}
 }
 
 /* HERO */
-.hero{display:flex;align-items:stretch;gap:24px;margin-bottom:30px;flex-wrap:wrap}
+.hero{display:flex;align-items:flex-start;gap:24px;margin-bottom:30px;flex-wrap:wrap}
 .hero-photo{
-  width:clamp(96px,14vw,170px);flex-shrink:0;overflow:hidden;position:relative;
+  width:clamp(96px,14vw,170px);flex-shrink:0;position:relative;
   border:1px solid var(--line2);border-radius:3px;background:var(--bg2);
 }
-.hero-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(35%) contrast(1.05)}
+.hero-photo img{width:100%;height:auto;display:block;filter:grayscale(35%) contrast(1.05)}
 .hero-photo::after{content:'';position:absolute;top:-1px;left:-1px;width:9px;height:9px;background:var(--accent);clip-path:polygon(0 0,100% 0,0 100%)}
 .hero-text{display:flex;flex-direction:column;justify-content:center;min-width:0;flex:1 1 240px}
 .hero-name{font-family:var(--font-disp);font-size:clamp(24px,3.4vw,38px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.15;margin-bottom:9px;word-break:break-word}
@@ -174,30 +176,31 @@ body.light nav{background:rgba(246,245,240,.86)}
 .ilist-item:hover{color:var(--ink);padding-left:6px}
 
 /* Compact teaching rows */
+.teaching-list{max-width:640px}
 .trow{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .trow:last-child{border-bottom:none}
 .trow-main{font-size:13px;color:var(--text);line-height:1.45;font-weight:300}
 .trow-main .org{color:var(--ghost);font-weight:300}
 .trow-date{font-family:var(--font-mono);font-size:10px;color:var(--ghost);white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
 
-/* Block grid — experiences, projects. Click a tile to open details. */
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
-@media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
-@media(min-width:960px){.grid.work-grid{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:1180px){.grid:not(.work-grid){grid-template-columns:repeat(4,1fr)}}
-@media(min-width:1500px){.grid.work-grid{grid-template-columns:repeat(5,1fr)}}
-@media(min-width:1900px){.grid.work-grid{grid-template-columns:repeat(6,1fr)}}
+/* Block grid — experiences, projects. Click a tile to open details. Sized ~1.5x the original tile via a larger auto-fill minimum. */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1px;background:var(--line)}
+@media(min-width:560px){.grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}}
+@media(min-width:960px){.grid.work-grid{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}}
+@media(min-width:1180px){.grid:not(.work-grid){grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}}
+@media(min-width:1500px){.grid.work-grid{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}}
+@media(min-width:1900px){.grid.work-grid{grid-template-columns:repeat(auto-fill,minmax(380px,1fr))}}
 
 .card{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:var(--bg2);-webkit-tap-highlight-color:transparent}
 .card img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(45%) contrast(1.05) brightness(.92);opacity:0;transition:transform .45s var(--ease),filter .3s,opacity .3s}
 .card img.loaded{opacity:1}
 .card:hover img{transform:scale(1.06);filter:grayscale(0%) contrast(1.05) brightness(1)}
 .card.noimg img{display:none}
-.card-overlay{position:absolute;left:0;right:0;bottom:0;padding:10px 11px;background:rgba(35,34,32,.74);backdrop-filter:blur(3px)}
+.card-overlay{position:absolute;left:0;right:0;bottom:0;padding:15px 16px;background:rgba(35,34,32,.74);backdrop-filter:blur(3px)}
 .card.noimg .card-overlay{position:static;height:100%;display:flex;flex-direction:column;justify-content:flex-end;background:none;backdrop-filter:none}
-.card-title{font-family:var(--font-disp);font-size:12.5px;font-weight:500;color:#f5f4ef;line-height:1.3}
+.card-title{font-family:var(--font-disp);font-size:16.5px;font-weight:500;color:#f5f4ef;line-height:1.3}
 .card.noimg .card-title{color:var(--text)}
-.card-meta{font-family:var(--font-mono);font-size:9px;color:rgba(245,244,239,.72);margin-top:3px;letter-spacing:.02em}
+.card-meta{font-family:var(--font-mono);font-size:12px;color:rgba(245,244,239,.72);margin-top:4px;letter-spacing:.02em}
 .card.noimg .card-meta{color:var(--ghost)}
 .card::before{content:'';position:absolute;top:6px;right:6px;width:4px;height:4px;background:var(--accent);opacity:0;transition:opacity .2s;z-index:1}
 .card:hover::before{opacity:1}
@@ -248,8 +251,8 @@ body.light .vcount{background:rgba(246,245,240,.8)}
   .links{gap:10px 14px}
   .links a{font-size:10.5px}
   .prose{font-size:14px;line-height:1.7}
-  .card-title{font-size:11.5px}
-  .card-meta{font-size:8.5px}
+  .card-title{font-size:14.5px}
+  .card-meta{font-size:11px}
   .modal{max-width:100%;border-radius:6px 6px 0 0;align-self:flex-end}
   .modal-backdrop{padding:0;align-items:flex-end}
   .modal-body{padding:18px 18px 20px}
@@ -296,6 +299,7 @@ body.light .vcount{background:rgba(246,245,240,.8)}
   <ul class="nav-links">
     <li><a href="#home" class="nl on" data-target="home">home</a></li>
     <li><a href="#work" class="nl" data-target="work">work</a></li>
+    <li><a href="#teaching" class="nl" data-target="teaching">teaching</a></li>
   </ul>
   <button class="tbtn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
     <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
@@ -309,7 +313,7 @@ body.light .vcount{background:rgba(246,245,240,.8)}
   <div class="split">
     <div class="split-main">
       <div class="hero r">
-        <div class="hero-photo"><img src="images/me.png" alt="Kartik"></div>
+        <div class="hero-photo"><img src="images/me.jpg" alt="Kartik"></div>
         <div class="hero-text">
           <h1 class="hero-name">Kartik <span>Chikkanagoudar</span></h1>
           <div class="links">
@@ -321,7 +325,6 @@ body.light .vcount{background:rgba(246,245,240,.8)}
           <p class="prose">Final-year Dual Degree student in Electrical Engineering at IIT Bombay, specializing in Solid State Devices with a minor in Computer Science. Research spans nanoelectronics, semiconductor physics, and device technology — both theoretical and experimental.</p>
           <p class="prose">Co-founder of <strong onclick="jumpTo('work')">HackerFab IIT Bombay</strong>, working to make hands-on chip fabrication accessible across India.</p>
           <p class="prose">Outside the lab, I enjoy photography — a few shots are up on my <a href="FunStuff/photobook/" target="_blank" rel="noopener">photobook</a>.</p>
-          <p class="prose">I also tinker with small side-projects for fun: a <a href="FunStuff/gameoflife/" target="_blank" rel="noopener">Game of Life</a> sim, a <a href="FunStuff/gamebyob/" target="_blank" rel="noopener">Game BYOB</a> build, and a few other odds and ends — all collected under <a href="FunStuff/" target="_blank" rel="noopener">/FunStuff</a>.</p>
         </div>
       </div>
 
@@ -342,10 +345,8 @@ body.light .vcount{background:rgba(246,245,240,.8)}
 
 <!-- ══ WORK ══ -->
 <section id="work" class="section">
-  <div class="split">
-    <div class="split-main">
-      <div class="label r" style="padding-top:0"><svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>Experience &amp; Projects</div>
-      <div class="grid r work-grid">
+  <div class="label r" style="padding-top:0"><svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>Projects</div>
+  <div class="grid r work-grid">
         <div class="card" onclick="openCard(this)" data-img="images/pcmo.png" data-title="Modeling and Simulation of PCMO RRAMs" data-meta="MeLoDe Lab, IIT Bombay · Prof. Udayan Ganguly" data-desc="Characterizing stochasticity via compact model parameter variations. Building unified physics-based TCAD models with SET/RESET transient simulation." data-tags="TCAD,RRAM,Compact Modeling">
           <img src="images/pcmo.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">PCMO RRAMs</div><div class="card-meta">2025 — present</div></div>
@@ -395,19 +396,16 @@ body.light .vcount{background:rgba(246,245,240,.8)}
           <div class="card-overlay"><div class="card-title">Automotive Chiplets</div><div class="card-meta">Nov – Dec 2023</div></div>
         </div>
       </div>
-    </div>
-    <div class="split-side">
-      <div class="label r" id="teaching">Teaching &amp; Mentorship</div>
-      <div class="r">
-        <div class="trow"><div class="trow-main">TA — Physics of Transistors <span class="org">· IIT Bombay</span></div><div class="trow-date">Jan–Apr 2026</div></div>
-        <div class="trow"><div class="trow-main">TA — VLSI Technology (EE669) <span class="org">· IIT Bombay</span></div><div class="trow-date">Jul–Nov 2025</div></div>
-        <div class="trow"><div class="trow-main">TA — 28nm CMOS Device &amp; Process Technology <span class="org">· IIT Bombay</span></div><div class="trow-date">Nov 2025</div></div>
-        <div class="trow"><div class="trow-main">TA — Introduction to Biology (BS101) <span class="org">· IIT Bombay, 35+ students</span></div><div class="trow-date">Aug–Dec 2024</div></div>
-        <div class="trow"><div class="trow-main">Institute Student Mentor</div><div class="trow-date">Jun 2023–May 2024</div></div>
-        <div class="trow"><div class="trow-main">Department Academic Mentor</div><div class="trow-date">Jun 2023–May 2024</div></div>
-        <div class="trow"><div class="trow-main">Student Mentoring — XLR8 &amp; ITSP</div><div class="trow-date">2023–2024</div></div>
-      </div>
-    </div>
+
+  <div class="label r" id="teaching">Teaching &amp; Mentorship</div>
+  <div class="r teaching-list">
+    <div class="trow"><div class="trow-main">TA — Physics of Transistors <span class="org">· IIT Bombay</span></div><div class="trow-date">Jan–Apr 2026</div></div>
+    <div class="trow"><div class="trow-main">TA — VLSI Technology (EE669) <span class="org">· IIT Bombay</span></div><div class="trow-date">Jul–Nov 2025</div></div>
+    <div class="trow"><div class="trow-main">TA — 28nm CMOS Device &amp; Process Technology <span class="org">· IIT Bombay</span></div><div class="trow-date">Nov 2025</div></div>
+    <div class="trow"><div class="trow-main">TA — Introduction to Biology (BS101) <span class="org">· IIT Bombay, 35+ students</span></div><div class="trow-date">Aug–Dec 2024</div></div>
+    <div class="trow"><div class="trow-main">Institute Student Mentor</div><div class="trow-date">Jun 2023–May 2024</div></div>
+    <div class="trow"><div class="trow-main">Department Academic Mentor</div><div class="trow-date">Jun 2023–May 2024</div></div>
+    <div class="trow"><div class="trow-main">Student Mentoring — XLR8 &amp; ITSP</div><div class="trow-date">2023–2024</div></div>
   </div>
 </section>
 
@@ -464,7 +462,7 @@ const spyIO = new IntersectionObserver(entries => {
     }
   });
 }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
-document.querySelectorAll('.section').forEach(s => spyIO.observe(s));
+document.querySelectorAll('.section, #teaching').forEach(s => spyIO.observe(s));
 
 /* ── Card popup ── */
 function openCard(el) {
