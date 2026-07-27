@@ -55,7 +55,7 @@ img{max-width:100%}
 .amark circle,.amark path{stroke:currentColor}
 
 /* NAV — slim top bar on phones, left sidebar from tablet up */
-:root{--side-w:186px}
+:root{--side-w:150px}
 nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
   height:var(--nav-h);display:flex;align-items:center;justify-content:center;
@@ -93,7 +93,7 @@ body.light nav{background:rgba(246,245,240,.86)}
   nav{
     left:0;right:auto;top:0;bottom:0;height:auto;width:var(--side-w);
     flex-direction:column;align-items:flex-start;justify-content:flex-start;
-    padding:52px 32px;
+    padding:52px 26px;
     border-bottom:none;border-right:1px solid var(--line);
   }
   .nav-links{flex-direction:column;gap:26px;margin-right:0}
@@ -117,28 +117,20 @@ body.light nav{background:rgba(246,245,240,.86)}
   #teaching{scroll-margin-top:34px}
 }
 
-/* Two-column split — stacks on narrow screens, side-by-side on laptop+ */
-.split{display:block}
-.split-main{min-width:0}
-.split-side{min-width:0;border-top:1px solid var(--line);margin-top:44px;padding-top:8px}
-@media(min-width:960px){
-  .split{display:grid;grid-template-columns:1fr 300px;gap:64px;align-items:start}
-  .split-side{border-top:none;border-left:1px solid var(--line);margin-top:0;padding-top:0;padding-left:40px;position:sticky;top:46px}
-}
-
-/* HERO */
-.hero{display:flex;align-items:flex-start;gap:24px;margin-bottom:30px;flex-wrap:wrap}
+/* HERO — full-width banner photo, spans the shell down to the rule above Projects */
+.hero{margin-bottom:0}
 .hero-photo{
-  width:clamp(96px,14vw,170px);flex-shrink:0;position:relative;
+  width:100%;position:relative;margin-bottom:28px;
   border:1px solid var(--line2);border-radius:3px;background:var(--bg2);
+  aspect-ratio:16/6;overflow:hidden;
 }
-.hero-photo img{width:100%;height:auto;display:block;filter:grayscale(35%) contrast(1.05)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;filter:grayscale(35%) contrast(1.05)}
 .hero-photo::after{content:'';position:absolute;top:-1px;left:-1px;width:9px;height:9px;background:var(--accent);clip-path:polygon(0 0,100% 0,0 100%)}
-.hero-text{display:flex;flex-direction:column;justify-content:center;min-width:0;flex:1 1 240px}
-.hero-name{font-family:var(--font-disp);font-size:clamp(24px,3.4vw,38px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.15;margin-bottom:9px;word-break:break-word}
+.hero-text{display:flex;flex-direction:column;justify-content:center;min-width:0}
+.hero-name{font-family:var(--font-disp);font-size:clamp(34px,6vw,64px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.08;margin-bottom:14px;word-break:break-word}
 .hero-name span{font-weight:400;color:var(--muted)}
 
-.links{display:flex;flex-wrap:wrap;gap:14px}
+.links{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:26px}
 .links a{
   font-family:var(--font-mono);font-size:11px;font-weight:400;
   color:var(--muted);text-decoration:none;letter-spacing:.02em;
@@ -158,22 +150,12 @@ body.light nav{background:rgba(246,245,240,.86)}
 }
 .section>.label:first-child,.split-main>.label:first-child,.split-side>.label:first-child{padding-top:0}
 
-.prose{font-size:14.5px;color:var(--dim);line-height:1.8;max-width:600px;font-weight:300}
+.prose{font-size:14.5px;color:var(--dim);line-height:1.8;max-width:680px;font-weight:300}
 .prose + .prose{margin-top:12px}
 .prose strong{color:var(--ink);font-weight:500;cursor:pointer;border-bottom:1px solid var(--accent);transition:opacity .2s}
 .prose strong:hover{opacity:.75}
 .prose a{color:var(--ink);font-weight:500;text-decoration:none;border-bottom:1px solid var(--accent);transition:opacity .2s}
 .prose a:hover{opacity:.75}
-
-/* Interest list */
-.ilist{display:flex;flex-direction:column}
-.ilist-item{
-  font-size:13.5px;color:var(--muted);padding:11px 0;
-  border-bottom:1px solid var(--line);
-  transition:color .2s,padding-left .2s;
-  font-weight:300;
-}
-.ilist-item:hover{color:var(--ink);padding-left:6px}
 
 /* Compact teaching rows */
 .teaching-list{max-width:640px}
@@ -183,24 +165,22 @@ body.light nav{background:rgba(246,245,240,.86)}
 .trow-main .org{color:var(--ghost);font-weight:300}
 .trow-date{font-family:var(--font-mono);font-size:10px;color:var(--ghost);white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
 
-/* Block grid — experiences, projects. Click a tile to open details. Sized ~1.5x the original tile via a larger auto-fill minimum. */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1px;background:var(--line)}
-@media(min-width:560px){.grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}}
-@media(min-width:960px){.grid.work-grid{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}}
-@media(min-width:1180px){.grid:not(.work-grid){grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}}
-@media(min-width:1500px){.grid.work-grid{grid-template-columns:repeat(auto-fill,minmax(360px,1fr))}}
-@media(min-width:1900px){.grid.work-grid{grid-template-columns:repeat(auto-fill,minmax(380px,1fr))}}
+/* Block grid — experiences, projects. Click a tile to open details. Denser grid: 6-up on wide screens. */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:var(--line)}
+@media(min-width:560px){.grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}}
+@media(min-width:960px){.grid.work-grid{grid-template-columns:repeat(6,1fr)}}
+@media(min-width:1180px){.grid:not(.work-grid){grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}}
 
 .card{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:var(--bg2);-webkit-tap-highlight-color:transparent}
 .card img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(45%) contrast(1.05) brightness(.92);opacity:0;transition:transform .45s var(--ease),filter .3s,opacity .3s}
 .card img.loaded{opacity:1}
 .card:hover img{transform:scale(1.06);filter:grayscale(0%) contrast(1.05) brightness(1)}
 .card.noimg img{display:none}
-.card-overlay{position:absolute;left:0;right:0;bottom:0;padding:15px 16px;background:rgba(35,34,32,.74);backdrop-filter:blur(3px)}
+.card-overlay{position:absolute;left:0;right:0;bottom:0;padding:10px 11px;background:rgba(35,34,32,.74);backdrop-filter:blur(3px)}
 .card.noimg .card-overlay{position:static;height:100%;display:flex;flex-direction:column;justify-content:flex-end;background:none;backdrop-filter:none}
-.card-title{font-family:var(--font-disp);font-size:16.5px;font-weight:500;color:#f5f4ef;line-height:1.3}
+.card-title{font-family:var(--font-disp);font-size:12.5px;font-weight:500;color:#f5f4ef;line-height:1.25}
 .card.noimg .card-title{color:var(--text)}
-.card-meta{font-family:var(--font-mono);font-size:12px;color:rgba(245,244,239,.72);margin-top:4px;letter-spacing:.02em}
+.card-meta{font-family:var(--font-mono);font-size:9.5px;color:rgba(245,244,239,.72);margin-top:3px;letter-spacing:.02em}
 .card.noimg .card-meta{color:var(--ghost)}
 .card::before{content:'';position:absolute;top:6px;right:6px;width:4px;height:4px;background:var(--accent);opacity:0;transition:opacity .2s;z-index:1}
 .card:hover::before{opacity:1}
@@ -244,15 +224,13 @@ body.light .vcount{background:rgba(246,245,240,.8)}
 
 /* ── Phone / narrow-screen tuning ── */
 @media(max-width:600px){
-  .hero{gap:16px}
-  .hero-photo{width:78px}
-  .hero-text{min-width:0}
-  .hero-name{font-size:24px;margin-bottom:7px}
+  .hero-photo{aspect-ratio:4/3;margin-bottom:20px}
+  .hero-name{font-size:32px;margin-bottom:10px}
   .links{gap:10px 14px}
   .links a{font-size:10.5px}
   .prose{font-size:14px;line-height:1.7}
-  .card-title{font-size:14.5px}
-  .card-meta{font-size:11px}
+  .card-title{font-size:11px}
+  .card-meta{font-size:8.5px}
   .modal{max-width:100%;border-radius:6px 6px 0 0;align-self:flex-end}
   .modal-backdrop{padding:0;align-items:flex-end}
   .modal-body{padding:18px 18px 20px}
@@ -268,27 +246,23 @@ body.light .vcount{background:rgba(246,245,240,.8)}
   .nav-links{gap:9px}
   .nav-links a{font-size:8.5px;letter-spacing:.03em}
   :root{--gut:14px}
-  .hero-name{font-size:21px}
+  .hero-name{font-size:26px}
 }
 
 /* ── Wide-screen scaling: let the page fill bigger monitors instead of floating in empty space ── */
 @media(min-width:1600px){
-  :root{--side-w:210px}
+  :root{--side-w:170px}
   .shell{max-width:1440px}
-  .prose{max-width:660px}
+  .prose{max-width:740px}
 }
 @media(min-width:1900px){
-  :root{--side-w:236px;--gut:clamp(40px,3.4vw,72px)}
+  :root{--side-w:190px;--gut:clamp(40px,3.4vw,72px)}
   .shell{max-width:1680px}
   body{font-size:15.5px}
-  .split{grid-template-columns:1fr 340px;gap:80px}
-  .split-side{padding-left:48px}
-  .prose{max-width:700px;font-size:15px}
-  .hero-photo{width:190px}
+  .prose{max-width:780px;font-size:15px}
 }
 @media(min-width:2400px){
   .shell{max-width:1880px}
-  .split{grid-template-columns:1fr 380px;gap:96px}
 }
 </style>
 </head>
@@ -310,35 +284,20 @@ body.light .vcount{background:rgba(246,245,240,.8)}
 
 <!-- ══ HOME ══ -->
 <section id="home" class="section">
-  <div class="split">
-    <div class="split-main">
-      <div class="hero r">
-        <div class="hero-photo"><img src="images/me.png" alt="Kartik"></div>
-        <div class="hero-text">
-          <h1 class="hero-name">Kartik <span>Chikkanagoudar</span></h1>
-          <div class="links">
-            <a href="/cdn-cgi/l/email-protection#5932382b2d30322c3a1930302d3b77383a773037">email</a>
-            <a href="https://github.com/MonolayerGraphene" target="_blank">github</a>
-            <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank">linkedin</a>
-          </div>
-          <div class="label" style="padding-top:22px;margin-bottom:12px">About</div>
-          <p class="prose">Final-year Dual Degree student in Electrical Engineering at IIT Bombay, specializing in Solid State Devices with a minor in Computer Science. Research spans nanoelectronics, semiconductor physics, and device technology — both theoretical and experimental.</p>
-          <p class="prose">Co-founder of <strong onclick="jumpTo('work')">HackerFab IIT Bombay</strong>, working to make hands-on chip fabrication accessible across India.</p>
-          <p class="prose">Outside the lab, I enjoy photography — a few shots are up on my <a href="FunStuff/photobook/" target="_blank" rel="noopener">photobook</a>.</p>
-        </div>
+  <div class="hero r">
+    <div class="hero-photo"><img src="images/me.png" alt="Kartik"></div>
+    <div class="hero-text">
+      <h1 class="hero-name">Kartik <span>Chikkanagoudar</span></h1>
+      <div class="links">
+        <a href="/cdn-cgi/l/email-protection#5932382b2d30322c3a1930302d3b77383a773037">email</a>
+        <a href="https://github.com/MonolayerGraphene" target="_blank">github</a>
+        <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank">linkedin</a>
       </div>
-
-    </div>
-    <div class="split-side">
-      <div class="label r">Research Interests</div>
-      <div class="ilist r">
-        <div class="ilist-item">Device Physics &amp; Nanoelectronics</div>
-        <div class="ilist-item">Semiconductor Modeling &amp; Simulation</div>
-        <div class="ilist-item">III-Nitride Materials &amp; Applications</div>
-        <div class="ilist-item">2D Materials and Devices</div>
-        <div class="ilist-item">Photonics &amp; Neuromorphic Computing</div>
-        <div class="ilist-item" style="border-bottom:1px solid var(--line)">TCAD Simulations &amp; Compact Modeling</div>
-      </div>
+      <div class="label" style="padding-top:0;margin-bottom:12px">About</div>
+      <p class="prose">I'm a final-year Dual Degree student in Electrical Engineering at IIT Bombay, and I've spent most of that time falling further down the rabbit hole of solid state devices — the stuff of nanoelectronics, semiconductor physics, and device technology, chased through both simulation and the messier reality of the lab bench. I like problems that make you sit with a material's physics until it finally clicks: how vacancies move through an oxide, why a transistor's threshold drifts, what a 2D crystal actually does under bias.</p>
+      <p class="prose">That curiosity spills into a few adjacent corners too — III-nitride devices, 2D materials, photonics and neuromorphic computing, TCAD and compact modeling — less a checklist and more the set of things I keep getting pulled back to.</p>
+      <p class="prose">A lot of my energy these days goes into <strong onclick="jumpTo('work')">HackerFab IIT Bombay</strong>, which I co-founded to make hands-on chip fabrication something students here can actually get their hands dirty with, not just read about.</p>
+      <p class="prose">Outside the lab, I enjoy photography — a few shots are up on my <a href="FunStuff/photobook/" target="_blank" rel="noopener">photobook</a>.</p>
     </div>
   </div>
 </section>
@@ -406,6 +365,11 @@ body.light .vcount{background:rgba(246,245,240,.8)}
     <div class="trow"><div class="trow-main">Institute Student Mentor</div><div class="trow-date">Jun 2023–May 2024</div></div>
     <div class="trow"><div class="trow-main">Department Academic Mentor</div><div class="trow-date">Jun 2023–May 2024</div></div>
     <div class="trow"><div class="trow-main">Student Mentoring — XLR8 &amp; ITSP</div><div class="trow-date">2023–2024</div></div>
+  </div>
+
+  <div class="label r" id="courses">Courses</div>
+  <div class="r teaching-list">
+    <div class="trow"><div class="trow-main">Course Name <span class="org">· IIT Bombay</span></div><div class="trow-date">Sem — Year</div></div>
   </div>
 </section>
 
