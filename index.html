@@ -10,8 +10,7 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-  
-  :root{
+:root{
   --bg:#0a0a0b;--bg2:#131315;--bg3:#1a1a1c;
   --line:#242426;--line2:#2f2f31;
   --ghost:#55544e;--muted:#8b8a82;--dim:#b7b6ae;
@@ -80,17 +79,17 @@ body.light nav{background:rgba(246,245,240,.86)}
 .nav-links a:hover,.nav-links a.on{color:var(--ink)}
 .nav-links a:hover::after,.nav-links a.on::after{right:0}
 
-/* Right-hand cluster: social icon grid + (visitor count / theme toggle) */
+/* Right-hand cluster: social icon row/grid + (visitor count / theme toggle) */
 .nav-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
 
-.nav-icons{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);gap:6px}
+.nav-icons{display:flex;flex-direction:row;gap:6px}
 .nav-icons a{
-  width:30px;height:30px;border:1px solid var(--line2);border-radius:2px;
+  width:36px;height:36px;border:1px solid var(--line2);border-radius:2px;
   color:var(--ghost);transition:color .2s,border-color .2s;
   display:flex;align-items:center;justify-content:center;
 }
 .nav-icons a:hover{color:var(--accent);border-color:var(--accent)}
-.nav-icons svg{width:17px;height:17px;display:block}
+.nav-icons svg{width:20px;height:20px;display:block}
 
 .nav-bottom{display:flex;align-items:center;gap:10px}
 
@@ -127,8 +126,8 @@ body.light nav{background:rgba(246,245,240,.86)}
   .nav-links a::before{content:'';position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:0;height:1px;background:var(--accent);transition:width .25s var(--ease)}
   .nav-links a:hover::before,.nav-links a.on::before{width:9px}
   .nav-right{flex-direction:column;align-items:flex-start;flex:1;width:100%;margin-top:28px;gap:0}
-  .nav-icons{margin-bottom:18px}
-  .nav-bottom{margin-top:auto;width:100%}
+  .nav-icons{display:grid;grid-template-columns:repeat(2,1fr);margin-top:auto;margin-bottom:14px}
+  .nav-bottom{margin-top:0;width:100%}
   body{padding-left:var(--side-w)}
 }
 
@@ -139,11 +138,11 @@ body.light nav{background:rgba(246,245,240,.86)}
 @media(max-width:480px){
   .nav-right{gap:8px}
   .nav-icons{gap:4px}
-  .nav-icons a{width:23px;height:23px}
-  .nav-icons svg{width:13px;height:13px}
+  .nav-icons a{width:28px;height:28px}
+  .nav-icons svg{width:15px;height:15px}
   .nav-bottom{gap:6px}
   .vcount{padding:4px 8px;font-size:9px;gap:4px}
-  .tbtn{width:23px;height:23px}
+  .tbtn{width:28px;height:28px}
 }
 
 .shell{max-width:1320px;margin:0 auto;padding:0 var(--gut);position:relative;z-index:1;width:100%}
