@@ -79,36 +79,10 @@ body.light nav{background:rgba(246,245,240,.86)}
 .nav-links a:hover::after,.nav-links a.on::after{right:0}
 
 /* Social / email icon row — lives in the sidebar on tablet+ only */
-.nav-icons{
-    display:none;
-    gap:12px;
-    margin:28px 0;
-}
-
-.nav-icons a{
-    width:42px;
-    height:42px;
-    border:1px solid var(--line2);
-    border-radius:4px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:var(--ghost);
-    transition:.25s;
-}
-
-.nav-icons a:hover{
-    color:var(--accent);
-    border-color:var(--accent);
-    background:var(--accent-dim);
-}
-
-.nav-icons svg{
-    width:22px;
-    height:22px;
-}
+.nav-icons{display:none;gap:14px;margin:22px 0 4px;flex-wrap:wrap}
+.nav-icons a{color:var(--ghost);transition:color .2s;display:flex;align-items:center;justify-content:center}
+.nav-icons a:hover{color:var(--accent)}
+.nav-icons svg{width:16px;height:16px;display:block}
 
 .tbtn{
   background:none;border:1px solid var(--line2);border-radius:2px;cursor:pointer;
@@ -122,15 +96,19 @@ body.light nav{background:rgba(246,245,240,.86)}
 .tbtn svg{width:13px;height:13px;display:block}
 
 @media(min-width:768px){
-
-.nav-icons{
-    display:grid;
-    grid-template-columns:repeat(2,48px);
-    grid-template-rows:repeat(2,48px);
-    gap:10px;
-    margin-top:36px;
-}
-
+  nav{
+    left:0;right:auto;top:0;bottom:0;height:auto;width:var(--side-w);
+    flex-direction:column;align-items:flex-start;justify-content:flex-start;
+    padding:40px 22px;
+    border-bottom:none;border-right:1px solid var(--line);
+  }
+  .nav-links{flex-direction:column;gap:26px;margin-right:0}
+  .nav-links a::after{display:none}
+  .nav-links a::before{content:'';position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:0;height:1px;background:var(--accent);transition:width .25s var(--ease)}
+  .nav-links a:hover::before,.nav-links a.on::before{width:9px}
+  .nav-icons{display:flex}
+  .tbtn{position:static;transform:none;margin-top:auto}
+  body{padding-left:var(--side-w)}
 }
 
 .shell{max-width:1320px;margin:0 auto;padding:0 var(--gut);position:relative;z-index:1;width:100%}
