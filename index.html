@@ -177,8 +177,12 @@ body.light nav{background:rgba(246,245,240,.86)}
   color:var(--dim);
   line-height:1.65;
   max-width:540px;
-  margin-bottom:32px; 
+  margin-bottom:32px;
   font-weight:300;
+
+  text-align:justify;
+  text-justify:inter-word;
+  hyphens:auto;
 }
 
 /* HORIZONTAL SOCIAL MEDIA ICONS — WHITE & NON-GLOWY */
@@ -389,36 +393,104 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 <!-- ══ HOME / HERO ══ -->
 <section id="home" class="section">
   <div class="hero-header r">
-    <div class="hero-left">
-      <h1 class="hero-name">Kartik <span>Chikkanagoudar</span></h1>
-      
-      <!-- SHORT INTRO -->
-      <p class="hero-intro">
-                Final-year Dual Degree Electrical Engineering student at IIT Bombay, specializing in nanoelectronics, TCAD modeling, and device physics. Co-founder of HackerFab IIT Bombay.
-        Final-year Dual Degree Electrical Engineering student at IIT Bombay, specializing in nanoelectronics, TCAD modeling, and device physics. Co-founder of HackerFab IIT Bombay.
-        Final-year Dual Degree Electrical Engineering student at IIT Bombay, specializing in nanoelectronics, TCAD modeling, and device physics. Co-founder of HackerFab IIT Bombay.
-        Final-year Dual Degree Electrical Engineering student at IIT Bombay, specializing in nanoelectronics, TCAD modeling, and device physics. Co-founder of HackerFab IIT Bombay.
-        Final-year Dual Degree Electrical Engineering student at IIT Bombay, specializing in nanoelectronics, TCAD modeling, and device physics. Co-founder of HackerFab IIT Bombay.
-        Final-year Dual Degree Electrical Engineering student at IIT Bombay, specializing in nanoelectronics, TCAD modeling, and device physics. Co-founder of HackerFab IIT Bombay.
-Final-year Dual Degree Electrical Engineering student at IIT Bombay, specializing in nanoelectronics, TCAD modeling, and device physics. Co-founder of HackerFab IIT Bombay.
-      </p>
+<div class="hero-left">
 
-      <!-- HORIZONTAL WHITE SOCIAL ICONS (NON-GLOWY) -->
-      <div class="hero-socials">
-        <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="7" cy="7.3" r="0.9" fill="currentColor" stroke="none"/><line x1="7" y1="10.5" x2="7" y2="17"/><path d="M11 17v-6.2M11 10.8c0-1.4 1-2.3 2.6-2.3S16 9.4 16 11.3V17"/></svg>
+    <h1 class="hero-name">
+        Kartik <span>Chikkanagoudar</span>
+    </h1>
+
+    <!-- SOCIALS -->
+    <div class="hero-socials">
+
+        <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/"
+           target="_blank"
+           rel="noopener"
+           title="LinkedIn"
+           aria-label="LinkedIn">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.5"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="7" cy="7.3" r="0.9"
+                        fill="currentColor"
+                        stroke="none"/>
+                <line x1="7" y1="10.5" x2="7" y2="17"/>
+                <path d="M11 17v-6.2M11 10.8c0-1.4 1-2.3 2.6-2.3S16 9.4 16 11.3V17"/>
+            </svg>
+
         </a>
-        <a href="https://github.com/MonolayerGraphene" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+
+        <a href="https://github.com/MonolayerGraphene"
+           target="_blank"
+           rel="noopener"
+           title="GitHub"
+           aria-label="GitHub">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.5"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+            </svg>
+
         </a>
-        <a href="mailto:kartikuc2004@gmail.com" title="Email (Gmail)" aria-label="Email — Gmail">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="M3 6l9 6.5L21 6"/></svg>
+
+        <a href="mailto:kartikuc2004@gmail.com"
+           title="Email (Gmail)"
+           aria-label="Email">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.5"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+                <rect x="2.5" y="4.5" width="19" height="15" rx="2"/>
+                <path d="M3 6l9 6.5L21 6"/>
+
+            </svg>
+
         </a>
-        <a href="mailto:kartikuc@uchicago.edu" title="Email (UChicago)" aria-label="Email — UChicago">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.3v4.7c0 1.1 2.5 2 6 2s6-.9 6-2v-4.7"/><path d="M22 9v6.2"/></svg>
+
+        <a href="mailto:kartikuc@uchicago.edu"
+           title="Email (UChicago)"
+           aria-label="Email">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.5"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+                <path d="M2 9l10-5 10 5-10 5-10-5z"/>
+                <path d="M6 11.3v4.7c0 1.1 2.5 2 6 2s6-.9 6-2v-4.7"/>
+                <path d="M22 9v6.2"/>
+
+            </svg>
+
         </a>
-      </div>
+
     </div>
+
+    <p class="hero-intro">
+        Final-year Dual Degree student in Electrical Engineering at IIT Bombay.
+        Incoming PhD student at the University of Chicago and co-founder of
+        HackerFab IIT Bombay, where I work toward making semiconductor
+        fabrication more accessible through open-source tools and hands-on
+        education.
+    </p>
+
+</div>
 
     <div class="hero-photo">
       <img src="images/me.png" alt="Kartik">
@@ -428,13 +500,55 @@ Final-year Dual Degree Electrical Engineering student at IIT Bombay, specializin
 
 <!-- ══ ABOUT SECTION ══ -->
 <section id="about" class="section">
-  <div class="label r" style="padding-top:0"><svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>About</div>
-  <div class="r">
-    <p class="prose">I'm a final-year Dual Degree student in Electrical Engineering at IIT Bombay, and I've spent most of that time falling further down the rabbit hole of solid state devices — the stuff of nanoelectronics, semiconductor physics, and device technology, chased through both simulation and the messier reality of the lab bench. I like problems that make you sit with a material's physics until it finally clicks: how vacancies move through an oxide, why a transistor's threshold drifts, what a 2D crystal actually does under bias.</p>
-    <p class="prose">That curiosity spills into a few adjacent corners too — III-nitride devices, 2D materials, photonics and neuromorphic computing, TCAD and compact modeling — less a checklist and more the set of things I keep getting pulled back to.</p>
-    <p class="prose">A lot of my energy these days goes into <strong onclick="jumpTo('work')">HackerFab IIT Bombay</strong>, which I co-founded to make hands-on chip fabrication something students here can actually get their hands dirty with, not just read about.</p>
-    <p class="prose">Outside the lab, I enjoy photography — a few shots are up on my <a href="FunStuff/photobook/" target="_blank" rel="noopener">photobook</a>.</p>
-  </div>
+
+    <div class="label r" style="padding-top:0">
+
+        <svg class="amark"
+             viewBox="0 0 16 16"
+             fill="none"
+             stroke-width="1">
+
+            <circle cx="8" cy="8" r="5"/>
+            <path d="M8 0v3M8 13v3M0 8h3M13 8h3"/>
+
+        </svg>
+
+        Research Interests
+
+    </div>
+
+    <div class="r">
+
+        <p class="prose">
+            My research interests broadly lie in semiconductor devices and
+            nanoelectronics, with a focus on understanding how material
+            properties translate into device behavior and ultimately circuit
+            performance.
+        </p>
+
+        <p class="prose">
+            I am particularly interested in non-volatile memories, compact
+            modeling, TCAD simulation, semiconductor fabrication, device
+            reliability, and emerging electronic materials including III–V
+            semiconductors and two-dimensional materials.
+        </p>
+
+        <p class="prose">
+            More broadly, I enjoy research spanning device physics,
+            photonics, neuromorphic computing, and the intersection of
+            materials, simulation, and experimental characterization.
+        </p>
+
+        <p class="prose">
+            Beyond research, I co-founded
+            <strong onclick="jumpTo('work')">HackerFab IIT Bombay</strong>,
+            an initiative focused on making semiconductor fabrication more
+            accessible through affordable open-source tools and hands-on
+            education.
+        </p>
+
+    </div>
+
 </section>
 
 <!-- ══ WORK ══ -->
