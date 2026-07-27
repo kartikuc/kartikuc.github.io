@@ -50,11 +50,11 @@ img{max-width:100%}
 
 #bar{position:fixed;top:0;left:0;height:2px;width:0%;background:var(--accent);opacity:.85;z-index:700;transition:width .1s linear}
 
-/* alignment-mark icon — signature motif borrowed from photomask fiducials */
+/* alignment-mark icon */
 .amark{width:11px;height:11px;flex-shrink:0;color:var(--accent)}
 .amark circle,.amark path{stroke:currentColor}
 
-/* NAV — top bar on phones, left sidebar from tablet up */
+/* NAV */
 :root{--side-w:142px}
 nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
@@ -79,7 +79,7 @@ body.light nav{background:rgba(246,245,240,.86)}
 .nav-links a:hover,.nav-links a.on{color:var(--ink)}
 .nav-links a:hover::after,.nav-links a.on::after{right:0}
 
-/* Right-hand cluster: (visitor count / theme toggle) */
+/* Right-hand cluster */
 .nav-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .nav-bottom{display:flex;align-items:center;gap:10px}
 
@@ -120,7 +120,6 @@ body.light nav{background:rgba(246,245,240,.86)}
   body{padding-left:var(--side-w)}
 }
 
-/* Narrow phones */
 @media(max-width:767px){
   :root{--nav-h:70px}
 }
@@ -145,10 +144,10 @@ body.light nav{background:rgba(246,245,240,.86)}
   #teaching{scroll-margin-top:34px}
 }
 
-/* HERO HEADER — FLEX LAYOUT (FIXES TEXT WRAPPING ISSUE) */
+/* HERO HEADER */
 .hero-header{
   display:flex;
-  justify-content:space-between;
+  justify-space-between;
   align-items:flex-start;
   gap:32px;
   margin-bottom:24px;
@@ -178,51 +177,50 @@ body.light nav{background:rgba(246,245,240,.86)}
   color:var(--ink);
   letter-spacing:-.02em;
   line-height:1.15;
-  margin-bottom:20px;
+  margin-bottom:12px;
   white-space:nowrap;
 }
 .hero-name span{font-weight:400;color:var(--muted)}
 
-/* VERTICAL SOCIAL MEDIA ICONS (ENLARGED 1.5x & BRIGHT DISTINCT COLOR) */
+/* SHORT HERO INTRO */
+.hero-intro{
+  font-size:clamp(13px, 1.1vw, 15px);
+  color:var(--dim);
+  line-height:1.65;
+  max-width:540px;
+  margin-bottom:20px;
+  font-weight:300;
+}
+
+/* HORIZONTAL SOCIAL MEDIA ICONS — WHITE & NON-GLOWY */
 .hero-socials{
   display:flex;
-  flex-direction:column;
-  gap:12px;
-  margin-top:18px;
+  flex-direction:row;
+  gap:10px;
+  margin-top:0;
+  flex-wrap:wrap;
 }
 .hero-socials a{
   display:flex;
   align-items:center;
   justify-content:center;
-  width:50px;
-  height:50px;
-  border:1px solid rgba(0, 229, 255, 0.35);
+  width:40px;
+  height:40px;
+  border:1px solid var(--line2);
   border-radius:4px;
-  background:rgba(0, 229, 255, 0.05);
-  color:#00e5ff; /* Bright electric cyan */
-  transition:transform .2s var(--ease), color .2s, border-color .2s, background .2s, box-shadow .2s;
-}
-body.light .hero-socials a{
-  color:#0088cc;
-  border-color:rgba(0, 136, 204, 0.35);
-  background:rgba(0, 136, 204, 0.06);
+  background:var(--bg2);
+  color:var(--ink); /* Pure crisp text color (white in dark mode) */
+  transition:background .2s, border-color .2s, color .2s, transform .2s var(--ease);
 }
 .hero-socials a:hover{
   transform:translateY(-2px);
-  color:#55efff;
-  border-color:#00e5ff;
-  background:rgba(0, 229, 255, 0.15);
-  box-shadow:0 4px 14px rgba(0, 229, 255, 0.25);
-}
-body.light .hero-socials a:hover{
-  color:#006699;
-  border-color:#0088cc;
-  background:rgba(0, 136, 204, 0.12);
-  box-shadow:0 4px 14px rgba(0, 136, 204, 0.2);
+  border-color:var(--ghost);
+  background:var(--bg3);
+  color:#ffffff;
 }
 .hero-socials svg{
-  width:36px;  /* 1.5x enlarged from 24px */
-  height:36px;
+  width:20px;
+  height:20px;
   display:block;
 }
 
@@ -254,7 +252,7 @@ body.light .hero-socials a:hover{
 }
 .section>.label:first-child,.split-main>.label:first-child,.split-side>.label:first-child{padding-top:0}
 
-/* Justified text & responsive font scaling */
+/* Justified text */
 .prose{
   font-size:clamp(12.5px, 1.1vw, 14.5px);
   color:var(--dim);
@@ -334,7 +332,7 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 
 /* Phone tuning */
 @media(max-width:600px){
-  .hero-name{font-size:28px;margin-bottom:14px}
+  .hero-name{font-size:28px;margin-bottom:10px}
   .prose{font-size:clamp(11.5px, 3.2vw, 13.5px);line-height:1.7;text-align:justify}
   .card-title{font-size:11px}
   .card-meta{font-size:8.5px}
@@ -406,7 +404,12 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
     <div class="hero-left">
       <h1 class="hero-name">Kartik <span>Chikkanagoudar</span></h1>
       
-      <!-- 4 VERTICAL ENLARGED SOCIAL ICONS UNDER THE NAME -->
+      <!-- SHORT INTRO -->
+      <p class="hero-intro">
+        Final-year Dual Degree Electrical Engineering student at IIT Bombay, specializing in nanoelectronics, TCAD modeling, and device physics. Co-founder of HackerFab IIT Bombay.
+      </p>
+
+      <!-- HORIZONTAL WHITE SOCIAL ICONS (NON-GLOWY) -->
       <div class="hero-socials">
         <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="7" cy="7.3" r="0.9" fill="currentColor" stroke="none"/><line x1="7" y1="10.5" x2="7" y2="17"/><path d="M11 17v-6.2M11 10.8c0-1.4 1-2.3 2.6-2.3S16 9.4 16 11.3V17"/></svg>
@@ -429,7 +432,7 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
   </div>
 </section>
 
-<!-- ══ ABOUT SECTION (NEW DISTINCT PART BELOW IMAGE) ══ -->
+<!-- ══ ABOUT SECTION ══ -->
 <section id="about" class="section">
   <div class="label r" style="padding-top:0"><svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>About</div>
   <div class="r">
