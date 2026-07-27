@@ -20,7 +20,7 @@
   --font-body:'Inter',Arial,Helvetica,sans-serif;
   --font-mono:'IBM Plex Mono',ui-monospace,monospace;
   --nav-h:60px;
-  --gut:clamp(20px,4vw,48px);
+  --gut:clamp(16px,4vw,48px);
   --ease:cubic-bezier(.19,1,.22,1);
 }
 body.light{
@@ -32,14 +32,15 @@ body.light{
 }
 
 html{scroll-behavior:smooth}
+html,body{width:100%;max-width:100%;overflow-x:hidden}
 body{
   background:var(--bg);color:var(--dim);
   font-family:var(--font-body);font-weight:300;
   font-size:15px;line-height:1.6;
   transition:background .35s var(--ease),color .35s var(--ease);
   -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
 }
+img{max-width:100%}
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.001s!important;transition-duration:.001s!important;scroll-behavior:auto!important}
 }
@@ -65,7 +66,7 @@ nav{
 }
 body.light nav{background:rgba(246,245,240,.86)}
 
-.nav-links{display:flex;gap:28px;list-style:none;margin-right:38px}
+.nav-links{display:flex;gap:28px;list-style:none;margin-right:38px;flex-wrap:wrap;justify-content:center}
 .nav-links a{
   font-family:var(--font-mono);font-size:11px;font-weight:400;
   color:var(--ghost);text-decoration:none;cursor:pointer;
@@ -82,6 +83,7 @@ body.light nav{background:rgba(246,245,240,.86)}
   width:26px;height:26px;position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);
   color:var(--ghost);transition:color .2s,border-color .2s;
   display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
 }
 .tbtn::before{content:'';position:absolute;top:50%;left:50%;width:44px;height:44px;transform:translate(-50%,-50%)}
 .tbtn:hover{color:var(--accent);border-color:var(--accent)}
@@ -102,7 +104,7 @@ body.light nav{background:rgba(246,245,240,.86)}
   body{padding-left:var(--side-w)}
 }
 
-.shell{max-width:1320px;margin:0 auto;padding:0 var(--gut);position:relative;z-index:1}
+.shell{max-width:1320px;margin:0 auto;padding:0 var(--gut);position:relative;z-index:1;width:100%}
 
 .page{display:none;padding-top:calc(var(--nav-h) + 34px);padding-bottom:70px;min-height:60vh}
 .page.on{display:block}
@@ -131,8 +133,8 @@ body.light nav{background:rgba(246,245,240,.86)}
 }
 .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(35%) contrast(1.05)}
 .hero-photo::after{content:'';position:absolute;top:-1px;left:-1px;width:9px;height:9px;background:var(--accent);clip-path:polygon(0 0,100% 0,0 100%)}
-.hero-text{display:flex;flex-direction:column;justify-content:center;min-width:180px}
-.hero-name{font-family:var(--font-disp);font-size:clamp(26px,5vw,34px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.15;margin-bottom:9px}
+.hero-text{display:flex;flex-direction:column;justify-content:center;min-width:0;flex:1 1 240px}
+.hero-name{font-family:var(--font-disp);font-size:clamp(24px,5vw,34px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.15;margin-bottom:9px;word-break:break-word}
 .hero-name span{font-weight:400;color:var(--muted)}
 
 .links{display:flex;flex-wrap:wrap;gap:14px}
@@ -159,6 +161,8 @@ body.light nav{background:rgba(246,245,240,.86)}
 .prose + .prose{margin-top:12px}
 .prose strong{color:var(--ink);font-weight:500;cursor:pointer;border-bottom:1px solid var(--accent);transition:opacity .2s}
 .prose strong:hover{opacity:.75}
+.prose a{color:var(--ink);font-weight:500;text-decoration:none;border-bottom:1px solid var(--accent);transition:opacity .2s}
+.prose a:hover{opacity:.75}
 
 /* Interest list */
 .ilist{display:flex;flex-direction:column}
@@ -177,9 +181,9 @@ body.light nav{background:rgba(246,245,240,.86)}
 .trow-main .org{color:var(--ghost);font-weight:300}
 .trow-date{font-family:var(--font-mono);font-size:10px;color:var(--ghost);white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
 
-/* Block grid — experiences, projects, hobbies. Click a tile to open details. */
+/* Block grid — experiences, projects. Click a tile to open details. */
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
-@media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:960px){.grid.work-grid{grid-template-columns:repeat(4,1fr)}}
 @media(min-width:1180px){.grid:not(.work-grid){grid-template-columns:repeat(4,1fr)}}
 
@@ -243,7 +247,14 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 @media(max-width:360px){
   .nav-links{gap:9px}
   .nav-links a{font-size:8.5px;letter-spacing:.03em}
-  :root{--gut:16px}
+  :root{--gut:14px}
+  .hero-name{font-size:21px}
+}
+
+/* ── Wide-screen ceiling: keep content from over-stretching on very large monitors ── */
+@media(min-width:1600px){
+  :root{--side-w:210px}
+  .shell{max-width:1440px}
 }
 </style>
 </head>
@@ -254,7 +265,6 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
   <ul class="nav-links">
     <li><a onclick="go('home')" class="nl on">home</a></li>
     <li><a onclick="go('work')" class="nl">work</a></li>
-    <li><a onclick="go('hobbies')" class="nl">hobbies</a></li>
   </ul>
   <button class="tbtn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
     <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
@@ -278,7 +288,8 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
           </div>
           <div class="label" style="padding-top:22px;margin-bottom:12px">About</div>
           <p class="prose">Final-year Dual Degree student in Electrical Engineering at IIT Bombay, specializing in Solid State Devices with a minor in Computer Science. Research spans nanoelectronics, semiconductor physics, and device technology — both theoretical and experimental.</p>
-          <p class="prose">Co-founder of <strong onclick="openHackerFab()">HackerFab IIT Bombay</strong>, working to make hands-on chip fabrication accessible across India.</p>
+          <p class="prose">Co-founder of <strong onclick="go('work')">HackerFab IIT Bombay</strong>, working to make hands-on chip fabrication accessible across India.</p>
+          <p class="prose">Outside the lab, I enjoy photography — a few shots are up on my <a href="https://kartikuc.github.io/photobook/" target="_blank" rel="noopener">photobook</a>.</p>
         </div>
       </div>
 
@@ -364,38 +375,6 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
         <div class="trow"><div class="trow-main">Department Academic Mentor</div><div class="trow-date">Jun 2023–May 2024</div></div>
         <div class="trow"><div class="trow-main">Student Mentoring — XLR8 &amp; ITSP</div><div class="trow-date">2023–2024</div></div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ HOBBIES ══ -->
-<div id="hobbies" class="page">
-  <div class="label r" style="padding-top:0"><svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>Things I Build &amp; Do</div>
-  <p class="prose r" style="max-width:620px;margin-bottom:26px">Outside the lab, I like building small self-contained things end to end — hardware, games, browser toys — mostly as an excuse to learn something new and ship it. A mix of that is below.</p>
-  <div class="grid r">
-    <div class="card" id="hf-card" onclick="openCard(this)" data-img="images/hackerfab.jpg" data-title="HackerFab IIT Bombay" data-meta="Hardware · Co-Founder" data-desc="Building lithography machines and spin coaters from scratch. India's first student-run semiconductor fab." data-url="https://hackerfabiitb.github.io/">
-      <img src="images/hackerfab.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
-      <div class="card-overlay"><div class="card-title">HackerFab IITB</div><div class="card-meta">Hardware</div></div>
-    </div>
-    <div class="card" onclick="openCard(this)" data-img="images/photobook.jpg" data-title="Photobook" data-meta="Photography" data-desc="A collection of photographs — places, moments, light. Shot mostly on walks and travels." data-url="https://kartikuc.github.io/photobook/">
-      <img src="images/photobook.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
-      <div class="card-overlay"><div class="card-title">Photobook</div><div class="card-meta">Photography</div></div>
-    </div>
-    <div class="card" onclick="openCard(this)" data-img="images/cabo.jpg" data-title="Online Cabo" data-meta="Game · Built from scratch" data-desc="A multiplayer implementation of the card game Cabo, built from scratch and playable in the browser." data-url="https://kartikuc.github.io/caboonline/">
-      <img src="images/cabo.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
-      <div class="card-overlay"><div class="card-title">Online Cabo</div><div class="card-meta">Game</div></div>
-    </div>
-    <div class="card" onclick="openCard(this)" data-img="images/byob.jpg" data-title="BYOB — Be Your Own Band" data-meta="Music · Work in progress" data-desc="A browser-based music synthesizer: play, layer, and experiment with sounds, no installs, no DAW." data-url="https://kartikuc.github.io/byob/">
-      <img src="images/byob.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
-      <div class="card-overlay"><div class="card-title">BYOB</div><div class="card-meta">Music</div></div>
-    </div>
-    <div class="card" onclick="openCard(this)" data-img="images/tictacbruh.jpg" data-title="Tic Tac Bruh" data-meta="Game · Built from scratch" data-desc="A browser-based twist on tic-tac-toe, playable online." data-url="https://kartikuc.github.io/tictacbruh/">
-      <img src="images/tictacbruh.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
-      <div class="card-overlay"><div class="card-title">Tic Tac Bruh</div><div class="card-meta">Game</div></div>
-    </div>
-    <div class="card" onclick="openCard(this)" data-img="images/gameoflife.jpg" data-title="Conway's Game of Life" data-meta="Simulation · Built from scratch" data-desc="An interactive browser implementation of Conway's Game of Life — the classic cellular automaton, click-to-seed and watch patterns evolve." data-tags="Cellular Automaton,JavaScript,Simulation" data-url="https://kartikuc.github.io/gameoflife/">
-      <img src="images/gameoflife.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
-      <div class="card-overlay"><div class="card-title">Game of Life</div><div class="card-meta">Simulation</div></div>
     </div>
   </div>
 </div>
@@ -489,13 +468,6 @@ function closeCard(e) {
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCard(); });
-function openHackerFab() {
-  go('hobbies');
-  setTimeout(() => {
-    const el = document.getElementById('hf-card');
-    if (el) openCard(el);
-  }, 340);
-}
 
 /* ── Theme toggle — dark is the default; toggle switches to light ── */
 let isDark = true;
