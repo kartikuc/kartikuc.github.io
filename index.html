@@ -19,9 +19,13 @@
   --font-disp:'Space Grotesk',sans-serif;
   --font-body:'Inter',Arial,Helvetica,sans-serif;
   --font-mono:'IBM Plex Mono',ui-monospace,monospace;
-  --nav-h:50px;
+  --nav-h:52px;
   --gut:clamp(16px,4vw,56px);
   --ease:cubic-bezier(.19,1,.22,1);
+
+  /* spacing scale — 8px base, used consistently in place of ad-hoc values */
+  --sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:24px;
+  --sp-6:32px;--sp-7:48px;--sp-8:64px;--sp-9:96px;
 }
 body.light{
   --bg:#f6f5f0;--bg2:#ebeae2;--bg3:#e2e0d5;
@@ -36,26 +40,28 @@ html,body{width:100%;max-width:100%;overflow-x:hidden}
 body{
   background:var(--bg);color:var(--dim);
   font-family:var(--font-body);font-weight:300;
-  font-size:15px;line-height:1.6;
+  font-size:15.5px;line-height:1.6;
   transition:background .35s var(--ease),color .35s var(--ease);
   -webkit-font-smoothing:antialiased;
 }
 img{max-width:100%}
+button{font:inherit;color:inherit}
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.001s!important;transition-duration:.001s!important;scroll-behavior:auto!important}
 }
 
 ::selection{background:var(--accent);color:var(--accent-ink)}
-:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
+:focus-visible{outline:1.5px solid var(--accent);outline-offset:2px;border-radius:1px}
 
 #bar{position:fixed;top:0;left:0;height:2px;width:0%;background:var(--accent);opacity:.85;z-index:700;transition:width .1s linear}
 
-/* alignment-mark icon — signature motif borrowed from photomask fiducials */
+/* alignment-mark icon — signature motif, borrowed from photomask fiducials.
+   Used consistently across nav, labels, and card corners rather than as a one-off. */
 .amark{width:11px;height:11px;flex-shrink:0;color:var(--accent)}
 .amark circle,.amark path{stroke:currentColor}
 
 /* NAV — slim top bar on phones, left sidebar from tablet up */
-:root{--side-w:132px}
+:root{--side-w:140px}
 nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
   height:var(--nav-h);display:flex;align-items:center;justify-content:center;
@@ -66,11 +72,11 @@ nav{
 }
 body.light nav{background:rgba(246,245,240,.86)}
 
-.nav-links{display:flex;gap:28px;list-style:none;margin-right:38px;flex-wrap:wrap;justify-content:center}
+.nav-links{display:flex;gap:30px;list-style:none;margin-right:40px;flex-wrap:wrap;justify-content:center}
 .nav-links a{
   font-family:var(--font-mono);font-size:11px;font-weight:400;
   color:var(--ghost);text-decoration:none;cursor:pointer;
-  letter-spacing:.06em;text-transform:uppercase;transition:color .2s;
+  letter-spacing:.07em;text-transform:uppercase;transition:color .2s;
   position:relative;padding-bottom:3px;
   display:inline-block;padding-top:20px;margin-top:-20px;
 }
@@ -79,19 +85,18 @@ body.light nav{background:rgba(246,245,240,.86)}
 .nav-links a:hover::after,.nav-links a.on::after{right:0}
 
 /* Social / email icon row — lives in the sidebar on tablet+ only */
-.nav-icons{display:none;gap:14px;margin:22px 0 4px;flex-wrap:wrap}
-.nav-icons a{color:var(--ghost);transition:color .2s;display:flex;align-items:center;justify-content:center}
+.nav-icons{display:none;gap:16px;margin:26px 0 4px;flex-wrap:wrap}
+.nav-icons a{color:var(--ghost);transition:color .2s;display:flex;align-items:center;justify-content:center;width:32px;height:32px;margin:-8px}
 .nav-icons a:hover{color:var(--accent)}
 .nav-icons svg{width:16px;height:16px;display:block}
 
 .tbtn{
   background:none;border:1px solid var(--line2);border-radius:2px;cursor:pointer;
-  width:26px;height:26px;position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);
+  width:28px;height:28px;position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);
   color:var(--ghost);transition:color .2s,border-color .2s;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
-.tbtn::before{content:'';position:absolute;top:50%;left:50%;width:44px;height:44px;transform:translate(-50%,-50%)}
 .tbtn:hover{color:var(--accent);border-color:var(--accent)}
 .tbtn svg{width:13px;height:13px;display:block}
 
@@ -99,10 +104,10 @@ body.light nav{background:rgba(246,245,240,.86)}
   nav{
     left:0;right:auto;top:0;bottom:0;height:auto;width:var(--side-w);
     flex-direction:column;align-items:flex-start;justify-content:flex-start;
-    padding:40px 22px;
+    padding:var(--sp-8) var(--sp-6);
     border-bottom:none;border-right:1px solid var(--line);
   }
-  .nav-links{flex-direction:column;gap:26px;margin-right:0}
+  .nav-links{flex-direction:column;gap:var(--sp-5);margin-right:0}
   .nav-links a::after{display:none}
   .nav-links a::before{content:'';position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:0;height:1px;background:var(--accent);transition:width .25s var(--ease)}
   .nav-links a:hover::before,.nav-links a.on::before{width:9px}
@@ -111,28 +116,26 @@ body.light nav{background:rgba(246,245,240,.86)}
   body{padding-left:var(--side-w)}
 }
 
-.shell{max-width:1320px;margin:0 auto;padding:0 var(--gut);position:relative;z-index:1;width:100%}
+.shell{max-width:1280px;margin:0 auto;padding:0 var(--gut);position:relative;z-index:1;width:100%}
 
 /* Single continuous page — sections replace the old tab-switched pages */
-.section{scroll-margin-top:calc(var(--nav-h) + 16px);padding-bottom:64px}
-#home{padding-top:calc(var(--nav-h) + 34px)}
-#work{padding-top:52px;margin-top:8px;border-top:1px solid var(--line)}
-#teaching{scroll-margin-top:calc(var(--nav-h) + 16px)}
+.section{scroll-margin-top:calc(var(--nav-h) + var(--sp-4));padding-bottom:var(--sp-9)}
+#home{padding-top:calc(var(--nav-h) + var(--sp-7))}
+#work{padding-top:var(--sp-7);margin-top:var(--sp-2);border-top:1px solid var(--line)}
 @media(min-width:768px){
-  #home{padding-top:46px}
-  .section{scroll-margin-top:34px}
-  #teaching{scroll-margin-top:34px}
+  #home{padding-top:var(--sp-8)}
+  .section{scroll-margin-top:var(--sp-6)}
 }
 
-/* HERO — side-by-side grid: text column first, photo column on the right (order-flipped on desktop only) */
+/* HERO — text column + photo column, order-flipped on desktop only */
 .hero{margin-bottom:0}
 @media(min-width:768px){
-  .hero{display:grid;grid-template-columns:1fr minmax(220px,38%);gap:36px;align-items:stretch}
+  .hero{display:grid;grid-template-columns:1fr minmax(240px,36%);gap:var(--sp-7);align-items:stretch}
   .hero-photo{order:2}
   .hero-text{order:1}
 }
 .hero-photo{
-  width:100%;position:relative;margin-bottom:28px;
+  width:100%;position:relative;margin-bottom:var(--sp-6);
   border:1px solid var(--line2);border-radius:3px;background:var(--bg2);
   aspect-ratio:16/6;overflow:hidden;
   display:flex;align-items:center;justify-content:center;
@@ -145,83 +148,107 @@ body.light nav{background:rgba(246,245,240,.86)}
   filter:grayscale(35%) contrast(1.05);
 }
 .hero-photo::after{content:'';position:absolute;top:-1px;left:-1px;width:9px;height:9px;background:var(--accent);clip-path:polygon(0 0,100% 0,0 100%);z-index:1}
+
 .hero-text{display:flex;flex-direction:column;justify-content:center;min-width:0}
-.hero-name{font-family:var(--font-disp);font-size:clamp(34px,6vw,64px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.08;margin-bottom:22px;word-break:break-word}
+.eyebrow{
+  font-family:var(--font-mono);font-size:11.5px;font-weight:400;color:var(--accent);
+  letter-spacing:.09em;text-transform:uppercase;margin-bottom:var(--sp-3);
+  display:flex;align-items:center;gap:8px;
+}
+.hero-name{font-family:var(--font-disp);font-size:clamp(32px,5.4vw,58px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.08;margin-bottom:var(--sp-5);word-break:break-word}
 .hero-name span{font-weight:400;color:var(--muted)}
+
+/* Facts strip — quick-scan summary before the reader commits to the full paragraphs */
+.facts{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:var(--sp-5);margin-bottom:var(--sp-6);
+  padding:var(--sp-4) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.fact-label{font-family:var(--font-mono);font-size:9.5px;color:var(--ghost);letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+.fact-val{font-size:13px;color:var(--text);font-weight:400;line-height:1.4}
 
 /* Section label */
 .label{
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:center;gap:9px;
   font-family:var(--font-mono);font-size:11px;font-weight:500;text-transform:uppercase;
   color:var(--muted);letter-spacing:.12em;
-  margin-bottom:18px;padding-top:40px;
+  margin-bottom:var(--sp-5);padding-top:var(--sp-8);
 }
-.section>.label:first-child,.split-main>.label:first-child,.split-side>.label:first-child{padding-top:0}
+.section>.label:first-child{padding-top:0}
 
-.prose{font-size:14.5px;color:var(--dim);line-height:1.8;max-width:680px;font-weight:300}
-.prose + .prose{margin-top:12px}
-.prose strong{color:var(--ink);font-weight:500;cursor:pointer;border-bottom:1px solid var(--accent);transition:opacity .2s}
+.prose{font-size:14.5px;color:var(--dim);line-height:1.8;max-width:660px;font-weight:300}
+.prose + .prose{margin-top:var(--sp-3)}
+.prose.lede{font-size:15.5px;color:var(--text)}
+.prose strong{color:var(--ink);font-weight:500;cursor:pointer;background:none;border:none;border-bottom:1px solid var(--accent);transition:opacity .2s;padding:0;font:inherit;text-align:left}
 .prose strong:hover{opacity:.75}
 .prose a{color:var(--ink);font-weight:500;text-decoration:none;border-bottom:1px solid var(--accent);transition:opacity .2s}
 .prose a:hover{opacity:.75}
 
 /* Compact teaching rows */
 .teaching-list{max-width:640px}
-.trow{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.trow{display:flex;justify-content:space-between;align-items:baseline;gap:var(--sp-4);padding:11px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .trow:last-child{border-bottom:none}
 .trow-main{font-size:13px;color:var(--text);line-height:1.45;font-weight:300}
 .trow-main .org{color:var(--ghost);font-weight:300}
 .trow-date{font-family:var(--font-mono);font-size:10px;color:var(--ghost);white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
 
 /* Course rows — name/code + one-line description, grouped by category */
-.course-cat{max-width:760px}
-.course-cat-title{font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin:26px 0 6px}
-.course-cat:first-of-type .course-cat-title{margin-top:0}
-.crow{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.course-cat{max-width:740px}
+.course-cat + .course-cat{margin-top:var(--sp-6)}
+.course-cat-title{
+  font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:var(--sp-2);padding-left:var(--sp-3);border-left:2px solid var(--accent);
+}
+.crow{display:flex;justify-content:space-between;align-items:baseline;gap:var(--sp-4);padding:11px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .crow:last-child{border-bottom:none}
 .crow-main{flex:1;min-width:220px}
 .crow-name{font-size:13px;color:var(--text);font-weight:400;line-height:1.4}
-.crow-name .code{font-family:var(--font-mono);font-size:10px;color:var(--ghost);margin-right:7px;letter-spacing:.02em}
-.crow-desc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.55;font-weight:300}
+.crow-name .code{font-family:var(--font-mono);font-size:10px;color:var(--ghost);margin-right:8px;letter-spacing:.02em}
+.crow-desc{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.55;font-weight:300}
 .crow-date{font-family:var(--font-mono);font-size:10px;color:var(--ghost);white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
 
-/* Block grid — experiences, projects. Click a tile to open details. Denser grid: 6-up on wide screens. */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:var(--line)}
-@media(min-width:560px){.grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}}
-@media(min-width:960px){.grid.work-grid{grid-template-columns:repeat(6,1fr)}}
-@media(min-width:1180px){.grid:not(.work-grid){grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}}
+/* Project grid — fewer, larger cards so each project gets room to be legible.
+   Capped max-width keeps cards from over-multiplying on ultrawide monitors. */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--line)}
+.work-grid{max-width:1040px}
+@media(min-width:560px){.work-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}}
 
-.card{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:var(--bg2);-webkit-tap-highlight-color:transparent}
-.card img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(45%) contrast(1.05) brightness(.92);opacity:0;transition:transform .45s var(--ease),filter .3s,opacity .3s}
+.card{
+  position:relative;aspect-ratio:3/2;overflow:hidden;cursor:pointer;background:var(--bg2);
+  -webkit-tap-highlight-color:transparent;border:none;display:block;width:100%;padding:0;text-align:left;
+}
+.card img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(45%) contrast(1.05) brightness(.92);opacity:0;transition:transform .5s var(--ease),filter .3s,opacity .3s}
 .card img.loaded{opacity:1}
-.card:hover img{transform:scale(1.06);filter:grayscale(0%) contrast(1.05) brightness(1)}
+.card:hover img,.card:focus-visible img{transform:scale(1.06);filter:grayscale(0%) contrast(1.05) brightness(1)}
 .card.noimg img{display:none}
-.card-overlay{position:absolute;left:0;right:0;bottom:0;padding:10px 11px;background:rgba(35,34,32,.74);backdrop-filter:blur(3px)}
+.card-overlay{position:absolute;left:0;right:0;bottom:0;padding:var(--sp-3) var(--sp-4);background:rgba(30,29,27,.78);backdrop-filter:blur(3px)}
 .card.noimg .card-overlay{position:static;height:100%;display:flex;flex-direction:column;justify-content:flex-end;background:none;backdrop-filter:none}
-.card-title{font-family:var(--font-disp);font-size:12.5px;font-weight:500;color:#f5f4ef;line-height:1.25}
+.card-title{font-family:var(--font-disp);font-size:14px;font-weight:500;color:#f5f4ef;line-height:1.3}
 .card.noimg .card-title{color:var(--text)}
-.card-meta{font-family:var(--font-mono);font-size:9.5px;color:rgba(245,244,239,.72);margin-top:3px;letter-spacing:.02em}
+.card-meta{font-family:var(--font-mono);font-size:9.5px;color:rgba(245,244,239,.72);margin-top:4px;letter-spacing:.02em}
 .card.noimg .card-meta{color:var(--ghost)}
-.card::before{content:'';position:absolute;top:6px;right:6px;width:4px;height:4px;background:var(--accent);opacity:0;transition:opacity .2s;z-index:1}
-.card:hover::before{opacity:1}
+/* fiducial corner mark replaces the old plain dot — ties cards to the nav/section-label motif */
+.card .amark{position:absolute;top:8px;right:8px;opacity:0;transition:opacity .2s;color:var(--accent);z-index:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.card:hover .amark,.card:focus-visible .amark{opacity:1}
 
 /* Modal popup */
-.modal-backdrop{position:fixed;inset:0;background:rgba(4,4,4,.68);backdrop-filter:blur(3px);z-index:900;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease)}
+.modal-backdrop{position:fixed;inset:0;background:rgba(4,4,4,.7);backdrop-filter:blur(3px);z-index:900;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease)}
 .modal-backdrop.open{opacity:1;pointer-events:auto}
-.modal{background:var(--bg2);width:100%;max-width:410px;max-height:84vh;overflow:auto;border:1px solid var(--line2);border-radius:3px;position:relative;transform:translateY(6px) scale(.98);transition:transform .28s var(--ease);box-shadow:0 24px 60px rgba(0,0,0,.5);-webkit-overflow-scrolling:touch}
+.modal{background:var(--bg2);width:100%;max-width:420px;max-height:84vh;overflow:auto;border:1px solid var(--line2);border-radius:4px;position:relative;transform:translateY(8px) scale(.98);transition:transform .3s var(--ease);box-shadow:0 24px 60px rgba(0,0,0,.5);-webkit-overflow-scrolling:touch}
 .modal-backdrop.open .modal{transform:none}
 .modal-close{position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;border:none;cursor:pointer;font-size:17px;line-height:1;z-index:2;display:flex;align-items:center;justify-content:center}
+.modal-close:focus-visible{outline:1.5px solid var(--accent);outline-offset:2px}
 .modal-img{width:100%;aspect-ratio:16/10;overflow:hidden;background:var(--bg3)}
 .modal-img img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(30%) contrast(1.03)}
-.modal-body{padding:20px 22px 22px}
-.modal-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-bottom:8px;letter-spacing:.03em}
-.modal-title{font-family:var(--font-disp);font-size:17px;font-weight:600;color:var(--ink);margin-bottom:11px;line-height:1.35}
-.modal-desc{font-size:13px;color:var(--dim);line-height:1.75;margin-bottom:14px;font-weight:300}
-.modal-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.modal-body{padding:var(--sp-5) var(--sp-6) var(--sp-6)}
+.modal-meta{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);margin-bottom:var(--sp-2);letter-spacing:.03em}
+.modal-title{font-family:var(--font-disp);font-size:18px;font-weight:600;color:var(--ink);margin-bottom:var(--sp-3);line-height:1.35}
+.modal-desc{font-size:13px;color:var(--dim);line-height:1.75;margin-bottom:var(--sp-4);font-weight:300}
+.modal-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:var(--sp-5)}
 .modal-tags span{font-family:var(--font-mono);font-size:9.5px;color:var(--muted);border:1px solid var(--line2);padding:3px 7px;border-radius:2px}
 .modal-link{font-family:var(--font-mono);font-size:11.5px;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:1px;letter-spacing:.02em;display:inline-block;padding-top:2px}
 
-footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(--font-mono);font-size:10.5px;color:var(--ghost);letter-spacing:.03em;border-top:1px solid var(--line);max-width:1320px;margin:0 auto}
+footer{position:relative;z-index:1;padding:var(--sp-5) var(--gut) var(--sp-7);font-family:var(--font-mono);font-size:10.5px;color:var(--ghost);letter-spacing:.03em;border-top:1px solid var(--line);max-width:1280px;margin:0 auto}
 
 /* Visitor counter — fixed bottom-right badge, present on every screen size */
 .vcount{
@@ -239,22 +266,24 @@ body.light .vcount{background:rgba(246,245,240,.8)}
 @media(min-width:768px){.vcount{right:22px;bottom:18px}}
 @media(max-width:600px){.vcount{right:10px;bottom:10px;padding:5px 10px;font-size:9.5px}}
 
-.r{opacity:0;transform:translateY(8px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.r{opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
 .r.v{opacity:1;transform:none}
 
 /* ── Phone / narrow-screen tuning ── */
 @media(max-width:600px){
-  .hero-photo{aspect-ratio:4/3;margin-bottom:20px}
-  .hero-name{font-size:32px;margin-bottom:14px}
+  .hero-photo{aspect-ratio:4/3;margin-bottom:var(--sp-5)}
+  .hero-name{font-size:30px;margin-bottom:var(--sp-4)}
+  .facts{grid-template-columns:1fr 1fr;gap:var(--sp-4)}
   .prose{font-size:14px;line-height:1.7}
-  .card-title{font-size:11px}
+  .card-title{font-size:12.5px}
   .card-meta{font-size:8.5px}
   .modal{max-width:100%;border-radius:6px 6px 0 0;align-self:flex-end}
   .modal-backdrop{padding:0;align-items:flex-end}
-  .modal-body{padding:18px 18px 20px}
+  .modal-body{padding:var(--sp-4)}
   .trow{gap:8px}
   .trow-main{font-size:12.5px}
   .crow{gap:8px}
+  footer{padding-bottom:var(--sp-9)}
 }
 @media(max-width:480px){
   .nav-links{gap:14px}
@@ -265,23 +294,20 @@ body.light .vcount{background:rgba(246,245,240,.8)}
   .nav-links{gap:9px}
   .nav-links a{font-size:8.5px;letter-spacing:.03em}
   :root{--gut:14px}
-  .hero-name{font-size:26px}
+  .hero-name{font-size:25px}
 }
 
 /* ── Wide-screen scaling: let the page fill bigger monitors instead of floating in empty space ── */
 @media(min-width:1600px){
-  :root{--side-w:150px}
-  .shell{max-width:1440px}
-  .prose{max-width:740px}
+  :root{--side-w:156px}
+  .shell{max-width:1360px}
+  .prose{max-width:700px}
 }
 @media(min-width:1900px){
-  :root{--side-w:168px;--gut:clamp(40px,3.4vw,72px)}
-  .shell{max-width:1680px}
-  body{font-size:15.5px}
-  .prose{max-width:780px;font-size:15px}
-}
-@media(min-width:2400px){
-  .shell{max-width:1880px}
+  :root{--side-w:172px;--gut:clamp(40px,3.4vw,72px)}
+  .shell{max-width:1520px}
+  body{font-size:16px}
+  .prose{max-width:740px;font-size:15px}
 }
 </style>
 </head>
@@ -318,13 +344,20 @@ body.light .vcount{background:rgba(246,245,240,.8)}
 <!-- ══ HOME ══ -->
 <section id="home" class="section">
   <div class="hero r">
-    <div class="hero-photo"><img src="images/me.png" alt="Kartik"></div>
+    <div class="hero-photo"><img src="images/me.png" alt="Portrait of Kartik Chikkanagoudar"></div>
     <div class="hero-text">
+      <div class="eyebrow"><svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>Electrical Engineering, IIT Bombay</div>
       <h1 class="hero-name">Kartik <span>Chikkanagoudar</span></h1>
-      <div class="label" style="padding-top:0;margin-bottom:12px">About</div>
-      <p class="prose">I'm a final-year Dual Degree student in Electrical Engineering at IIT Bombay, and I've spent most of that time falling further down the rabbit hole of solid state devices — the stuff of nanoelectronics, semiconductor physics, and device technology, chased through both simulation and the messier reality of the lab bench. I like problems that make you sit with a material's physics until it finally clicks: how vacancies move through an oxide, why a transistor's threshold drifts, what a 2D crystal actually does under bias.</p>
+
+      <div class="facts">
+        <div><div class="fact-label">Focus</div><div class="fact-val">Semiconductor devices &amp; nanoelectronics</div></div>
+        <div><div class="fact-label">Currently</div><div class="fact-val">Co-founder, HackerFab IIT Bombay</div></div>
+        <div><div class="fact-label">Based</div><div class="fact-val">Mumbai, India</div></div>
+      </div>
+
+      <p class="prose lede">I'm a final-year Dual Degree student in Electrical Engineering at IIT Bombay, and I've spent most of that time falling further down the rabbit hole of solid state devices — the stuff of nanoelectronics, semiconductor physics, and device technology, chased through both simulation and the messier reality of the lab bench. I like problems that make you sit with a material's physics until it finally clicks: how vacancies move through an oxide, why a transistor's threshold drifts, what a 2D crystal actually does under bias.</p>
       <p class="prose">That curiosity spills into a few adjacent corners too — III-nitride devices, 2D materials, photonics and neuromorphic computing, TCAD and compact modeling — less a checklist and more the set of things I keep getting pulled back to.</p>
-      <p class="prose">A lot of my energy these days goes into <strong onclick="jumpTo('work')">HackerFab IIT Bombay</strong>, which I co-founded to make hands-on chip fabrication something students here can actually get their hands dirty with, not just read about.</p>
+      <p class="prose">A lot of my energy these days goes into <button type="button" class="prose-inline" style="all:unset;color:var(--ink);font-weight:500;cursor:pointer;border-bottom:1px solid var(--accent);font:inherit;transition:opacity .2s" onclick="jumpTo('work')" onmouseover="this.style.opacity=.75" onmouseout="this.style.opacity=1">HackerFab IIT Bombay</button>, which I co-founded to make hands-on chip fabrication something students here can actually get their hands dirty with, not just read about.</p>
       <p class="prose">Outside the lab, I enjoy photography — a few shots are up on my <a href="FunStuff/photobook/" target="_blank" rel="noopener">photobook</a>.</p>
     </div>
   </div>
@@ -333,55 +366,67 @@ body.light .vcount{background:rgba(246,245,240,.8)}
 <!-- ══ WORK ══ -->
 <section id="work" class="section">
   <div class="label r" style="padding-top:0"><svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>Projects</div>
-  <div class="grid r work-grid">
-        <div class="card" onclick="openCard(this)" data-img="images/pcmo.png" data-title="Modeling and Simulation of PCMO RRAMs" data-meta="MeLoDe Lab, IIT Bombay · Prof. Udayan Ganguly" data-desc="Characterizing stochasticity via compact model parameter variations. Building unified physics-based TCAD models with SET/RESET transient simulation." data-tags="TCAD,RRAM,Compact Modeling">
+  <div class="grid r work-grid" id="workGrid">
+        <button type="button" class="card" data-img="images/pcmo.png" data-title="Modeling and Simulation of PCMO RRAMs" data-meta="MeLoDe Lab, IIT Bombay · Prof. Udayan Ganguly" data-desc="Characterizing stochasticity via compact model parameter variations. Building unified physics-based TCAD models with SET/RESET transient simulation." data-tags="TCAD,RRAM,Compact Modeling">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/pcmo.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">PCMO RRAMs</div><div class="card-meta">2025 — present</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/aln.png" data-title="AlN BAW SMR Resonator and Filter Design" data-meta="IIT Bombay · Prof. Apurba Laha" data-desc="AlN bulk acoustic wave resonators with distributed Bragg reflectors. 3.6 GHz center frequency with high quality factor." data-tags="MEMS,RF Design,AlN">
+        </button>
+        <button type="button" class="card" data-img="images/aln.png" data-title="AlN BAW SMR Resonator and Filter Design" data-meta="IIT Bombay · Prof. Apurba Laha" data-desc="AlN bulk acoustic wave resonators with distributed Bragg reflectors. 3.6 GHz center frequency with high quality factor." data-tags="MEMS,RF Design,AlN">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/aln.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">AlN BAW Resonator</div><div class="card-meta">Jul – Dec 2024</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/moke.png" data-title="Magneto-optic Synapse for Neuromorphic Computing" data-meta="IIT Bombay · Prof. Debanjan Bhowmik" data-desc="PMA materials for MOKE-based photonic memory. Python simulations for domain-wall formation and propagation." data-tags="Photonics,Neuromorphic,Python">
+        </button>
+        <button type="button" class="card" data-img="images/moke.png" data-title="Magneto-optic Synapse for Neuromorphic Computing" data-meta="IIT Bombay · Prof. Debanjan Bhowmik" data-desc="PMA materials for MOKE-based photonic memory. Python simulations for domain-wall formation and propagation." data-tags="Photonics,Neuromorphic,Python">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/moke.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">Magneto-optic Synapse</div><div class="card-meta">Dec 2023 – Apr 2024</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/755.png" data-title="Coulomb Blockade Spectroscopy in 2D Quantum Dots" data-meta="IIT Bombay · Prof. Bhaskaran Muralidharan" data-desc="Python simulation via multi-electron Fock space. Current analysis via SCF and Master equation procedures." data-tags="Quantum Transport,2D Materials,Python">
+        </button>
+        <button type="button" class="card" data-img="images/755.png" data-title="Coulomb Blockade Spectroscopy in 2D Quantum Dots" data-meta="IIT Bombay · Prof. Bhaskaran Muralidharan" data-desc="Python simulation via multi-electron Fock space. Current analysis via SCF and Master equation procedures." data-tags="Quantum Transport,2D Materials,Python">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/755.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">Quantum Dot Spectroscopy</div><div class="card-meta">Jul – Dec 2023</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/bsim4.jpeg" data-title="BSIM4 Verilog-A Model Development" data-meta="Micron Technology · Summer Intern" data-desc="Translated BSIM4 C code to VerilogA. Validated across all operating points and device geometries. Geometric parameter tuning." data-tags="Verilog-A,MOSFET,BSIM4">
+        </button>
+        <button type="button" class="card" data-img="images/bsim4.jpeg" data-title="BSIM4 Verilog-A Model Development" data-meta="Micron Technology · Summer Intern" data-desc="Translated BSIM4 C code to VerilogA. Validated across all operating points and device geometries. Geometric parameter tuning." data-tags="Verilog-A,MOSFET,BSIM4">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/bsim4.jpeg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">BSIM4 Model Dev.</div><div class="card-meta">Jun – Jul 2025</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/tifr.png" data-title="Superconducting Resonator Design & Fabrication" data-meta="TIFR" data-desc="Resonator cavity simulation and bias filter optimization. Cleanroom fabrication of van der Waals heterostructures." data-tags="Superconducting,Cleanroom,vdW">
+        </button>
+        <button type="button" class="card" data-img="images/tifr.png" data-title="Superconducting Resonator Design & Fabrication" data-meta="TIFR" data-desc="Resonator cavity simulation and bias filter optimization. Cleanroom fabrication of van der Waals heterostructures." data-tags="Superconducting,Cleanroom,vdW">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/tifr.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">Superconducting Resonator</div><div class="card-meta">May – Jul 2024</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/aerb.png" data-title="Reactor Physics and Control" data-meta="Atomic Energy Regulatory Board (AERB)" data-desc="PWR core simulation with neutron kinetics and xenon feedback. PID controllers for reactor power regulation." data-tags="Reactor Physics,PID,Control">
+        </button>
+        <button type="button" class="card" data-img="images/aerb.png" data-title="Reactor Physics and Control" data-meta="Atomic Energy Regulatory Board (AERB)" data-desc="PWR core simulation with neutron kinetics and xenon feedback. PID controllers for reactor power regulation." data-tags="Reactor Physics,PID,Control">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/aerb.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">Reactor Physics</div><div class="card-meta">May – Jul 2023</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/724.png" data-title="Nanowire FeFET Mirrorbit Characterization & Variability Analysis" data-meta="Nanoelectronics · Prof. Udayan Ganguly · Best Project Award" data-desc="Si nanowire FeFET simulation for MirrorBit reliability. Metal grain granularity as dominant Vth variability source." data-tags="FeFET,TCAD,Variability">
+        </button>
+        <button type="button" class="card" data-img="images/724.png" data-title="Nanowire FeFET Mirrorbit Characterization & Variability Analysis" data-meta="Nanoelectronics · Prof. Udayan Ganguly · Best Project Award" data-desc="Si nanowire FeFET simulation for MirrorBit reliability. Metal grain granularity as dominant Vth variability source." data-tags="FeFET,TCAD,Variability">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/724.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">FeFET Variability</div><div class="card-meta">Mar – May 2024</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/edl.jpg" data-title="Electroluminescence Imaging of Solar Cells" data-meta="Electronic Design Lab · Prof. Siddharth Tallur · Top 10 of 60+" data-desc="Portable contactless solar cell fault detection. Embedded + image processing for series resistance extraction." data-tags="Embedded,Imaging,Solar">
+        </button>
+        <button type="button" class="card" data-img="images/edl.jpg" data-title="Electroluminescence Imaging of Solar Cells" data-meta="Electronic Design Lab · Prof. Siddharth Tallur · Top 10 of 60+" data-desc="Portable contactless solar cell fault detection. Embedded + image processing for series resistance extraction." data-tags="Embedded,Imaging,Solar">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/edl.jpg" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">EL Imaging</div><div class="card-meta">Jan – Apr 2024</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/618.png" data-title="PMOS Two-Stage OTA Design" data-meta="CMOS Analog VLSI · Prof. Rajesh Zele" data-desc="Differential two-stage PMOS OTA in Cadence Virtuoso. Post-layout parasitic extraction." data-tags="Cadence,Analog,VLSI">
+        </button>
+        <button type="button" class="card" data-img="images/618.png" data-title="PMOS Two-Stage OTA Design" data-meta="CMOS Analog VLSI · Prof. Rajesh Zele" data-desc="Differential two-stage PMOS OTA in Cadence Virtuoso. Post-layout parasitic extraction." data-tags="Cadence,Analog,VLSI">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/618.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">Two-Stage OTA</div><div class="card-meta">Sep – Nov 2024</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/309.png" data-title="Pipeline RISC Processor Design" data-meta="Microprocessors · Prof. Virendra Singh" data-desc="16-bit superscalar RISC with two-way fetch, load queue, store buffer." data-tags="RISC,Pipeline,VHDL">
+        </button>
+        <button type="button" class="card" data-img="images/309.png" data-title="Pipeline RISC Processor Design" data-meta="Microprocessors · Prof. Virendra Singh" data-desc="16-bit superscalar RISC with two-way fetch, load queue, store buffer." data-tags="RISC,Pipeline,VHDL">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/309.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">Pipeline RISC</div><div class="card-meta">Mar – May 2024</div></div>
-        </div>
-        <div class="card" onclick="openCard(this)" data-img="images/jlr.png" data-title="Chiplet Technology in Automotive Systems" data-meta="Inter IIT Tech Meet 12.0 · JLR" data-desc="Specialized chiplets for ADAS. Micro-architecture for L4–L5 autonomous driving." data-tags="Chiplet,ADAS,Automotive">
+        </button>
+        <button type="button" class="card" data-img="images/jlr.png" data-title="Chiplet Technology in Automotive Systems" data-meta="Inter IIT Tech Meet 12.0 · JLR" data-desc="Specialized chiplets for ADAS. Micro-architecture for L4–L5 autonomous driving." data-tags="Chiplet,ADAS,Automotive">
+          <svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>
           <img src="images/jlr.png" alt="" onerror="this.parentElement.classList.add('noimg')" onload="this.classList.add('loaded')">
           <div class="card-overlay"><div class="card-title">Automotive Chiplets</div><div class="card-meta">Nov – Dec 2023</div></div>
-        </div>
+        </button>
       </div>
 
   <div class="label r" id="teaching">Teaching &amp; Mentorship</div>
@@ -496,7 +541,7 @@ body.light .vcount{background:rgba(246,245,240,.8)}
 </div><!-- /shell -->
 
 <div class="modal-backdrop" id="modalBackdrop" onclick="closeCard(event)">
-  <div class="modal" onclick="event.stopPropagation()">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeCard()" aria-label="Close">×</button>
     <div class="modal-img" id="modalImgWrap"><img id="modalImg" src="" alt=""></div>
     <div class="modal-body">
@@ -547,8 +592,12 @@ const spyIO = new IntersectionObserver(entries => {
 }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
 document.querySelectorAll('.section, #teaching').forEach(s => spyIO.observe(s));
 
-/* ── Card popup ── */
+/* ── Card popup (accessible: buttons are natively focusable/operable by keyboard;
+     focus is trapped in the dialog and returned to the trigger on close) ── */
+let lastFocusedCard = null;
+
 function openCard(el) {
+  lastFocusedCard = el;
   const img = document.getElementById('modalImg');
   const imgWrap = document.getElementById('modalImgWrap');
   if (el.classList.contains('noimg') || !el.dataset.img) {
@@ -556,6 +605,7 @@ function openCard(el) {
   } else {
     imgWrap.style.display = 'block';
     img.src = el.dataset.img;
+    img.alt = el.dataset.title || '';
   }
   document.getElementById('modalMeta').textContent = el.dataset.meta || '';
   document.getElementById('modalTitle').textContent = el.dataset.title || '';
@@ -573,12 +623,28 @@ function openCard(el) {
   else { link.style.display = 'none'; }
   document.getElementById('modalBackdrop').classList.add('open');
   document.body.style.overflow = 'hidden';
+  document.getElementById('modalBackdrop').querySelector('.modal-close').focus();
 }
 function closeCard(e) {
   document.getElementById('modalBackdrop').classList.remove('open');
   document.body.style.overflow = '';
+  if (lastFocusedCard) { lastFocusedCard.focus(); lastFocusedCard = null; }
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCard(); });
+document.getElementById('workGrid').addEventListener('click', e => {
+  const card = e.target.closest('.card');
+  if (card) openCard(card);
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeCard(); return; }
+  const backdrop = document.getElementById('modalBackdrop');
+  if (e.key === 'Tab' && backdrop.classList.contains('open')) {
+    const focusables = backdrop.querySelectorAll('button, a[href]');
+    if (!focusables.length) return;
+    const first = focusables[0], last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
 
 /* ── Theme toggle — dark is the default; toggle switches to light ── */
 let isDark = true;
@@ -601,12 +667,23 @@ window.addEventListener('DOMContentLoaded', () => {
     el.style.transitionDelay = Math.min(i * 0.03, 0.25) + 's';
     io.observe(el);
   });
+
+  /* Staggered hero entrance on first paint, independent of the generic reveal
+     observer above — gives the page a considered opening beat instead of a
+     single flat fade. */
+  const heroBits = document.querySelectorAll('#home .eyebrow, #home .hero-name, #home .facts, #home .prose');
+  heroBits.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(10px)';
+    el.style.transition = `opacity .6s cubic-bezier(.19,1,.22,1) ${i * 0.07}s, transform .6s cubic-bezier(.19,1,.22,1) ${i * 0.07}s`;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.style.opacity = '1'; el.style.transform = 'none';
+    }));
+  });
 });
 
 /* ── Visitor counter ──
-   Uses a free, keyless hit-counter API (no backend of your own required).
-   Swap the `key` below for anything unique to your domain, and swap the
-   endpoint entirely if you'd rather self-host a counter later. */
+   Uses a free, keyless hit-counter API (no backend of your own required). */
 (function(){
   const numEl = document.getElementById('vcountNum');
   const key = 'kartik-chikkanagoudar-dev-portfolio-v1';
