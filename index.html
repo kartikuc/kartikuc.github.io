@@ -54,11 +54,12 @@ img{max-width:100%}
 .amark{width:11px;height:11px;flex-shrink:0;color:var(--accent)}
 .amark circle,.amark path{stroke:currentColor}
 
-/* NAV — slim top bar on phones, left sidebar from tablet up */
+/* NAV — top bar on phones (links left, icons/count/theme right), left sidebar from tablet up */
 :root{--side-w:132px}
 nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  height:var(--nav-h);display:flex;align-items:center;justify-content:center;
+  height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;
+  gap:10px;
   padding:0 var(--gut);
   background:rgba(10,10,11,.86);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
@@ -66,7 +67,7 @@ nav{
 }
 body.light nav{background:rgba(246,245,240,.86)}
 
-.nav-links{display:flex;gap:28px;list-style:none;margin-right:38px;flex-wrap:wrap;justify-content:center}
+.nav-links{display:flex;gap:28px;list-style:none;flex-wrap:wrap}
 .nav-links a{
   font-family:var(--font-mono);font-size:11px;font-weight:400;
   color:var(--ghost);text-decoration:none;cursor:pointer;
@@ -78,15 +79,33 @@ body.light nav{background:rgba(246,245,240,.86)}
 .nav-links a:hover,.nav-links a.on{color:var(--ink)}
 .nav-links a:hover::after,.nav-links a.on::after{right:0}
 
-/* Social / email icon row — lives in the sidebar on tablet+ only */
-.nav-icons{display:none;gap:14px;margin:22px 0 4px;flex-wrap:wrap}
-.nav-icons a{color:var(--ghost);transition:color .2s;display:flex;align-items:center;justify-content:center}
-.nav-icons a:hover{color:var(--accent)}
-.nav-icons svg{width:16px;height:16px;display:block}
+/* Right-hand cluster: social icon grid + (visitor count / theme toggle) */
+.nav-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+
+.nav-icons{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);gap:6px}
+.nav-icons a{
+  width:30px;height:30px;border:1px solid var(--line2);border-radius:2px;
+  color:var(--ghost);transition:color .2s,border-color .2s;
+  display:flex;align-items:center;justify-content:center;
+}
+.nav-icons a:hover{color:var(--accent);border-color:var(--accent)}
+.nav-icons svg{width:17px;height:17px;display:block}
+
+.nav-bottom{display:flex;align-items:center;gap:10px}
+
+.vcount{
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--font-mono);font-size:10px;color:var(--muted);
+  border:1px solid var(--line2);border-radius:20px;
+  padding:5px 10px;letter-spacing:.03em;white-space:nowrap;
+  transition:border-color .35s,color .2s;
+}
+.vcount-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.vcount-num{color:var(--ink);font-weight:500}
 
 .tbtn{
   background:none;border:1px solid var(--line2);border-radius:2px;cursor:pointer;
-  width:26px;height:26px;position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);
+  width:26px;height:26px;position:relative;
   color:var(--ghost);transition:color .2s,border-color .2s;
   display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
@@ -102,13 +121,28 @@ body.light nav{background:rgba(246,245,240,.86)}
     padding:40px 22px;
     border-bottom:none;border-right:1px solid var(--line);
   }
-  .nav-links{flex-direction:column;gap:26px;margin-right:0}
+  .nav-links{flex-direction:column;gap:26px}
   .nav-links a::after{display:none}
   .nav-links a::before{content:'';position:absolute;left:-14px;top:50%;transform:translateY(-50%);width:0;height:1px;background:var(--accent);transition:width .25s var(--ease)}
   .nav-links a:hover::before,.nav-links a.on::before{width:9px}
-  .nav-icons{display:flex}
-  .tbtn{position:static;transform:none;margin-top:auto}
+  .nav-right{flex-direction:column;align-items:flex-start;flex:1;width:100%;margin-top:28px;gap:0}
+  .nav-icons{margin-bottom:18px}
+  .nav-bottom{margin-top:auto;width:100%}
   body{padding-left:var(--side-w)}
+}
+
+/* Narrow phones: keep the right-hand cluster from crowding the links */
+@media(max-width:767px){
+  :root{--nav-h:70px}
+}
+@media(max-width:480px){
+  .nav-right{gap:8px}
+  .nav-icons{gap:4px}
+  .nav-icons a{width:23px;height:23px}
+  .nav-icons svg{width:13px;height:13px}
+  .nav-bottom{gap:6px}
+  .vcount{padding:4px 8px;font-size:9px;gap:4px}
+  .tbtn{width:23px;height:23px}
 }
 
 .shell{max-width:1320px;margin:0 auto;padding:0 var(--gut);position:relative;z-index:1;width:100%}
@@ -140,13 +174,30 @@ body.light nav{background:rgba(246,245,240,.86)}
 @media(min-width:768px){
   .hero-photo{aspect-ratio:auto;height:100%;margin-bottom:0}
 }
+/* On phones/tablets the photo floats top-right and body text wraps around it */
+@media(max-width:767px){
+  .hero-photo{
+    float:right;
+    width:36%;
+    max-width:190px;
+    margin:0 0 16px 18px;
+    aspect-ratio:1;
+  }
+  .hero-text{display:block}
+}
+@media(max-width:480px){
+  .hero-photo{max-width:140px}
+}
+@media(max-width:360px){
+  .hero-photo{max-width:112px;margin-left:12px}
+}
 .hero-photo img{
   width:100%;height:100%;object-fit:contain;object-position:center center;display:block;
   filter:grayscale(35%) contrast(1.05);
 }
 .hero-photo::after{content:'';position:absolute;top:-1px;left:-1px;width:9px;height:9px;background:var(--accent);clip-path:polygon(0 0,100% 0,0 100%);z-index:1}
 .hero-text{display:flex;flex-direction:column;justify-content:center;min-width:0}
-.hero-name{font-family:var(--font-disp);font-size:clamp(34px,6vw,64px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.08;margin-bottom:22px;word-break:break-word}
+.hero-name{font-family:var(--font-disp);font-size:clamp(28px,7vw,64px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.1;margin-bottom:22px;word-break:keep-all;overflow-wrap:normal}
 .hero-name span{font-weight:400;color:var(--muted)}
 
 /* Section label */
@@ -223,28 +274,11 @@ body.light nav{background:rgba(246,245,240,.86)}
 
 footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(--font-mono);font-size:10.5px;color:var(--ghost);letter-spacing:.03em;border-top:1px solid var(--line);max-width:1320px;margin:0 auto}
 
-/* Visitor counter — fixed bottom-right badge, present on every screen size */
-.vcount{
-  position:fixed;right:16px;bottom:16px;z-index:150;
-  display:flex;align-items:center;gap:7px;
-  font-family:var(--font-mono);font-size:10.5px;color:var(--muted);
-  background:rgba(19,19,21,.72);backdrop-filter:blur(8px);
-  border:1px solid var(--line2);border-radius:20px;
-  padding:6px 13px;letter-spacing:.03em;
-  transition:background .35s,border-color .35s,color .2s;
-}
-body.light .vcount{background:rgba(246,245,240,.8)}
-.vcount-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
-.vcount-num{color:var(--ink);font-weight:500}
-@media(min-width:768px){.vcount{right:22px;bottom:18px}}
-@media(max-width:600px){.vcount{right:10px;bottom:10px;padding:5px 10px;font-size:9.5px}}
-
 .r{opacity:0;transform:translateY(8px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
 .r.v{opacity:1;transform:none}
 
 /* ── Phone / narrow-screen tuning ── */
 @media(max-width:600px){
-  .hero-photo{aspect-ratio:4/3;margin-bottom:20px}
   .hero-name{font-size:32px;margin-bottom:14px}
   .prose{font-size:14px;line-height:1.7}
   .card-title{font-size:11px}
@@ -294,23 +328,33 @@ body.light .vcount{background:rgba(246,245,240,.8)}
     <li><a href="#work" class="nl" data-target="work">work</a></li>
     <li><a href="#teaching" class="nl" data-target="teaching">teaching</a></li>
   </ul>
-  <div class="nav-icons">
-    <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="7" cy="7.3" r="0.9" fill="currentColor" stroke="none"/><line x1="7" y1="10.5" x2="7" y2="17"/><path d="M11 17v-6.2M11 10.8c0-1.4 1-2.3 2.6-2.3S16 9.4 16 11.3V17"/></svg>
-    </a>
-    <a href="https://github.com/MonolayerGraphene" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-    </a>
-    <a href="mailto:kartikuc2004@gmail.com" title="Email (Gmail)" aria-label="Email — Gmail">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="M3 6l9 6.5L21 6"/></svg>
-    </a>
-    <a href="mailto:kartikuc@uchicago.edu" title="Email (UChicago)" aria-label="Email — UChicago">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.3v4.7c0 1.1 2.5 2 6 2s6-.9 6-2v-4.7"/><path d="M22 9v6.2"/></svg>
-    </a>
+
+  <div class="nav-right">
+    <div class="nav-icons">
+      <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="7" cy="7.3" r="0.9" fill="currentColor" stroke="none"/><line x1="7" y1="10.5" x2="7" y2="17"/><path d="M11 17v-6.2M11 10.8c0-1.4 1-2.3 2.6-2.3S16 9.4 16 11.3V17"/></svg>
+      </a>
+      <a href="https://github.com/MonolayerGraphene" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      </a>
+      <a href="mailto:kartikuc2004@gmail.com" title="Email (Gmail)" aria-label="Email — Gmail">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="M3 6l9 6.5L21 6"/></svg>
+      </a>
+      <a href="mailto:kartikuc@uchicago.edu" title="Email (UChicago)" aria-label="Email — UChicago">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.3v4.7c0 1.1 2.5 2 6 2s6-.9 6-2v-4.7"/><path d="M22 9v6.2"/></svg>
+      </a>
+    </div>
+
+    <div class="nav-bottom">
+      <div class="vcount" id="visitorCounter" aria-label="Visitor count">
+        <span class="vcount-dot"></span>
+        <span class="vcount-num" id="vcountNum">···</span>
+      </div>
+      <button class="tbtn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      </button>
+    </div>
   </div>
-  <button class="tbtn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
-    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
-  </button>
 </nav>
 
 <div class="shell">
@@ -510,12 +554,6 @@ body.light .vcount{background:rgba(246,245,240,.8)}
 </div>
 
 <footer>kartik chikkanagoudar · iit bombay · 2026</footer>
-
-<div class="vcount" id="visitorCounter" aria-label="Visitor count">
-  <span class="vcount-dot"></span>
-  <span>visits</span>
-  <span class="vcount-num" id="vcountNum">···</span>
-</div>
 
 <script>
 /* ── Scroll progress + nav bg ── */
