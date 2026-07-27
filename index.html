@@ -20,7 +20,7 @@
   --font-body:'Inter',Arial,Helvetica,sans-serif;
   --font-mono:'IBM Plex Mono',ui-monospace,monospace;
   --nav-h:60px;
-  --gut:clamp(16px,4vw,48px);
+  --gut:clamp(16px,4vw,56px);
   --ease:cubic-bezier(.19,1,.22,1);
 }
 body.light{
@@ -106,14 +106,13 @@ body.light nav{background:rgba(246,245,240,.86)}
 
 .shell{max-width:1320px;margin:0 auto;padding:0 var(--gut);position:relative;z-index:1;width:100%}
 
-.page{display:none;padding-top:calc(var(--nav-h) + 34px);padding-bottom:70px;min-height:60vh}
-.page.on{display:block}
-@keyframes pin{from{opacity:0}to{opacity:1}}
-@keyframes pout{from{opacity:1}to{opacity:0}}
-.page.entering{animation:pin .32s var(--ease) both}
-.page.leaving{animation:pout .15s ease forwards;pointer-events:none}
+/* Single continuous page — sections replace the old tab-switched pages */
+.section{scroll-margin-top:calc(var(--nav-h) + 16px);padding-bottom:64px}
+#home{padding-top:calc(var(--nav-h) + 34px)}
+#work{padding-top:52px;margin-top:8px;border-top:1px solid var(--line)}
 @media(min-width:768px){
-  .page{padding-top:46px}
+  #home{padding-top:46px}
+  .section{scroll-margin-top:34px}
 }
 
 /* Two-column split — stacks on narrow screens, side-by-side on laptop+ */
@@ -128,13 +127,13 @@ body.light nav{background:rgba(246,245,240,.86)}
 /* HERO */
 .hero{display:flex;align-items:stretch;gap:24px;margin-bottom:30px;flex-wrap:wrap}
 .hero-photo{
-  width:clamp(96px,14vw,150px);flex-shrink:0;overflow:hidden;position:relative;
+  width:clamp(96px,14vw,170px);flex-shrink:0;overflow:hidden;position:relative;
   border:1px solid var(--line2);border-radius:3px;background:var(--bg2);
 }
 .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(35%) contrast(1.05)}
 .hero-photo::after{content:'';position:absolute;top:-1px;left:-1px;width:9px;height:9px;background:var(--accent);clip-path:polygon(0 0,100% 0,0 100%)}
 .hero-text{display:flex;flex-direction:column;justify-content:center;min-width:0;flex:1 1 240px}
-.hero-name{font-family:var(--font-disp);font-size:clamp(24px,5vw,34px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.15;margin-bottom:9px;word-break:break-word}
+.hero-name{font-family:var(--font-disp);font-size:clamp(24px,3.4vw,38px);font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.15;margin-bottom:9px;word-break:break-word}
 .hero-name span{font-weight:400;color:var(--muted)}
 
 .links{display:flex;flex-wrap:wrap;gap:14px}
@@ -155,9 +154,9 @@ body.light nav{background:rgba(246,245,240,.86)}
   color:var(--muted);letter-spacing:.12em;
   margin-bottom:18px;padding-top:40px;
 }
-.page>.label:first-child,.split-main>.label:first-child,.split-side>.label:first-child{padding-top:0}
+.section>.label:first-child,.split-main>.label:first-child,.split-side>.label:first-child{padding-top:0}
 
-.prose{font-size:14.5px;color:var(--dim);line-height:1.8;max-width:560px;font-weight:300}
+.prose{font-size:14.5px;color:var(--dim);line-height:1.8;max-width:600px;font-weight:300}
 .prose + .prose{margin-top:12px}
 .prose strong{color:var(--ink);font-weight:500;cursor:pointer;border-bottom:1px solid var(--accent);transition:opacity .2s}
 .prose strong:hover{opacity:.75}
@@ -186,6 +185,8 @@ body.light nav{background:rgba(246,245,240,.86)}
 @media(min-width:560px){.grid{grid-template-columns:repeat(3,1fr)}}
 @media(min-width:960px){.grid.work-grid{grid-template-columns:repeat(4,1fr)}}
 @media(min-width:1180px){.grid:not(.work-grid){grid-template-columns:repeat(4,1fr)}}
+@media(min-width:1500px){.grid.work-grid{grid-template-columns:repeat(5,1fr)}}
+@media(min-width:1900px){.grid.work-grid{grid-template-columns:repeat(6,1fr)}}
 
 .card{position:relative;aspect-ratio:4/3;overflow:hidden;cursor:pointer;background:var(--bg2);-webkit-tap-highlight-color:transparent}
 .card img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(45%) contrast(1.05) brightness(.92);opacity:0;transition:transform .45s var(--ease),filter .3s,opacity .3s}
@@ -219,6 +220,22 @@ body.light nav{background:rgba(246,245,240,.86)}
 
 footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(--font-mono);font-size:10.5px;color:var(--ghost);letter-spacing:.03em;border-top:1px solid var(--line);max-width:1320px;margin:0 auto}
 
+/* Visitor counter — fixed bottom-right badge, present on every screen size */
+.vcount{
+  position:fixed;right:16px;bottom:16px;z-index:150;
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--font-mono);font-size:10.5px;color:var(--muted);
+  background:rgba(19,19,21,.72);backdrop-filter:blur(8px);
+  border:1px solid var(--line2);border-radius:20px;
+  padding:6px 13px;letter-spacing:.03em;
+  transition:background .35s,border-color .35s,color .2s;
+}
+body.light .vcount{background:rgba(246,245,240,.8)}
+.vcount-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.vcount-num{color:var(--ink);font-weight:500}
+@media(min-width:768px){.vcount{right:22px;bottom:18px}}
+@media(max-width:600px){.vcount{right:10px;bottom:10px;padding:5px 10px;font-size:9.5px}}
+
 .r{opacity:0;transform:translateY(8px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
 .r.v{opacity:1;transform:none}
 
@@ -251,10 +268,24 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
   .hero-name{font-size:21px}
 }
 
-/* ── Wide-screen ceiling: keep content from over-stretching on very large monitors ── */
+/* ── Wide-screen scaling: let the page fill bigger monitors instead of floating in empty space ── */
 @media(min-width:1600px){
   :root{--side-w:210px}
   .shell{max-width:1440px}
+  .prose{max-width:660px}
+}
+@media(min-width:1900px){
+  :root{--side-w:236px;--gut:clamp(40px,3.4vw,72px)}
+  .shell{max-width:1680px}
+  body{font-size:15.5px}
+  .split{grid-template-columns:1fr 340px;gap:80px}
+  .split-side{padding-left:48px}
+  .prose{max-width:700px;font-size:15px}
+  .hero-photo{width:190px}
+}
+@media(min-width:2400px){
+  .shell{max-width:1880px}
+  .split{grid-template-columns:1fr 380px;gap:96px}
 }
 </style>
 </head>
@@ -263,8 +294,8 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 
 <nav id="nav">
   <ul class="nav-links">
-    <li><a onclick="go('home')" class="nl on">home</a></li>
-    <li><a onclick="go('work')" class="nl">work</a></li>
+    <li><a href="#home" class="nl on" data-target="home">home</a></li>
+    <li><a href="#work" class="nl" data-target="work">work</a></li>
   </ul>
   <button class="tbtn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
     <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
@@ -274,7 +305,7 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 <div class="shell">
 
 <!-- ══ HOME ══ -->
-<div id="home" class="page on entering">
+<section id="home" class="section">
   <div class="split">
     <div class="split-main">
       <div class="hero r">
@@ -288,8 +319,9 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
           </div>
           <div class="label" style="padding-top:22px;margin-bottom:12px">About</div>
           <p class="prose">Final-year Dual Degree student in Electrical Engineering at IIT Bombay, specializing in Solid State Devices with a minor in Computer Science. Research spans nanoelectronics, semiconductor physics, and device technology — both theoretical and experimental.</p>
-          <p class="prose">Co-founder of <strong onclick="go('work')">HackerFab IIT Bombay</strong>, working to make hands-on chip fabrication accessible across India.</p>
-          <p class="prose">Outside the lab, I enjoy photography — a few shots are up on my <a href="photobook/" target="_blank" rel="noopener">photobook</a>.</p>
+          <p class="prose">Co-founder of <strong onclick="jumpTo('work')">HackerFab IIT Bombay</strong>, working to make hands-on chip fabrication accessible across India.</p>
+          <p class="prose">Outside the lab, I enjoy photography — a few shots are up on my <a href="FunStuff/photobook/" target="_blank" rel="noopener">photobook</a>.</p>
+          <p class="prose">I also tinker with small side-projects for fun: a <a href="FunStuff/gameoflife/" target="_blank" rel="noopener">Game of Life</a> sim, a <a href="FunStuff/gamebyob/" target="_blank" rel="noopener">Game BYOB</a> build, and a few other odds and ends — all collected under <a href="FunStuff/" target="_blank" rel="noopener">/FunStuff</a>.</p>
         </div>
       </div>
 
@@ -306,10 +338,10 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- ══ WORK ══ -->
-<div id="work" class="page">
+<section id="work" class="section">
   <div class="split">
     <div class="split-main">
       <div class="label r" style="padding-top:0"><svg class="amark" viewBox="0 0 16 16" fill="none" stroke-width="1"><circle cx="8" cy="8" r="5"/><path d="M8 0v3M8 13v3M0 8h3M13 8h3"/></svg>Experience &amp; Projects</div>
@@ -377,7 +409,7 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
       </div>
     </div>
   </div>
-</div>
+</section>
 
 </div><!-- /shell -->
 
@@ -397,6 +429,12 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 
 <footer>kartik chikkanagoudar · iit bombay · 2026</footer>
 
+<div class="vcount" id="visitorCounter" aria-label="Visitor count">
+  <span class="vcount-dot"></span>
+  <span>visits</span>
+  <span class="vcount-num" id="vcountNum">···</span>
+</div>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
 /* ── Scroll progress + nav bg ── */
@@ -406,35 +444,27 @@ window.addEventListener('scroll', () => {
   document.getElementById('bar').style.width = (tot > 0 ? st / tot * 100 : 0) + '%';
 }, { passive: true });
 
-/* ── Page transitions ── */
-let curPage = 'home';
-function go(id) {
-  if (id === curPage) return;
-  const out = document.getElementById(curPage), inp = document.getElementById(id);
-  out.classList.add('leaving');
-  out.addEventListener('animationend', () => out.classList.remove('on', 'leaving'), { once: true });
-  setTimeout(() => {
-    inp.classList.add('on', 'entering');
-    inp.addEventListener('animationend', () => inp.classList.remove('entering'), { once: true });
-    triggerReveals(id);
-  }, 130);
-  document.querySelectorAll('.nl').forEach(l => l.classList.toggle('on', l.getAttribute('onclick')?.includes(`'${id}'`)));
-  curPage = id;
-  window.scrollTo({ top: 0, behavior: 'auto' });
-}
-function triggerReveals(id) {
-  setTimeout(() => {
-    document.querySelectorAll('#' + id + ' .r').forEach((el, i) => {
-      el.classList.remove('v');
-      el.style.transitionDelay = Math.min(i * 0.035, 0.3) + 's';
-      setTimeout(() => el.classList.add('v'), 20);
-    });
-  }, 50);
-}
+/* ── Smooth-scroll to a section (used by nav links and inline "work" mention) ── */
 function jumpTo(id) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+document.querySelectorAll('.nl').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    jumpTo(a.dataset.target);
+  });
+});
+
+/* ── Scroll-spy: highlight the nav link for whichever section is in view ── */
+const spyIO = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.nl').forEach(l => l.classList.toggle('on', l.dataset.target === entry.target.id));
+    }
+  });
+}, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+document.querySelectorAll('.section').forEach(s => spyIO.observe(s));
 
 /* ── Card popup ── */
 function openCard(el) {
@@ -490,8 +520,26 @@ window.addEventListener('DOMContentLoaded', () => {
     el.style.transitionDelay = Math.min(i * 0.03, 0.25) + 's';
     io.observe(el);
   });
-  triggerReveals('home');
 });
+
+/* ── Visitor counter ──
+   Uses a free, keyless hit-counter API (no backend of your own required).
+   Swap the `key` below for anything unique to your domain, and swap the
+   endpoint entirely if you'd rather self-host a counter later. */
+(function(){
+  const numEl = document.getElementById('vcountNum');
+  const key = 'kartik-chikkanagoudar-dev-portfolio-v1';
+  fetch('https://countapi.mileshilliard.com/api/v1/hit/' + key)
+    .then(r => r.json())
+    .then(data => {
+      if (data && typeof data.value !== 'undefined') {
+        numEl.textContent = data.value.toLocaleString();
+      } else {
+        numEl.textContent = '—';
+      }
+    })
+    .catch(() => { numEl.textContent = '—'; });
+})();
 </script>
 </body>
 </html>
