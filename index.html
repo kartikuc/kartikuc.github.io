@@ -14,8 +14,8 @@
 :root{
   --bg:#0a0a0b;--bg2:#131315;--bg3:#1a1a1c;
   --line:#242426;--line2:#2f2f31;
-  --ghost:#55544e;--muted:#8b8a82;--dim:#b7b6ae;
-  --text:#c9c8c1;--ink:#f4f3ee;
+  --ghost:#55544e;--muted:#8b8a82;--dim:#ffffff;
+  --text:#ffffff;--ink:#ffffff;
   --accent:#e8b400;--accent-dim:rgba(232,180,0,.14);--accent-ink:#0a0a0b;
   --font-disp:'Space Grotesk',sans-serif;
   --font-body:'Inter',Arial,Helvetica,sans-serif;
@@ -163,10 +163,12 @@ body.light nav{background:rgba(246,245,240,.86)}
 #about{padding-top:40px;margin-top:8px;border-top:1px solid var(--line)}
 #work{padding-top:52px;margin-top:8px;border-top:1px solid var(--line)}
 #teaching{scroll-margin-top:calc(var(--nav-h) + 16px)}
+#courses{scroll-margin-top:calc(var(--nav-h) + 16px)}
 @media(min-width:768px){
   #home{padding-top:calc(var(--nav-h) + 46px)}
   .section{scroll-margin-top:34px}
   #teaching{scroll-margin-top:34px}
+  #courses{scroll-margin-top:34px}
 }
 @media(max-width:767px){
   /* Desktop values above were oversized for a short mobile viewport —
@@ -221,7 +223,8 @@ body.light nav{background:rgba(246,245,240,.86)}
   font-size:clamp(13px, 1.1vw, 15px);
   color:var(--dim);
   line-height:1.65;
-  max-width:640px;
+  max-width:100%;
+  width:100%;
   margin-bottom:32px;
   font-weight:300;
   text-align:justify;
@@ -315,7 +318,8 @@ body.light nav{background:rgba(246,245,240,.86)}
   font-size:clamp(12.5px, 1.1vw, 14.5px);
   color:var(--dim);
   line-height:1.8;
-  max-width:880px;
+  max-width:100%;
+  width:100%;
   font-weight:300;
   text-align:justify;
   text-justify:inter-word;
@@ -432,13 +436,12 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 @media(min-width:1600px){
   :root{--side-w:160px}
   .shell{max-width:1440px}
-  .prose{max-width:920px}
 }
 @media(min-width:1900px){
   :root{--side-w:176px;--gut:clamp(40px,3.4vw,72px)}
   .shell{max-width:1680px}
   body{font-size:15.5px}
-  .prose{max-width:980px;font-size:15px}
+  .prose{font-size:15px}
 }
 @media(min-width:2400px){
   .shell{max-width:1880px}
@@ -452,8 +455,9 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
   <ul class="nav-links" id="navLinks">
     <li><a href="#home" class="nl on" data-target="home">home</a></li>
     <li><a href="#about" class="nl" data-target="about">about</a></li>
-    <li><a href="#work" class="nl" data-target="work">work</a></li>
+    <li><a href="#work" class="nl" data-target="work">research</a></li>
     <li><a href="#teaching" class="nl" data-target="teaching">teaching</a></li>
+    <li><a href="#courses" class="nl" data-target="courses">courses</a></li>
   </ul>
 
   <div class="nav-right">
@@ -562,9 +566,10 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 
     </div>
 
-      <p  class="hero-intro">
-        Hi! Nice to meet you.<\p>
-      <p  class="hero-intro">
+      <p class="hero-intro">
+        Hi! Nice to meet you.
+      </p>
+      <p class="hero-intro">
         I am an incoming post-graduate at the University of Chicago, pursuing a PhD in Molecular Engineering in the 
         Pritzker School of Molecular Engineering. I recently graduated from IITB (2026 batch) with 
         Bachelors in Electrical Engineering with a Minor in Computer Science and a Masters in Electrical Engineering with a specialization in Solid State Devices. 
@@ -575,7 +580,7 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
           My primary interests lie in developing advanced semiconductor and nanoelectronic technologies. I am an avid enthusiast of
           hands-on hardware and robotics projects along with a few nice topics in software like architcture and networks, and, 
           am one of the founders of HackerFab-IITB, part of a global project to open-source knowledge of semiconductor fabrication tools.  
-        <\p>
+        </p>
 
         <p  class="hero-intro">
   In my freetime I like to play sports (any kind works, though I've mostly played field hockey and badminton) and 
@@ -863,7 +868,7 @@ const spyIO = new IntersectionObserver(entries => {
     }
   });
 }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
-document.querySelectorAll('.section, #teaching').forEach(s => spyIO.observe(s));
+document.querySelectorAll('.section, #teaching, #courses').forEach(s => spyIO.observe(s));
 
 /* ── Mobile hamburger menu ── */
 const navLinksEl = document.getElementById('navLinks');
