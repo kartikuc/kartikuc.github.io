@@ -336,9 +336,22 @@ body.light nav{background:rgba(246,245,240,.86)}
 .trow-date{font-family:var(--font-mono);font-size:10px;color:var(--ghost);white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
 
 /* Course rows */
-.course-cat{max-width:100%;}
-.course-cat-title{font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin:26px 0 6px}
-.course-cat:first-of-type .course-cat-title{margin-top:0}
+.course-cat{max-width:100%;border:1px solid var(--line);border-radius:4px;margin-bottom:10px;overflow:hidden}
+.course-cat:first-of-type{margin-top:0}
+.course-cat-toggle{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--bg2);border:none;cursor:pointer;text-align:left;
+  padding:12px 14px;
+}
+.course-cat-toggle:hover{background:var(--bg3)}
+.course-cat-title{font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin:0}
+.course-cat-count{font-family:var(--font-mono);font-size:10px;color:var(--ghost);margin-left:8px}
+.course-cat-chevron{width:11px;height:11px;color:var(--ghost);flex-shrink:0;transition:transform .25s var(--ease)}
+.course-cat-toggle[aria-expanded="true"] .course-cat-chevron{transform:rotate(180deg)}
+.course-cat-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s var(--ease)}
+.course-cat-panel.open{grid-template-rows:1fr}
+.course-cat-panel-inner{overflow:hidden;padding:0 14px}
+.course-cat-panel.open .course-cat-panel-inner{padding:2px 14px 6px}
 .crow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0;border-bottom:1px solid var(--line);flex-wrap:nowrap;}
 .crow:last-child{border-bottom:none}
 .crow-main{flex:1;display:flex;align-items:center;gap:12px;min-width:0;}
@@ -699,101 +712,7 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
   </div>
 
   <div class="label r" id="courses">Courses</div>
-  <div class="r">
-
-    <div class="course-cat">
-      <div class="course-cat-title">Nanoelectronics &amp; Semiconductors</div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 207</span>Electronic Devices &amp; Circuits</div><div class="crow-desc">Semiconductor diode, BJT, and MOSFET fundamentals underlying analog design.</div></div><div class="crow-date">Spring 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 755</span>Quantum Transport in Nanoscale Devices</div><div class="crow-desc">NEGF-based transport formalism for nanoscale semiconductor devices.</div></div><div class="crow-date">Spring 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 236</span>Electronic Devices Lab</div><div class="crow-desc">Hands-on characterization of diodes, BJTs, and MOSFETs.</div></div><div class="crow-date">Autumn 2023–24</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 620</span>Physics of Transistors</div><div class="crow-desc">Device physics governing MOSFET operation and scaling limits.</div></div><div class="crow-date">Spring 2023–24</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 724</span>Nanoelectronics</div><div class="crow-desc">Quantum-confined and nanoscale device phenomena beyond classical MOSFETs.</div></div><div class="crow-date">Spring 2023–24</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 457</span>Compound Semiconductor Material and Devices</div><div class="crow-desc">III-V material properties and heterostructure device design.</div></div><div class="crow-date">Autumn 2024–25</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 669</span>VLSI Technology</div><div class="crow-desc">Semiconductor fabrication process flow, from wafer to transistor.</div></div><div class="crow-date">Autumn 2024–25</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 672</span>Microelectronics Lab</div><div class="crow-desc">Cleanroom fabrication of microelectronic devices.</div></div><div class="crow-date">Spring 2024–25</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 728</span>Growth and Characterization of Nano-electronic Materials</div><div class="crow-desc">Thin-film growth techniques and materials characterization methods.</div></div><div class="crow-date">Spring 2024–25</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 735</span>Microelectronics Simulations Lab</div><div class="crow-desc">TCAD simulation of semiconductor device behavior.</div></div><div class="crow-date">Spring 2024–25</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 767</span>Photonics System Engineering</div><div class="crow-desc">Photonic device design and optical system integration.</div></div><div class="crow-date">Spring 2024–25</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 784</span>2D Materials and Devices</div><div class="crow-desc">Transport and device physics of 2D crystals such as graphene and TMDs.</div></div><div class="crow-date">Spring 2024–25</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 746</span>Neuromorphic Engineering</div><div class="crow-desc">Device and circuit approaches to brain-inspired computing.</div></div><div class="crow-date">Autumn 2025–26</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 765</span>Reliability and Failure Analysis of Electronic Devices</div><div class="crow-desc">Degradation mechanisms and reliability testing of semiconductor devices.</div></div><div class="crow-date">Autumn 2025–26</div></div>
-    </div>
-
-    <div class="course-cat">
-      <div class="course-cat-title">Electrical Engineering</div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 114</span>Power Engineering I</div><div class="crow-desc">Fundamentals of power generation and transmission systems.</div></div><div class="crow-date">Autumn 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 204</span>Analog Circuits</div><div class="crow-desc">Design and analysis of transistor-based analog amplifier circuits.</div></div><div class="crow-date">Autumn 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 214</span>Digital Circuits Lab</div><div class="crow-desc">Design and testing of combinational and sequential digital circuits.</div></div><div class="crow-date">Autumn 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 224</span>Digital Systems</div><div class="crow-desc">Boolean logic, combinational/sequential design, and digital system architecture.</div></div><div class="crow-date">Autumn 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 229</span>Signal Processing I</div><div class="crow-desc">Continuous- and discrete-time signal analysis and transforms.</div></div><div class="crow-date">Autumn 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 325</span>Probability and Random Processes</div><div class="crow-desc">Probabilistic models and stochastic processes for engineering systems.</div></div><div class="crow-date">Autumn 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 230</span>Analog Lab</div><div class="crow-desc">Practical design and testing of analog circuits.</div></div><div class="crow-date">Spring 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 238</span>Power Engineering II</div><div class="crow-desc">Advanced topics in power systems and electrical machines.</div></div><div class="crow-date">Spring 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 240</span>Power Engineering Lab</div><div class="crow-desc">Experiments with electrical machines and power systems.</div></div><div class="crow-date">Spring 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 302</span>Control Systems</div><div class="crow-desc">Feedback control theory and system stability analysis.</div></div><div class="crow-date">Spring 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 309</span>Microprocessors</div><div class="crow-desc">Architecture and programming of microprocessor-based systems.</div></div><div class="crow-date">Spring 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 337</span>Microprocessors Laboratory</div><div class="crow-desc">Hands-on interfacing and programming of microprocessor systems.</div></div><div class="crow-date">Spring 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 301</span>Electromagnetic Waves</div><div class="crow-desc">Maxwell's equations and wave propagation in guided and unguided media.</div></div><div class="crow-date">Autumn 2023–24</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 324</span>Control Systems Lab</div><div class="crow-desc">Experimental validation of feedback control system design.</div></div><div class="crow-date">Autumn 2023–24</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 340</span>Communications Lab</div><div class="crow-desc">Implementation and testing of analog and digital communication systems.</div></div><div class="crow-date">Autumn 2023–24</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 341</span>Communication Systems I</div><div class="crow-desc">Analog and digital modulation techniques for communication systems.</div></div><div class="crow-date">Autumn 2023–24</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 671</span>VLSI Design</div><div class="crow-desc">Digital and analog integrated circuit design methodology.</div></div><div class="crow-date">Autumn 2023–24</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 739</span>Processor Design</div><div class="crow-desc">Microarchitecture and datapath design of processors.</div></div><div class="crow-date">Autumn 2023–24</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 344</span>Electronic Design Lab</div><div class="crow-desc">Open-ended electronic system design and prototyping project.</div></div><div class="crow-date">Spring 2023–24</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 618</span>CMOS Analog VLSI Design</div><div class="crow-desc">Analog integrated circuit design techniques in CMOS technology.</div></div><div class="crow-date">Autumn 2024–25</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">EE 706</span>Communication Networks</div><div class="crow-desc">Network protocols and architectures for data communication.</div></div><div class="crow-date">Spring 2025–26</div></div>
-    </div>
-
-    <div class="course-cat">
-      <div class="course-cat-title">Computer Science</div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">CS 101</span>Computer Programming and Utilization</div><div class="crow-desc">Introductory programming and computational problem-solving.</div></div><div class="crow-date">Spring 2021–22</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">CS 213</span>Data Structures and Algorithms</div><div class="crow-desc">Core data structures and algorithmic design and analysis.</div></div><div class="crow-date">Spring 2022–23</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">CS 347</span>Operating Systems</div><div class="crow-desc">Process management, memory management, and OS design principles.</div></div><div class="crow-date">Autumn 2024–25</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">CS 228</span>Logic for Computer Science</div><div class="crow-desc">Propositional and predicate logic for computer science applications.</div></div><div class="crow-date">Spring 2024–25</div></div>
-
-      <div class="crow"><div class="crow-main"><div class="crow-name"><span class="code">CS 224</span>Computer Networks</div><div class="crow-desc">Principles of computer network design and protocols.</div></div><div class="crow-date">Spring 2025–26</div></div>
-    </div>
-
-  </div>
+  <div class="r" id="coursesList"></div>
 </section>
 
 </div><!-- /shell -->
@@ -815,6 +734,107 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 <footer>kartik chikkanagoudar · iit bombay · 2026</footer>
 
 <script>
+/* ── Coursework data + collapsible render ──
+   Same content as before, just data-driven instead of hand-duplicated
+   markup, and collapsed by category with an expand affordance. */
+const COURSEWORK = [
+  { category:'Nanoelectronics & Semiconductors', courses:[
+    { code:'EE 207', name:'Electronic Devices &amp; Circuits', desc:'Semiconductor diode, BJT, and MOSFET fundamentals underlying analog design.', date:'Spring 2022–23' },
+    { code:'EE 755', name:'Quantum Transport in Nanoscale Devices', desc:'NEGF-based transport formalism for nanoscale semiconductor devices.', date:'Spring 2022–23' },
+    { code:'EE 236', name:'Electronic Devices Lab', desc:'Hands-on characterization of diodes, BJTs, and MOSFETs.', date:'Autumn 2023–24' },
+    { code:'EE 620', name:'Physics of Transistors', desc:'Device physics governing MOSFET operation and scaling limits.', date:'Spring 2023–24' },
+    { code:'EE 724', name:'Nanoelectronics', desc:'Quantum-confined and nanoscale device phenomena beyond classical MOSFETs.', date:'Spring 2023–24' },
+    { code:'EE 457', name:'Compound Semiconductor Material and Devices', desc:'III-V material properties and heterostructure device design.', date:'Autumn 2024–25' },
+    { code:'EE 669', name:'VLSI Technology', desc:'Semiconductor fabrication process flow, from wafer to transistor.', date:'Autumn 2024–25' },
+    { code:'EE 672', name:'Microelectronics Lab', desc:'Cleanroom fabrication of microelectronic devices.', date:'Spring 2024–25' },
+    { code:'EE 728', name:'Growth and Characterization of Nano-electronic Materials', desc:'Thin-film growth techniques and materials characterization methods.', date:'Spring 2024–25' },
+    { code:'EE 735', name:'Microelectronics Simulations Lab', desc:'TCAD simulation of semiconductor device behavior.', date:'Spring 2024–25' },
+    { code:'EE 767', name:'Photonics System Engineering', desc:'Photonic device design and optical system integration.', date:'Spring 2024–25' },
+    { code:'EE 784', name:'2D Materials and Devices', desc:'Transport and device physics of 2D crystals such as graphene and TMDs.', date:'Spring 2024–25' },
+    { code:'EE 746', name:'Neuromorphic Engineering', desc:'Device and circuit approaches to brain-inspired computing.', date:'Autumn 2025–26' },
+    { code:'EE 765', name:'Reliability and Failure Analysis of Electronic Devices', desc:'Degradation mechanisms and reliability testing of semiconductor devices.', date:'Autumn 2025–26' },
+  ]},
+  { category:'Electrical Engineering', courses:[
+    { code:'EE 114', name:'Power Engineering I', desc:'Fundamentals of power generation and transmission systems.', date:'Autumn 2022–23' },
+    { code:'EE 204', name:'Analog Circuits', desc:'Design and analysis of transistor-based analog amplifier circuits.', date:'Autumn 2022–23' },
+    { code:'EE 214', name:'Digital Circuits Lab', desc:'Design and testing of combinational and sequential digital circuits.', date:'Autumn 2022–23' },
+    { code:'EE 224', name:'Digital Systems', desc:'Boolean logic, combinational/sequential design, and digital system architecture.', date:'Autumn 2022–23' },
+    { code:'EE 229', name:'Signal Processing I', desc:'Continuous- and discrete-time signal analysis and transforms.', date:'Autumn 2022–23' },
+    { code:'EE 325', name:'Probability and Random Processes', desc:'Probabilistic models and stochastic processes for engineering systems.', date:'Autumn 2022–23' },
+    { code:'EE 230', name:'Analog Lab', desc:'Practical design and testing of analog circuits.', date:'Spring 2022–23' },
+    { code:'EE 238', name:'Power Engineering II', desc:'Advanced topics in power systems and electrical machines.', date:'Spring 2022–23' },
+    { code:'EE 240', name:'Power Engineering Lab', desc:'Experiments with electrical machines and power systems.', date:'Spring 2022–23' },
+    { code:'EE 302', name:'Control Systems', desc:'Feedback control theory and system stability analysis.', date:'Spring 2022–23' },
+    { code:'EE 309', name:'Microprocessors', desc:'Architecture and programming of microprocessor-based systems.', date:'Spring 2022–23' },
+    { code:'EE 337', name:'Microprocessors Laboratory', desc:'Hands-on interfacing and programming of microprocessor systems.', date:'Spring 2022–23' },
+    { code:'EE 301', name:'Electromagnetic Waves', desc:'Maxwell\'s equations and wave propagation in guided and unguided media.', date:'Autumn 2023–24' },
+    { code:'EE 324', name:'Control Systems Lab', desc:'Experimental validation of feedback control system design.', date:'Autumn 2023–24' },
+    { code:'EE 340', name:'Communications Lab', desc:'Implementation and testing of analog and digital communication systems.', date:'Autumn 2023–24' },
+    { code:'EE 341', name:'Communication Systems I', desc:'Analog and digital modulation techniques for communication systems.', date:'Autumn 2023–24' },
+    { code:'EE 671', name:'VLSI Design', desc:'Digital and analog integrated circuit design methodology.', date:'Autumn 2023–24' },
+    { code:'EE 739', name:'Processor Design', desc:'Microarchitecture and datapath design of processors.', date:'Autumn 2023–24' },
+    { code:'EE 344', name:'Electronic Design Lab', desc:'Open-ended electronic system design and prototyping project.', date:'Spring 2023–24' },
+    { code:'EE 618', name:'CMOS Analog VLSI Design', desc:'Analog integrated circuit design techniques in CMOS technology.', date:'Autumn 2024–25' },
+    { code:'EE 706', name:'Communication Networks', desc:'Network protocols and architectures for data communication.', date:'Spring 2025–26' },
+  ]},
+  { category:'Computer Science', courses:[
+    { code:'CS 101', name:'Computer Programming and Utilization', desc:'Introductory programming and computational problem-solving.', date:'Spring 2021–22' },
+    { code:'CS 213', name:'Data Structures and Algorithms', desc:'Core data structures and algorithmic design and analysis.', date:'Spring 2022–23' },
+    { code:'CS 347', name:'Operating Systems', desc:'Process management, memory management, and OS design principles.', date:'Autumn 2024–25' },
+    { code:'CS 228', name:'Logic for Computer Science', desc:'Propositional and predicate logic for computer science applications.', date:'Spring 2024–25' },
+    { code:'CS 224', name:'Computer Networks', desc:'Principles of computer network design and protocols.', date:'Spring 2025–26' },
+  ]},
+];
+
+function renderCoursework(){
+  const wrap = document.getElementById('coursesList');
+  if (!wrap) return;
+  const frag = document.createDocumentFragment();
+
+  COURSEWORK.forEach((cat, i) => {
+    const catEl = document.createElement('div');
+    catEl.className = 'course-cat';
+
+    const panelId = `course-panel-${i}`;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'course-cat-toggle';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', panelId);
+    btn.innerHTML = `
+      <span class="course-cat-title">${cat.category}<span class="course-cat-count">(${cat.courses.length})</span></span>
+      <svg class="course-cat-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>`;
+
+    const panel = document.createElement('div');
+    panel.className = 'course-cat-panel';
+    panel.id = panelId;
+
+    const inner = document.createElement('div');
+    inner.className = 'course-cat-panel-inner';
+    cat.courses.forEach(c => {
+      const crow = document.createElement('div');
+      crow.className = 'crow';
+      crow.innerHTML = `
+        <div class="crow-main"><div class="crow-name"><span class="code">${c.code}</span>${c.name}</div><div class="crow-desc">${c.desc}</div></div>
+        <div class="crow-date">${c.date}</div>`;
+      inner.appendChild(crow);
+    });
+    panel.appendChild(inner);
+
+    btn.addEventListener('click', () => {
+      const isOpen = panel.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    catEl.appendChild(btn);
+    catEl.appendChild(panel);
+    frag.appendChild(catEl);
+  });
+
+  wrap.appendChild(frag);
+}
+document.addEventListener('DOMContentLoaded', renderCoursework);
+
 /* ── Scroll progress + nav bg ── */
 window.addEventListener('scroll', () => {
   const st = document.documentElement.scrollTop;
