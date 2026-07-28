@@ -66,6 +66,10 @@ nav{
   border-bottom:1px solid var(--line);
   transition:background .35s,border-color .35s;
 }
+@media(min-width:768px){
+  nav{position:fixed}
+  .nav-links{position:absolute;left:50%;top:0;transform:translateX(-50%)}
+}
 body.light nav{background:rgba(246,245,240,.86)}
 
 .nav-links{display:flex;gap:36px;list-style:none;flex-wrap:wrap}
@@ -192,11 +196,19 @@ body.light nav{background:rgba(246,245,240,.86)}
   flex:1;
   min-width:0;
 }
+.hero-photo-col{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+  flex-shrink:0;
+}
 .hero-photo{
   flex-shrink:0;
   width:clamp(275px, 35vw, 425px);
   aspect-ratio:1;
-  border:none;
+  border:1px solid var(--line2);
+  border-radius:6px;
   background:transparent;
   position:relative;
   overflow:hidden;
@@ -267,11 +279,12 @@ body.light nav{background:rgba(246,245,240,.86)}
 
 @media(max-width:767px){
   .hero-header{
-    flex-direction:column-reverse; /* photo (last child) renders first / on top on mobile */
+    flex-direction:column-reverse; /* photo column (last child) renders first / on top on mobile */
     align-items:center;
     gap:24px;
   }
   .hero-left{width:100%}
+  .hero-photo-col{width:100%}
   .hero-photo{
     width:min(300px, 70vw);
     max-width:100%;
@@ -454,8 +467,8 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
 <nav id="nav">
   <ul class="nav-links" id="navLinks">
     <li><a href="#home" class="nl on" data-target="home">home</a></li>
-    <li><a href="#about" class="nl" data-target="about">about</a></li>
-    <li><a href="#work" class="nl" data-target="work">research</a></li>
+    <li><a href="#about" class="nl" data-target="about">research</a></li>
+    <li><a href="#work" class="nl" data-target="work">projects</a></li>
     <li><a href="#teaching" class="nl" data-target="teaching">teaching</a></li>
     <li><a href="#courses" class="nl" data-target="courses">courses</a></li>
   </ul>
@@ -483,89 +496,6 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
         Kartik <span>Chikkanagoudar</span>
     </h1>
 
-    <!-- SOCIALS -->
-    <div class="hero-socials">
-
-        <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/"
-           target="_blank"
-           rel="noopener"
-           title="LinkedIn"
-           aria-label="LinkedIn">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.5"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <circle cx="7" cy="7.3" r="0.9"
-                        fill="currentColor"
-                        stroke="none"/>
-                <line x1="7" y1="10.5" x2="7" y2="17"/>
-                <path d="M11 17v-6.2M11 10.8c0-1.4 1-2.3 2.6-2.3S16 9.4 16 11.3V17"/>
-            </svg>
-
-        </a>
-
-        <a href="https://github.com/MonolayerGraphene"
-           target="_blank"
-           rel="noopener"
-           title="GitHub"
-           aria-label="GitHub">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.5"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-            </svg>
-
-        </a>
-
-        <a href="mailto:kartikuc2004@gmail.com"
-           title="Email (Gmail)"
-           aria-label="Email">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.5"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-                <rect x="2.5" y="4.5" width="19" height="15" rx="2"/>
-                <path d="M3 6l9 6.5L21 6"/>
-
-            </svg>
-
-        </a>
-
-        <a href="mailto:kartikuc@uchicago.edu"
-           title="Email (UChicago)"
-           aria-label="Email">
-
-            <svg viewBox="0 0 24 24"
-                 fill="none"
-                 stroke="currentColor"
-                 stroke-width="1.5"
-                 stroke-linecap="round"
-                 stroke-linejoin="round">
-
-                <path d="M2 9l10-5 10 5-10 5-10-5z"/>
-                <path d="M6 11.3v4.7c0 1.1 2.5 2 6 2s6-.9 6-2v-4.7"/>
-                <path d="M22 9v6.2"/>
-
-            </svg>
-
-        </a>
-
-    </div>
-
       <p class="hero-intro">
         Hi! Nice to meet you.
       </p>
@@ -592,8 +522,93 @@ footer{position:relative;z-index:1;padding:20px var(--gut) 30px;font-family:var(
           </p>
 </div>
 
-    <div class="hero-photo">
-      <img src="images/me.png" alt="Kartik">
+    <div class="hero-photo-col">
+      <div class="hero-photo">
+        <img src="images/me.png" alt="Kartik">
+      </div>
+
+      <!-- SOCIALS -->
+      <div class="hero-socials">
+
+          <a href="https://www.linkedin.com/in/kartik-u-chikkanagoudar-082267224/"
+             target="_blank"
+             rel="noopener"
+             title="LinkedIn"
+             aria-label="LinkedIn">
+
+              <svg viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="1.5"
+                   stroke-linecap="round"
+                   stroke-linejoin="round">
+
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <circle cx="7" cy="7.3" r="0.9"
+                          fill="currentColor"
+                          stroke="none"/>
+                  <line x1="7" y1="10.5" x2="7" y2="17"/>
+                  <path d="M11 17v-6.2M11 10.8c0-1.4 1-2.3 2.6-2.3S16 9.4 16 11.3V17"/>
+              </svg>
+
+          </a>
+
+          <a href="https://github.com/MonolayerGraphene"
+             target="_blank"
+             rel="noopener"
+             title="GitHub"
+             aria-label="GitHub">
+
+              <svg viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="1.5"
+                   stroke-linecap="round"
+                   stroke-linejoin="round">
+
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+              </svg>
+
+          </a>
+
+          <a href="mailto:kartikuc2004@gmail.com"
+             title="Email (Gmail)"
+             aria-label="Email">
+
+              <svg viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="1.5"
+                   stroke-linecap="round"
+                   stroke-linejoin="round">
+
+                  <rect x="2.5" y="4.5" width="19" height="15" rx="2"/>
+                  <path d="M3 6l9 6.5L21 6"/>
+
+              </svg>
+
+          </a>
+
+          <a href="mailto:kartikuc@uchicago.edu"
+             title="Email (UChicago)"
+             aria-label="Email">
+
+              <svg viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="1.5"
+                   stroke-linecap="round"
+                   stroke-linejoin="round">
+
+                  <path d="M2 9l10-5 10 5-10 5-10-5z"/>
+                  <path d="M6 11.3v4.7c0 1.1 2.5 2 6 2s6-.9 6-2v-4.7"/>
+                  <path d="M22 9v6.2"/>
+
+              </svg>
+
+          </a>
+
+      </div>
     </div>
   </div>
 </section>
