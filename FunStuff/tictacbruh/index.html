@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VANISH — Tic Tac Toe</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --x-color: #ff2d55;
+    --o-color: #0ff;
+    --bg: #080810;
+    --panel: #0d0d1a;
+    --border: #1a1a3a;
+    --dim-x: #4a0015;
+    --dim-o: #003a3a;
+    --glow-x: 0 0 20px #ff2d5588, 0 0 40px #ff2d5544;
+    --glow-o: 0 0 20px #0ff8, 0 0 40px #0ff4;
+    --warn-x: #ff6b35;
+    --warn-o: #ffe135;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Share Tech Mono', monospace;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* Grid background */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 20px;
+  }
+
+  h1 {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    letter-spacing: 0.3em;
+    color: #fff;
+    text-shadow: 0 0 30px #0ff, 0 0 60px #0ff4;
+    animation: titlePulse 3s ease-in-out infinite;
+  }
+
+  @keyframes titlePulse {
+    0%, 100% { text-shadow: 0 0 30px #0ff, 0 0 60px #0ff4; }
+    50% { text-shadow: 0 0 50px #0ff, 0 0 100px #0ff6, 0 0 150px #0ff2; }
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.4em;
+    color: #0ff6;
+    text-transform: uppercase;
+    margin-top: -16px;
+  }
+
+  /* Score board */
+  .scoreboard {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .score-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 12px 24px;
+    text-align: center;
+    position: relative;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .score-card.x-card { border-color: var(--x-color); box-shadow: 0 0 15px #ff2d5522; }
+  .score-card.o-card { border-color: var(--o-color); box-shadow: 0 0 15px #0ff2; }
+
+  .score-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 4px;
+  }
+  .score-card.x-card .score-label { color: var(--x-color); }
+  .score-card.o-card .score-label { color: var(--o-color); }
+
+  .score-num {
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #fff;
+  }
+
+  .vs-text {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    color: #ffffff44;
+    letter-spacing: 0.2em;
+  }
+
+  /* Status bar */
+  .status {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+    letter-spacing: 0.15em;
+    padding: 10px 20px;
+    border: 1px solid #ffffff11;
+    background: #ffffff05;
+    color: #fff;
+    text-align: center;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
+
+  /* GAME BOARD */
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    position: relative;
+  }
+
+  .cell {
+    width: clamp(90px, 22vw, 130px);
+    height: clamp(90px, 22vw, 130px);
+    background: var(--panel);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s, border-color 0.2s, transform 0.1s;
+    overflow: hidden;
+  }
+
+  .cell:hover:not(.occupied) {
+    background: #ffffff08;
+    border-color: #ffffff22;
+  }
+
+  .cell:active:not(.occupied) {
+    transform: scale(0.96);
+  }
+
+  .cell.occupied { cursor: default; }
+
+  /* Corner decorations */
+  .cell::before, .cell::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-color: #ffffff15;
+    border-style: solid;
+  }
+  .cell::before { top: 4px; left: 4px; border-width: 1px 0 0 1px; }
+  .cell::after  { bottom: 4px; right: 4px; border-width: 0 1px 1px 0; }
+
+  /* Piece symbols */
+  .piece {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(2rem, 7vw, 3.2rem);
+    transition: all 0.3s;
+    position: relative;
+    z-index: 2;
+    user-select: none;
+  }
+
+  .piece.x { color: var(--x-color); text-shadow: var(--glow-x); }
+  .piece.o { color: var(--o-color); text-shadow: var(--glow-o); }
+
+  /* OLDEST piece - warn state */
+  .cell.will-vanish .piece.x {
+    color: var(--dim-x);
+    text-shadow: none;
+    animation: warnBlink 0.6s ease-in-out infinite;
+  }
+  .cell.will-vanish .piece.o {
+    color: var(--dim-o);
+    text-shadow: none;
+    animation: warnBlink 0.6s ease-in-out infinite;
+  }
+
+  @keyframes warnBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* Warning badge on oldest piece */
+  .cell.will-vanish::before {
+    border-color: var(--warn-x);
+    animation: cornerGlow 0.6s ease-in-out infinite alternate;
+  }
+  .cell.will-vanish.o-cell::before {
+    border-color: var(--warn-o);
+  }
+
+  @keyframes cornerGlow {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+  }
+
+  /* Vanish animation */
+  @keyframes vanish {
+    0%   { opacity: 1; transform: scale(1); }
+    40%  { opacity: 0.8; transform: scale(1.3); filter: blur(0px); }
+    100% { opacity: 0; transform: scale(0); filter: blur(8px); }
+  }
+
+  .piece.vanishing {
+    animation: vanish 0.4s ease-in forwards;
+  }
+
+  /* Place animation */
+  @keyframes placeIn {
+    0%   { transform: scale(0) rotate(-10deg); opacity: 0; }
+    70%  { transform: scale(1.15) rotate(3deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .piece.placing {
+    animation: placeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  /* Win highlight */
+  .cell.win-cell {
+    background: #ffffff08;
+    animation: winPulse 0.8s ease-in-out infinite alternate;
+  }
+
+  .cell.win-cell.x-cell { border-color: var(--x-color); box-shadow: inset 0 0 20px #ff2d5522; }
+  .cell.win-cell.o-cell { border-color: var(--o-color); box-shadow: inset 0 0 20px #0ff2; }
+
+  @keyframes winPulse {
+    from { background: #ffffff05; }
+    to   { background: #ffffff12; }
+  }
+
+  /* Queue indicators */
+  .queues {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .queue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .queue-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .queue.x-queue .queue-label { color: var(--x-color); }
+  .queue.o-queue .queue-label { color: var(--o-color); }
+
+  .queue-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .queue-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid;
+    transition: all 0.3s;
+  }
+  .x-queue .queue-dot { border-color: var(--x-color); background: transparent; }
+  .x-queue .queue-dot.filled { background: var(--x-color); box-shadow: 0 0 8px var(--x-color); }
+  .x-queue .queue-dot.next-gone { background: var(--dim-x); border-color: var(--dim-x); animation: warnBlink 0.6s infinite; }
+
+  .o-queue .queue-dot { border-color: var(--o-color); background: transparent; }
+  .o-queue .queue-dot.filled { background: var(--o-color); box-shadow: 0 0 8px var(--o-color); }
+  .o-queue .queue-dot.next-gone { background: var(--dim-o); border-color: var(--dim-o); animation: warnBlink 0.6s infinite; }
+
+  /* Buttons */
+  .btn {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    padding: 12px 28px;
+    background: transparent;
+    border: 1px solid #ffffff33;
+    color: #fff;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+  }
+
+  .btn:hover {
+    background: #ffffff10;
+    border-color: #0ff;
+    color: #0ff;
+    box-shadow: 0 0 20px #0ff2;
+  }
+
+  /* Turn indicator stripe */
+  .turn-stripe {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--x-color), transparent);
+    transition: all 0.4s;
+  }
+  .turn-stripe.o-turn {
+    background: linear-gradient(90deg, transparent, var(--o-color), transparent);
+  }
+
+  /* Overlay for win/draw */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8,8,16,0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+    gap: 20px;
+  }
+
+  .overlay.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .overlay-title {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(2rem, 8vw, 4rem);
+    letter-spacing: 0.2em;
+    color: #fff;
+    animation: titlePulse 1.5s ease-in-out infinite;
+  }
+
+  .overlay-sub {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(0.9rem, 3vw, 1.3rem);
+    letter-spacing: 0.3em;
+    color: #ffffff88;
+  }
+
+  .rules-box {
+    background: var(--panel);
+    border: 1px solid #0ff3;
+    padding: 16px 24px;
+    max-width: 360px;
+    text-align: center;
+    font-size: 0.72rem;
+    line-height: 1.8;
+    color: #ffffff88;
+    letter-spacing: 0.05em;
+  }
+
+  .rules-box strong {
+    color: #0ff;
+    font-style: normal;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>VANISH</h1>
+  <div class="subtitle">Tic Tac Toe — Evolved</div>
+
+  <div class="rules-box">
+    Each player holds <strong>max 3 pieces</strong> on the board.<br>
+    Place a 4th? Your <strong>oldest piece vanishes</strong>.<br>
+    The board never sleeps. No draws. Only strategy.
+  </div>
+
+  <div class="scoreboard">
+    <div class="score-card x-card">
+      <div class="score-label">⬥ PLAYER X</div>
+      <div class="score-num" id="scoreX">0</div>
+    </div>
+    <div class="vs-text">VS</div>
+    <div class="score-card o-card">
+      <div class="score-label">PLAYER O ⬥</div>
+      <div class="score-num" id="scoreO">0</div>
+    </div>
+  </div>
+
+  <div class="turn-stripe" id="turnStripe"></div>
+
+  <div class="status" id="status">PLAYER X — MAKE YOUR MOVE</div>
+
+  <div class="board" id="board">
+    <!-- cells injected by JS -->
+  </div>
+
+  <div class="queues">
+    <div class="queue x-queue">
+      <div class="queue-label">X pieces</div>
+      <div class="queue-dots" id="xDots"></div>
+    </div>
+    <div class="queue o-queue">
+      <div class="queue-label">O pieces</div>
+      <div class="queue-dots" id="oDots"></div>
+    </div>
+  </div>
+
+  <button class="btn" id="resetBtn">⟳ NEW GAME</button>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="overlay-title" id="overlayTitle"></div>
+  <div class="overlay-sub" id="overlaySub"></div>
+  <button class="btn" id="overlayBtn">PLAY AGAIN</button>
+</div>
+
+<script>
+const WIN_COMBOS = [
+  [0,1,2],[3,4,5],[6,7,8],
+  [0,3,6],[1,4,7],[2,5,8],
+  [0,4,8],[2,4,6]
+];
+
+const MAX_PIECES = 3;
+
+let board, currentPlayer, scores, moveQueues, gameOver, moveCount;
+
+function init() {
+  board = Array(9).fill(null);
+  currentPlayer = 'X';
+  moveQueues = { X: [], O: [] };
+  gameOver = false;
+  moveCount = 0;
+  renderBoard();
+  updateStatus();
+  updateDots();
+  updateStripe();
+  document.getElementById('overlay').classList.remove('show');
+}
+
+function renderBoard() {
+  const boardEl = document.getElementById('board');
+  boardEl.innerHTML = '';
+  for (let i = 0; i < 9; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.dataset.idx = i;
+    cell.addEventListener('click', () => handleClick(i));
+    boardEl.appendChild(cell);
+  }
+  syncCells();
+}
+
+function syncCells(winCells = []) {
+  for (let i = 0; i < 9; i++) {
+    const cell = document.querySelector(`.cell[data-idx="${i}"]`);
+    cell.innerHTML = '';
+    cell.className = 'cell';
+
+    if (board[i]) {
+      const p = board[i];
+      cell.classList.add('occupied');
+      cell.classList.add(p === 'X' ? 'x-cell' : 'o-cell');
+
+      // Is this the oldest piece?
+      const queue = moveQueues[p];
+      if (queue.length >= MAX_PIECES && queue[0] === i) {
+        cell.classList.add('will-vanish');
+      }
+
+      if (winCells.includes(i)) {
+        cell.classList.add('win-cell');
+        cell.classList.add(p === 'X' ? 'x-cell' : 'o-cell');
+      }
+
+      const piece = document.createElement('div');
+      piece.className = `piece ${p.toLowerCase()}`;
+      piece.textContent = p;
+      cell.appendChild(piece);
+    }
+  }
+}
+
+async function handleClick(idx) {
+  if (gameOver || board[idx]) return;
+
+  // If placing 4th piece, vanish oldest
+  const queue = moveQueues[currentPlayer];
+  let vanishedIdx = null;
+
+  if (queue.length >= MAX_PIECES) {
+    vanishedIdx = queue.shift();
+    // Animate vanish
+    const oldCell = document.querySelector(`.cell[data-idx="${vanishedIdx}"]`);
+    const oldPiece = oldCell.querySelector('.piece');
+    if (oldPiece) {
+      oldPiece.classList.add('vanishing');
+      await new Promise(r => setTimeout(r, 380));
+    }
+    board[vanishedIdx] = null;
+    syncCells();
+  }
+
+  // Place new piece
+  board[idx] = currentPlayer;
+  queue.push(idx);
+
+  // Animate place
+  syncCells();
+  const newCell = document.querySelector(`.cell[data-idx="${idx}"]`);
+  const newPiece = newCell.querySelector('.piece');
+  if (newPiece) newPiece.classList.add('placing');
+  await new Promise(r => setTimeout(r, 50));
+  if (newPiece) newPiece.classList.remove('placing');
+
+  moveCount++;
+  updateDots();
+
+  // Check win
+  const winCombo = checkWin(currentPlayer);
+  if (winCombo) {
+    gameOver = true;
+    syncCells(winCombo);
+    scores = scores || { X: 0, O: 0 };
+    scores[currentPlayer]++;
+    document.getElementById('scoreX').textContent = scores.X;
+    document.getElementById('scoreO').textContent = scores.O;
+    setTimeout(() => showOverlay(`PLAYER ${currentPlayer} WINS`, 'DOMINANCE ACHIEVED'), 500);
+    return;
+  }
+
+  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+  syncCells();
+  updateStatus();
+  updateStripe();
+}
+
+function checkWin(player) {
+  for (const combo of WIN_COMBOS) {
+    if (combo.every(i => board[i] === player)) return combo;
+  }
+  return null;
+}
+
+function updateStatus() {
+  const el = document.getElementById('status');
+  const queue = moveQueues[currentPlayer];
+  const nextGone = queue.length >= MAX_PIECES;
+  if (nextGone) {
+    el.textContent = `PLAYER ${currentPlayer} — PLACE A PIECE · OLDEST WILL VANISH`;
+    el.style.color = currentPlayer === 'X' ? '#ff6b35' : '#ffe135';
+  } else {
+    el.textContent = `PLAYER ${currentPlayer} — MAKE YOUR MOVE`;
+    el.style.color = '#fff';
+  }
+}
+
+function updateStripe() {
+  const stripe = document.getElementById('turnStripe');
+  stripe.className = 'turn-stripe' + (currentPlayer === 'O' ? ' o-turn' : '');
+}
+
+function updateDots() {
+  ['X','O'].forEach(p => {
+    const dots = document.getElementById(p === 'X' ? 'xDots' : 'oDots');
+    dots.innerHTML = '';
+    const queue = moveQueues[p];
+    for (let i = 0; i < MAX_PIECES; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'queue-dot';
+      if (i < queue.length) {
+        if (i === 0 && queue.length >= MAX_PIECES) {
+          dot.classList.add('next-gone');
+        } else {
+          dot.classList.add('filled');
+        }
+      }
+      dots.appendChild(dot);
+    }
+  });
+}
+
+function showOverlay(title, sub) {
+  document.getElementById('overlayTitle').textContent = title;
+  document.getElementById('overlaySub').textContent = sub;
+  document.getElementById('overlay').classList.add('show');
+}
+
+scores = { X: 0, O: 0 };
+document.getElementById('resetBtn').addEventListener('click', init);
+document.getElementById('overlayBtn').addEventListener('click', init);
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CABO — Online Card Game</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loading">
+  <div class="loading-logo">CABO</div>
+  <div class="spinner"></div>
+  <div class="loading-hint">Connecting...</div>
+</div>
+
+<!-- LOBBY -->
+<div id="lobby" style="display:none">
+  <div class="logo-wrap">
+    <div class="logo">CABO</div>
+    <div class="logo-sub">Card Game</div>
+  </div>
+
+  <!-- Name entry -->
+  <div class="lobby-box" id="enter-name-box">
+    <h2>Welcome</h2>
+    <div>
+      <label>Your Name</label>
+      <input type="text" id="player-name-input" placeholder="Enter your name..." maxlength="20" autofocus />
+    </div>
+    <button class="btn btn-primary" onclick="setName()">Continue →</button>
+  </div>
+
+  <!-- Main lobby -->
+  <div class="lobby-box" id="lobby-main" style="display:none">
+    <h2>Play Cabo</h2>
+    <button class="btn btn-primary" onclick="createRoom()">🎲 Create New Room</button>
+    <div class="divider">or join existing</div>
+    <div>
+      <label>Room Code</label>
+      <input type="text" id="join-code-input" placeholder="4-letter code..." maxlength="4"
+        style="text-transform:uppercase;letter-spacing:0.28em;font-size:22px;text-align:center" />
+    </div>
+    <button class="btn btn-secondary" onclick="joinRoom()">Join Room →</button>
+    <div class="power-legend">
+      <span class="pl-item pl-peek">7/8 Peek own</span>
+      <span class="pl-item pl-spy">9/10 Spy opp.</span>
+      <span class="pl-item pl-swap">J Blind Swap</span>
+      <span class="pl-item pl-swap">Q Peek+Swap</span>
+      <span class="pl-item pl-king">K King Swap</span>
+      <span class="pl-item pl-king">K♠ = 0 pts</span>
+    </div>
+  </div>
+
+  <!-- Waiting room -->
+  <div class="lobby-box" id="waiting-room" style="display:none">
+    <h2>Room Ready</h2>
+    <div class="room-code-display">
+      <div class="code" id="display-room-code">ABCD</div>
+      <div class="hint">Share this code with friends</div>
+    </div>
+    <div>
+      <label style="margin-bottom:8px;display:block">Players (<span id="player-count">1</span>/6)</label>
+      <div class="player-list" id="player-list"></div>
+    </div>
+    <button class="btn btn-primary" id="start-btn" onclick="startGame()" disabled>
+      Start Game (need 2+)
+    </button>
+    <button class="btn btn-secondary" onclick="leaveRoom()">← Leave</button>
+  </div>
+</div>
+
+<!-- GAME -->
+<div id="game">
+  <!-- Header -->
+  <div class="game-header">
+    <div class="game-title">CABO</div>
+    <div class="turn-info">
+      <div id="turn-label" class="pulsing">Loading...</div>
+      <div id="round-label">Round 1</div>
+    </div>
+    <div id="cabo-status"></div>
+  </div>
+
+  <!-- Score strip -->
+  <div class="score-strip" id="score-strip"></div>
+
+  <!-- Main game area -->
+  <div class="game-main">
+    <div class="game-board">
+
+      <!-- Opponents -->
+      <div class="opponents-area" id="opponents-area"></div>
+
+      <!-- Center: deck, drawn card, discard -->
+      <div class="center-area">
+        <!-- Draw pile -->
+        <div class="pile-container">
+          <div class="pile-label">Draw Pile</div>
+          <div class="card-slot deck-card" id="deck-pile" onclick="drawFromDeck()">
+            <img class="card-img" src="https://deckofcardsapi.com/static/img/back.png" draggable="false" alt="Draw Pile">
+            <span class="deck-count" id="deck-count"></span>
+          </div>
+        </div>
+
+        <!-- Drawn card (shown only when applicable) -->
+        <div id="drawn-card-area" style="display:none">
+          <div class="drawn-area">
+            <div class="drawn-area-label">Drawn Card</div>
+            <div id="drawn-card-display"></div>
+            <div class="drawn-area-buttons">
+              <button class="btn btn-secondary btn-action" onclick="discardDrawnCard()">Discard</button>
+              <button class="btn btn-success btn-action" id="use-power-btn" onclick="usePower()" style="display:none">Use Power</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Discard pile -->
+        <div class="pile-container">
+          <div class="pile-label">Discard Pile</div>
+          <div id="discard-pile-display">
+            <div class="discard-empty">+</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My cards -->
+      <div class="my-area" id="my-area">
+        <div class="my-name-label" id="my-name-label">You</div>
+        <div class="hand-row" id="my-cards"></div>
+      </div>
+
+      <!-- Log -->
+      <div class="log-panel" id="log-panel"></div>
+    </div>
+
+    <!-- Action Status Box -->
+    <div id="action-status-box" class="action-status-box" style="display:none">
+      <div class="asb-title" id="asb-title">ACTION</div>
+      <div class="asb-body" id="asb-body"></div>
+    </div>
+
+    <!-- Chat -->
+    <div class="chat-panel">
+      <div class="chat-header">💬 Chat</div>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Message..." maxlength="120" />
+        <button class="chat-send-btn" onclick="sendChat()">↑</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <div class="help-text" id="help-text">Waiting...</div>
+    <button class="btn btn-music" id="music-btn" onclick="toggleMusic()" title="Play music">
+      🎵
+    </button>
+    <button class="btn btn-action btn-danger" id="cabo-btn" onclick="callCabo()" disabled>
+      📣 Call CABO
+    </button>
+  </div>
+</div>
+
+<!-- Initial Peek Overlay -->
+<div id="peek-overlay" class="peek-overlay" style="display:none">
+  <h2>Peek at Your Cards</h2>
+  <p>These are your two inner cards. Memorize them — click Ready when done.</p>
+  <div class="peek-cards-row" id="peek-cards-row"></div>
+  <button class="peek-ready-btn" id="peek-ready-btn" onclick="markReady()">I'm Ready ✓</button>
+</div>
+
+<!-- Round End Modal -->
+<div class="modal-overlay" id="round-modal">
+  <div class="modal">
+    <h2>Round Over!</h2>
+    <div id="round-modal-content"></div>
+    <button class="btn btn-primary" id="next-round-btn" onclick="nextRound()" style="display:none">
+      Next Round →
+    </button>
+    <button class="btn btn-secondary" onclick="closeRoundModal()">Close</button>
+  </div>
+</div>
+
+<!-- Game Over Modal -->
+<div class="modal-overlay" id="game-over-modal">
+  <div class="modal">
+    <h2 id="gameover-title">Game Over!</h2>
+    <div id="gameover-content"></div>
+    <button class="btn btn-primary" onclick="playAgain()">Play Again</button>
+  </div>
+</div>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
